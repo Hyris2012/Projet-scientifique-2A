@@ -61,6 +61,7 @@ public class PanelTraj extends JPanel implements ActionListener {
 			Xparcourus.add(balle.getValeurX().get(tps)
 			paint();
 		}else{
+			time.stop();
 			new FenetreFinJeu(balle.aterrissage, balle.max);	// en supposant que la fenetre affiche l'altitude max atteinte et la longueur parcourue, qui seraient tout deux attributs de balle 
 		}
 		
