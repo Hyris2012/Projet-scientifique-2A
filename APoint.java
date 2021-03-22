@@ -24,6 +24,10 @@ public class APoint {
         return Math.sqrt(dx * dx + dy * dy);
     }
     
+    public double getHauteurEntre(APoint autrePoint){
+		return(Math.abs(x - autrePoint.x));
+	}
+    
     /**
      * Pour afficher les coordonnées du point
      * @return les coordonnées du point sous la forme [x=1.0,y=1.0]

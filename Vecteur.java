@@ -7,13 +7,14 @@ public class Vecteur {
 	public Vecteur(){
 	}
 	
-	// méthode pour récuper le module --> méthode distance dans la classe APoint
+	public Vecteur( APoint b, APoint p, double m, double a){
+		base=b;
+		pointe=p;
+		m=b.distance(p);
+		argument= Math.asin((p.getHauteurEntre(b))/m);
+		
+	}
 	
-	
-	// méthode pour récuperer l'argument 
-	
-
-	
-	
+		
 }
 
