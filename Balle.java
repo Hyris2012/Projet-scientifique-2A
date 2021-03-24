@@ -50,6 +50,17 @@ public class Balle {
 		
 		}
 		
+		
+		
+		public ArrayList <Double> getValeurX(){
+			return valeurX;
+		}
+		
+		public ArrayList <Double> getValeurY(){
+			return valeurY;
+		}
+		
+		
 
 }
 
