@@ -10,6 +10,11 @@
  * 
  * 
  */
+ 
+ import java.awt.event.*;
+ import java.awt.Color;
+ import java.util.ArrayList<E> ;
+ import javax.swing.*;
 
 // aaaaaa
 public class PanelTraj extends JPanel implements ActionListener {
@@ -50,14 +55,14 @@ public class PanelTraj extends JPanel implements ActionListener {
 		// appelé lors de l'appui sur le bouton 'lancer' -> càd dans actionPerformed de FenetreJeu 
 		
 		// dessine la trajectoire jusqu'à --> tps 
-		g.setColor(Color.white);
-		drawPolyline(balle.valeurX.toArray(), balle.valeurY.toArray());
+		g.setColor(Color.black);
+		drawPolyline(balle.getValeurX().toArray(), balle.getValeurY().toArray());
 		
 	}
 	
 	public void actionPerformed(ActionEvent e){
 		
-		if(!aterrie()){
+		if(!atterrie()){
 			Xparcourus.add(balle.getValeurX().get(tps));
 			paint();
 		}else{
@@ -69,7 +74,7 @@ public class PanelTraj extends JPanel implements ActionListener {
 	
 	public boolean atterrie(){
 		// doit déterminer si la balle a atteri 
-		boolean b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.atterrissage);
+		boolean b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.atterrissage));
 		return b; 
 		
 	}
