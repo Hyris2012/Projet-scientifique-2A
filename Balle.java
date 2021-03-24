@@ -49,7 +49,7 @@ public class Balle {
 			valeurY.add(y);
 			}
 		
-		//blabla
+		
 		}
 	public void calculSommet(){
 		
