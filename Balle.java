@@ -9,6 +9,9 @@ public class Balle {
 	private double pensenteur;
 	private ArrayList <Double> valeurX;
 	private ArrayList <Double> valeurY;
+	// faudra le remplacer par un vecteur les coordonées du point origine
+
+	
 	
 	public Balle (){
 		}
@@ -37,7 +40,7 @@ public class Balle {
 	public void calculTrajectoire(){
 		int y = 0;
 		for( int i = 0; i<valeurX.size(); i++){
-			//y = -(pesenteur)/angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2));
+			//y = -(pesenteur)/(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2));
 			}
 		
 		}
