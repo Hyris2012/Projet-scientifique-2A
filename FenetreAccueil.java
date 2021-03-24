@@ -26,6 +26,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		debut = new JButton("Commencer a jouer !") ; 
 		debut.addActionListener(this) ; 
 		debut.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(15/21.0)),(int)(largeur*(20/29.7)),(int)(hauteur*(4/21.0))) ;
+		debut.setBackground(Color.red) ; 
+		debut.setFont(new Font("Stencil",Font.BOLD,50)) ;
 		
 		FenPrinc.add(debut) ; 
 		this.add(FenPrinc) ;
