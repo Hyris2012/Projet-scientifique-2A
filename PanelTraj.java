@@ -10,15 +10,21 @@
  * 
  * 
  */
- /*
+
  
  import java.awt.event.*;
  import java.awt.Color;
- import java.util.ArrayList<E> ;
+ //import java.util.ArrayList<E> ;
  import javax.swing.*;
 
 // aaaaaa
-public class PanelTraj extends JPanel implements ActionListener {
+public class PanelTraj  {
+	//extends JPanel implements ActionListener
+	
+	public static void main(String[]args){
+	System.out.println("cc");
+}
+	 /*
 	
 	private Balle balle;
 	//private ImageIcon fond;
@@ -79,6 +85,9 @@ public class PanelTraj extends JPanel implements ActionListener {
 		return b; 
 		
 	}
+	* */
 }
 
-*/
+
+
+
