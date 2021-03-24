@@ -11,7 +11,7 @@
  * 
  */
 
-
+// aaaaaa
 public class PanelTraj extends JPanel implements ActionListener {
 	
 	private Balle balle;
@@ -58,7 +58,7 @@ public class PanelTraj extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e){
 		
 		if(!aterrie()){
-			Xparcourus.add(balle.getValeurX().get(tps)
+			Xparcourus.add(balle.getValeurX().get(tps));
 			paint();
 		}else{
 			time.stop();
