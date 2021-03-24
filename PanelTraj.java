@@ -24,10 +24,10 @@ public class PanelTraj extends JPanel implements ActionListener {
 	
 	private Balle balle;
 	//private ImageIcon fond;
-	public Timer time;
-	public int tps;
-	public ArrayList<Double> Xparcourus;
-	public ArrayList<Double> Yparcourus;
+	private Timer time;
+	private int tps;
+	private ArrayList<Integer> Xparcourus;
+	private ArrayList<Integer> Yparcourus;
 	
 	public PanelTraj(Balle balle) {
 		super();
@@ -66,7 +66,7 @@ public class PanelTraj extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e){
 		
 		if(!atterrie()){
-			Xparcourus.add(balle.getValeurX().get(tps));
+			Xparcourus.add((int) balle.getValeurX().get(tps));
 			repaint();
 		}else{
 			time.stop();
@@ -76,8 +76,9 @@ public class PanelTraj extends JPanel implements ActionListener {
 	}
 	
 	public boolean atterrie(){
+		boolean b = true;
 		// doit déterminer si la balle a atteri 
-		boolean b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.atterrissage));
+		// b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.atterrissage));		// attribut aterrissage supposé 
 		return b; 
 		
 	}
