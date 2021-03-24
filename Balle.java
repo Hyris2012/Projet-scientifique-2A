@@ -6,11 +6,13 @@ public class Balle {
 	private double taille;
 	private double vitesseInitiale;
 	private double angleIni;
-	private double pensenteur;
+	private double pesenteur;
 	private ArrayList <Double> valeurX;
 	private ArrayList <Double> valeurY;
 	// faudra le remplacer par un vecteur les coordonées du point origine
-	//private Vecteur origine; blabla
+	private Vecteur depart; 
+	Polynome p; 
+	
 	
 
 	
@@ -18,7 +20,7 @@ public class Balle {
 	public Balle (){
 		}
 		
-	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X){
+	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X,APoint b, APoint p){
 		angleIni = angle;
 		vitesseInitiale = v0;
 		this.masse = masse;
@@ -31,25 +33,47 @@ public class Balle {
 			X.add(i);
 			
 	    }
-	    //origine = new Vecteur
+	    
+	    depart = new Vecteur (b,p);
+	    
+	    initPolynome();
 	   
+	    
 	    
 	}
 	    
-	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X, double p ){
-		this(angle, v0 , masse, rayon , taille, X);
-		pensenteur = p;
+	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X, APoint b, APoint p, double g ){
+		this(angle, v0 , masse, rayon ,taille, X, b, p, m, a);
+		pesenteur = g;
 		
 		}
 	
 	public void calculTrajectoire(){
-		int y = 0;
+		double y = 0;
 		for( int i = 0; i<valeurX.size(); i++){
-			//y = -(pesenteur)/(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)); blabla
+			y = p.calculFdeX(i);
+			//-(pesenteur)/2*(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)))*(Math.pow(i-depart.getBase().x,2))+Math.tan(angleIni)*(i-depart.getBase().x)+depart.getBase().y;
+			valeurY.add(y);
 			}
+		
 		
 		}
 		
+	public void initPolynome(){
+		double a = -(pesenteur)/2*(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)));
+		double b = Math.tan(angleIni);
+		double c = depart.getBase().y;
+		p = new Polynome(a, b, c );
+		
+		
+		}
+	
+	
+	public void calculSommet(){
+		
+		
+		
+	}
 
 }
 
