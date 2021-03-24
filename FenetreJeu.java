@@ -95,5 +95,6 @@ public class FenetreJeu extends JFrame{
 		FenPrinc.add(equa) ; //12
 		this.add(FenPrinc) ;
 		setVisible(true) ;  
+		//commentaire
 	}
 }
