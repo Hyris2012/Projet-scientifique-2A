@@ -15,6 +15,22 @@ public class Vecteur {
 		
 	}
 	
+	public APoint getBase(){
+		return this.base;
+	}
+	
+	public APoint getPointe(){
+		return this.pointe;
+	}
+	
+	public double getModule(){
+		return this.module;
+	}
+	
+	public double getArgument (){
+		return this.argument;
+	}
+	
 		
 }
 
