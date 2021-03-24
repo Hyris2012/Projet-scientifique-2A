@@ -6,10 +6,11 @@ public class FenetreFinJeu extends JFrame {
 	
 	public FenetreFinJeu(String type, String affichage){
 		super(type);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(550, 400, 400, 200);
 		
-		JLabel etiquette = new JLabel("affichage");
+		JLabel etiquette = new JLabel(affichage);
+		etiquette.setBounds(10, 10, 200, 80);
 		
 		JPanel unique = new JPanel();
 		unique.setLayout(null);
