@@ -10,6 +10,7 @@
  * 
  * 
  */
+ /*
  
  import java.awt.event.*;
  import java.awt.Color;
@@ -80,3 +81,4 @@ public class PanelTraj extends JPanel implements ActionListener {
 	}
 }
 
+*/
