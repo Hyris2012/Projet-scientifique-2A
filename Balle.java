@@ -10,13 +10,15 @@ public class Balle {
 	private ArrayList <Double> valeurX;
 	private ArrayList <Double> valeurY;
 	// faudra le remplacer par un vecteur les coordonées du point origine
+	//private Vecteur origine; blabla
+	
 
 	
 	
 	public Balle (){
 		}
 		
-	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X ){
+	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X){
 		angleIni = angle;
 		vitesseInitiale = v0;
 		this.masse = masse;
@@ -29,6 +31,9 @@ public class Balle {
 			X.add(i);
 			
 	    }
+	    //origine = new Vecteur
+	   
+	    
 	}
 	    
 	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X, double p ){
@@ -40,7 +45,7 @@ public class Balle {
 	public void calculTrajectoire(){
 		int y = 0;
 		for( int i = 0; i<valeurX.size(); i++){
-			//y = -(pesenteur)/(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2));
+			//y = -(pesenteur)/(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)); blabla
 			}
 		
 		}
