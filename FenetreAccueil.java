@@ -14,7 +14,6 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 	public FenetreAccueil() {
 		super("Trajectory Manager") ; 
 		fenetrejeu = new FenetreJeu() ; 
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300,100,largeur,hauteur);
 		setBackground(Color.white) ; 
