@@ -35,8 +35,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	public PanelTraj() {
 		super();
 		setLayout(null);
-		setBounds(50, 50, 500, 700);
-		setBackground(Color.black);
+		setBounds(50, 50, 700, 500);
+		setBackground(Color.white);
 		
 		time = new Timer (100, this);
 	
