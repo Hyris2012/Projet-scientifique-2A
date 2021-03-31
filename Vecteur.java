@@ -7,11 +7,11 @@ public class Vecteur {
 	public Vecteur(){
 	}
 	
-	public Vecteur( APoint b, APoint p, double m, double a){
+	public Vecteur(APoint b, APoint p){
 		base=b;
 		pointe=p;
-		m=b.distance(p);
-		argument= Math.asin((p.getHauteurEntre(b))/m);
+		module=b.distance(p);
+		argument= Math.asin((p.getHauteurEntre(b))/module); // les angles sont en radian 
 		
 	}
 	

@@ -97,6 +97,5 @@ public class FenetreJeu extends JFrame{
 		this.add(FenPrinc) ;
 		setVisible(false) ;
 		  
-		//commentaire
 	}
 }
