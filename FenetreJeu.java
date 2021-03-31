@@ -1,11 +1,16 @@
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Graphics;
+import javax.swing.JLabel; // pas sure que les import en dessous soient utiles 
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
-public class FenetreJeu extends JFrame{
+public class FenetreJeu extends JFrame implements ActionListener{
 	private JPanel FenPrinc ; 
 	//private JPanel paramG ;
-	private JPanel courbe ; 
+	private PanelTraj courbe ; 
 	private JLabel equa ;
 	private JButton lancer ;
 	private int largeur = 1500;
@@ -23,7 +28,8 @@ public class FenetreJeu extends JFrame{
 		FenPrinc.setBounds(0,0,largeur,hauteur) ;
 		FenPrinc.setBackground(Color.white) ; 
 		
-		/* paramG = new JPanel() ; 
+		
+		/*paramG = new JPanel() ; 
 		paramG.setLayout(null) ;
 		paramG.setBounds((int)(largeur*(0.2/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(8.0/29.7)),(int)(hauteur*(19.0/21.0))) ;
 		paramG.setBackground(Color.green) ; */
@@ -76,10 +82,17 @@ public class FenetreJeu extends JFrame{
 		lancer.setFont(new Font("Stencil",Font.BOLD,50)) ;
 		lancer.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(17.7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		lancer.setBackground(Color.red) ; 
+		lancer.addActionListener(this);
 		
 		equa = new JLabel("Equation de la trajectoire : ") ; //12
 		equa.setBounds((int)(largeur*(15/29.7)),(int)(hauteur*(15/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(3/21.0))) ; 
 		equa.setFont(new Font("Arial",Font.BOLD,32)) ;
+		
+		courbe = new PanelTraj();
+		courbe.setLayout(null);
+		courbe.setBounds((int)(1500*(10/29.7)),(int)(1000*(1/21.0)),(int)(1500*(18/29.7)),(int)(1000*(14/21.0)));
+		courbe.setBackground(Color.green);
+		courbe.setVisible(false);
 		
 		FenPrinc.add(angle) ; //1
 		FenPrinc.add(angle1) ; //2
@@ -93,9 +106,20 @@ public class FenetreJeu extends JFrame{
 		FenPrinc.add(endroit1) ; //10
 		FenPrinc.add(lancer) ; //11
 		FenPrinc.add(equa) ; //12
+		FenPrinc.add(courbe) ;
+
 		
 		this.add(FenPrinc) ;
 		setVisible(false) ;
-		  
+		
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==lancer){
+			
+			courbe.setVisible(true);
+			courbe.lancerBalle(new Balle());
+		}
+	}	
+	
 }

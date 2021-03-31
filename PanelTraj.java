@@ -16,6 +16,7 @@
  import java.awt.Color;
  import java.util.ArrayList;
  import javax.swing.*;
+ import java.awt.*;
  import java.awt.Graphics;
  import java.awt.event.MouseEvent;
  import java.awt.event.MouseListener;
@@ -34,9 +35,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	
 	public PanelTraj() {
 		super();
-		setLayout(null);
-		setBounds(50, 50, 700, 500);
-		setBackground(Color.white);
+		
 		
 		time = new Timer (100, this);
 	
@@ -44,6 +43,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		
 		Xparcourus = new ArrayList<Double>();
 		Yparcourus = new ArrayList<Double>();
+		
+		addMouseListener(this);
 		
 	}
 	
@@ -58,9 +59,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	}
 	
 	
+	public void actionPerformed(ActionEvent e){//lié au timer
 	
-	public void actionPerformed(ActionEvent e){
-		
 		if(!atterrie()){
 			Xparcourus.add(balle.getValeurX().get(tps));
 			repaint();
@@ -99,7 +99,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		int y1= (int) flecheInit.getBase().y; // ordonnée base flèche
 		int x2= (int) flecheInit.getPointe().x; // abscisse pointe
 		int y2= (int) flecheInit.getPointe().y; // ordonnée pointe
-		final int d=7, h=7; // hauteur et largeur de la petite pointe au bout de la flèche
+		final int d=12, h=5; // hauteur et largeur de la petite pointe au bout de la flèche
 		
 		int dx = x2 - x1;
 		int dy = y2 - y1;
@@ -123,11 +123,13 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		g.fillPolygon(xpoints, ypoints, 3);
 	}
 	public void paint(Graphics g){
-			
-			// dessine la trajectoire jusqu'à --> tps 
+			//super.paint(g);
+		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
 			g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
-			drawArrowLine(g);
+			if(flecheInit!=null){
+				drawArrowLine(g);
+			}
 		}
 	
 	public boolean atterrie(){
