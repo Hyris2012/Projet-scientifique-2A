@@ -37,7 +37,7 @@ public class Polynome {
 		double delta;
 		delta = b*b - 4*a*c;
 		if(delta < 0){
-			new FenetreFinJeu("Erreur","Erreur : la trajectoire est souterraine ou aérienne.");
+			new FenetreFinJeu("Erreur","Erreur : la trajectoire est souterraine ou la balle ne touche pas le sol");
 			return;
 		} if (delta == 0){
 			new FenetreFinJeu("Erreur", "Erreur : la trajectoire est paranormale");
@@ -50,11 +50,13 @@ public class Polynome {
 		}
 	}
 	
-	public double calculAtterrissage(){
+	public double calculAtterrissage(){ 
 		
 		return Math.max(racines[0], racines[1]);
 		
 	}	
+	
+	
 	
 	public double calculSommet(){
 		double extremum = calculFdeX(alpha);
@@ -86,6 +88,15 @@ public class Polynome {
 	
 	public double[] getRacines(){
 		return racines;
+	}
+	
+	public String toString (){
+		return ("La balle a parcouru " + distanceEntreRacines() + " et a atteint une hauteur de "+ calculSommet());
+	}
+	
+	public double distanceEntreRacines(){
+		double d= Math.abs(racines[0]-racines[1]);
+		return d;
 	}
 }
 

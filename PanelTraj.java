@@ -51,24 +51,24 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		return ("je suis une String");
 		//juste pour le principe
 	}
-	/*
+	
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
 		time.start();
 	}
 	
 	
-	*/
+	
 	public void actionPerformed(ActionEvent e){
-		/*
+		
 		if(!atterrie()){
-			Xparcourus.add((int) balle.getValeurX().get(tps));
+			Xparcourus.add(balle.getValeurX().get(tps));
 			repaint();
 		}else{
 			time.stop();
-			new FenetreFinJeu(balle.aterrissage, balle.max);	// en supposant que la fenetre affiche l'altitude max atteinte et la longueur parcourue, qui seraient tout deux attributs de balle 
+			new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// en supposant que la fenetre affiche l'altitude max atteinte et la longueur parcourue, qui seraient tout deux attributs de balle 
 		}
-		*/
+		
 	}
 	
 	public void mouseExited(MouseEvent e){
@@ -126,14 +126,14 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 			
 			// dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
-			//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
+			g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			drawArrowLine(g);
 		}
-	/*
+	
 	public boolean atterrie(){
 		boolean b = true;
 		// doit déterminer si la balle a atteri 
-		b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.p.getRacines()[1]));		
+		b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]));		
 		return b; 
 		
 	}
@@ -147,7 +147,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		return t;
 	}
 	
-	*/
+	
 }
 
 

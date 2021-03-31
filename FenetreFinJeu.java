@@ -58,8 +58,4 @@ public class FenetreFinJeu extends JFrame {
 		
 	}
 	
-	public static void main (String[] args){
-		new FenetreFinJeu("Test", "Hello world");
-	}
-	
 }

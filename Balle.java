@@ -11,9 +11,10 @@ public class Balle {
 	private ArrayList <Double> valeurY;
 	// faudra le remplacer par un vecteur les coordonées du point origine
 	private Vecteur depart; 
-	Polynome p; 
+	private Polynome p; 
 	
-	
+	// distanceAterrissage esr distance en x entre le point de départ et le point d'arrivée
+	// hauteurMax = hauteur de la flèche au plus haut 
 
 	
 	
@@ -47,7 +48,7 @@ public class Balle {
 	}
 
 
-	public Balle(int angle, int v0 , int masse, int rayon , int taille, ArrayList <Double> X, APoint b, APoint p, double g){
+	public Balle(double angle, double v0 , double masse, double rayon , double taille, ArrayList <Double> X, APoint b, APoint p, double g){
 		this(angle, v0 , masse, rayon ,taille, X, b, p);
 		pesenteur = g;
 		
@@ -83,6 +84,10 @@ public class Balle {
 	
 	public ArrayList <Double> getValeurY(){
 		return valeurY;
+	}
+	
+	public Polynome getPolynome(){
+		return this.p;
 	}
 
 }
