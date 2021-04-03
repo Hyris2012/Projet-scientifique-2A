@@ -38,8 +38,6 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		
 		
 		time = new Timer (1, this);
-	
-		balle = new Balle();
 		
 		Xparcourus = new ArrayList<Double>();
 		Yparcourus = new ArrayList<Double>();
@@ -132,13 +130,15 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 			super.paint(g);
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
-			Polynome p=new Polynome(-1,3,400);
+			//Polynome p=new Polynome(-1,3,400);
 			ArrayList<Double> YAffiches = new ArrayList<Double>();
-			for(int i=0; i<p.getValeurY().size(); i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
-				YAffiches.add(getHeight()-p.getValeurY().get(i));
+			if(balle!=null){
+				for(int i=0; i<balle.getPolynome().getValeurY().size(); i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
+					YAffiches.add(getHeight()-balle.getPolynome().getValeurY().get(i));
+				}
+				g.drawPolyline(conversionTableau(balle.getPolynome().getValeurX()), conversionTableau(YAffiches), balle.getPolynome().getValeurX().size());
+				//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			}
-			g.drawPolyline(conversionTableau(p.getValeurX()), conversionTableau(YAffiches), p.getValeurX().size());
-			//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			if(flecheInit!=null){
 				drawArrowLine(g);
 			}

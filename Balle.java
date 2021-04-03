@@ -25,7 +25,7 @@ public class Balle {
 		
 		this.angleIni = v.getArgument() * Math.PI/180;	// pour convertir en degrés les radians qu'on a reçu
 		
-		this.vitesseInitiale = v.getModule()/10000;
+		this.vitesseInitiale = v.getModule()/10;
 		this.masse = m;
 		this.rayon = r;
 		this.pesanteur=9.81;
