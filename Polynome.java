@@ -20,6 +20,7 @@ public class Polynome {
 		this.a = a;
 		this.b = b;
 		this.c = c;
+		racines= new double[2];
 		calculRacines();
 		alpha = -b/(2*a);
 		beta = calculFdeX(0.0);			//beta est l'ordonnée à l'origine 

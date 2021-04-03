@@ -118,7 +118,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		if(e.getSource()==lancer){
 			
 			courbe.setVisible(true);
-			courbe.lancerBalle(new Balle());
+			
 		}
 	}	
 	

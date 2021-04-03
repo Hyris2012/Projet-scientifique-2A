@@ -63,6 +63,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	
 		if(!atterrie()){
 			Xparcourus.add(balle.getValeurX().get(tps));
+			Yparcourus.add(balle.getValeurY().get(tps));
 			repaint();
 		}else{
 			time.stop();
@@ -91,6 +92,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		APoint departFleche=new APoint(0,this.getHeight());
 		APoint pointeFleche= new APoint(e.getX(),e.getY());
 		flecheInit=new Vecteur (departFleche, pointeFleche);
+		repaint(); //tout marche jusque là
+		lancerBalle(new Balle(1.0,1.0,flecheInit));
 		repaint();
 	}
 	
@@ -123,7 +126,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		g.fillPolygon(xpoints, ypoints, 3);
 	}
 	public void paint(Graphics g){
-			//super.paint(g);
+			super.paint(g);
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
 			g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
@@ -135,9 +138,12 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	public boolean atterrie(){
 		boolean b = true;
 		// doit déterminer si la balle a atteri 
-		b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]));		
+		if(Xparcourus.size()>0){
+			b = (Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]);		
+		}else{
+			b=false;
+		}
 		return b; 
-		
 	}
 	
 	public int[] conversionTableau(ArrayList<Double> liste){
