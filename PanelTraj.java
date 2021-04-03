@@ -133,7 +133,11 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
 			Polynome p=new Polynome(-1,3,400);
-			g.drawPolyline(conversionTableau(p.getValeurX()), conversionTableau(p.getValeurY()), p.getValeurX().size());
+			ArrayList<Double> YAffiches = new ArrayList<Double>();
+			for(int i=0; i<p.getValeurY().size(); i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
+				YAffiches.add(getHeight()-p.getValeurY().get(i));
+			}
+			g.drawPolyline(conversionTableau(p.getValeurX()), conversionTableau(YAffiches), p.getValeurX().size());
 			//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			if(flecheInit!=null){
 				drawArrowLine(g);
