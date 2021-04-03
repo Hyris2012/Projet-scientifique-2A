@@ -6,7 +6,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 	private int largeur = 1100 ;
 	private int hauteur = 800 ;
 	private JButton debut ; 
-	boolean FenJeu ; 
+	//boolean FenJeu ; 
 	FenetreJeu fenetrejeu ;
 	private JPanel FenPrinc ; 
 	private Color couleur = new Color(135,206,235);
@@ -16,7 +16,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		fenetrejeu = new FenetreJeu() ; 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300,100,largeur,hauteur);
-		FenJeu = false ;
+		//FenJeu = false ;
 		
 		FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 
@@ -45,8 +45,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	public void actionPerformed(ActionEvent e) {
-		FenJeu = true ;
-		fenetrejeu.setVisible(FenJeu) ;
+		//FenJeu = true ;
+		fenetrejeu.setVisible(true) ;
 		setVisible(false) ;
 	}	
 	

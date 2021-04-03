@@ -28,7 +28,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	private Balle balle;
 	//private ImageIcon fond;
 	private Timer time;
-	private int tps;
+	private long tpsIni; // temps zéro pris pris à partir de l'heure system
 	private ArrayList<Double> Xparcourus;
 	private ArrayList<Double> Yparcourus;
 	private Vecteur flecheInit; // définira le vecteur pour lancer la balle 
@@ -37,7 +37,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		super();
 		
 		
-		time = new Timer (100, this);
+		time = new Timer (1, this);
 	
 		balle = new Balle();
 		
@@ -55,21 +55,23 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
+		tpsIni=System.currentTimeMillis();
 		time.start();
 	}
 	
 	
 	public void actionPerformed(ActionEvent e){//lié au timer
 	
-		if(!atterrie()){
-			Xparcourus.add(balle.getValeurX().get(tps));
-			Yparcourus.add(balle.getValeurY().get(tps));
-			repaint();
-		}else{
-			time.stop();
-			new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// en supposant que la fenetre affiche l'altitude max atteinte et la longueur parcourue, qui seraient tout deux attributs de balle 
+		if (e.getSource()==time){
+			if(!atterrie()){
+				Xparcourus.add(balle.getPolynome().getValeurX().get((int)(System.currentTimeMillis()-tpsIni)));
+				Yparcourus.add(balle.getPolynome().getValeurY().get((int)(System.currentTimeMillis()-tpsIni)));
+				repaint();
+			}else{
+				time.stop();
+				new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// la fenetre affiche l'altitude max atteinte et la longueur parcourue
+			}
 		}
-		
 	}
 	
 	public void mouseExited(MouseEvent e){
@@ -92,6 +94,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		APoint departFleche=new APoint(0,this.getHeight());
 		APoint pointeFleche= new APoint(e.getX(),e.getY());
 		flecheInit=new Vecteur (departFleche, pointeFleche);
+		
 		repaint(); //tout marche jusque là
 		lancerBalle(new Balle(1.0,1.0,flecheInit));
 		repaint();
@@ -129,7 +132,9 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 			super.paint(g);
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
-			g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
+			Polynome p=new Polynome(-1,3,400);
+			g.drawPolyline(conversionTableau(p.getValeurX()), conversionTableau(p.getValeurY()), p.getValeurX().size());
+			//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			if(flecheInit!=null){
 				drawArrowLine(g);
 			}

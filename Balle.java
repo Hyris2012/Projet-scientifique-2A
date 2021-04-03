@@ -7,9 +7,7 @@ public class Balle {
 	private double vitesseInitiale;
 	private double angleIni;			// angle en radians 
 	private double pesanteur;
-	private ArrayList <Double> valeurX;
-	private ArrayList <Double> valeurY;
-	// faudra le remplacer par un vecteur les coordonées du point origine
+	// on a enlevé valeurX et valeurY de balle pour les mettre dans polynomes pour créer un polynome indépendamment de la balle et pouvoir l'afficher 
 	private Vecteur depart; 
 	private Polynome p; 
 	
@@ -27,20 +25,14 @@ public class Balle {
 		
 		this.angleIni = v.getArgument() * Math.PI/180;	// pour convertir en degrés les radians qu'on a reçu
 		
-		this.vitesseInitiale = v.getModule();
+		this.vitesseInitiale = v.getModule()/10000;
 		this.masse = m;
 		this.rayon = r;
-		this.valeurX = new ArrayList<Double>();
-		this.valeurY = new ArrayList<Double>();
 		this.pesanteur=9.81;
 		
-		for(double i= 0; i<500; i++){
-			valeurX.add(i);
-	    }
-	        
+		      
 	    this.depart = v;
 	    initPolynome();
-	    calculTrajectoire();
 	}
 
 
@@ -62,26 +54,9 @@ public class Balle {
 		
 	}
 	
-	public void calculTrajectoire(){
-		double y = 0;
-		for( int i = 0; i<valeurX.size(); i++){
-			y = p.calculFdeX(i);
-			//-(pesanteur)/2*(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)))*(Math.pow(i-depart.getBase().x,2))+Math.tan(angleIni)*(i-depart.getBase().x)+depart.getBase().y;
-			valeurY.add(y);
-		}
-		
-		
-	}
-	
 	// accesseurs en lecture 
 	
-	public ArrayList <Double> getValeurX(){
-		return valeurX;
-	}
 	
-	public ArrayList <Double> getValeurY(){
-		return valeurY;
-	}
 	
 	public Polynome getPolynome(){
 		return this.p;

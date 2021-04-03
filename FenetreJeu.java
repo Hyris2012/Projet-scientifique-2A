@@ -29,12 +29,15 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		FenPrinc.setBackground(Color.white) ; 
 		
 		
+		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?
+		
+		
 		/*paramG = new JPanel() ; 
 		paramG.setLayout(null) ;
 		paramG.setBounds((int)(largeur*(0.2/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(8.0/29.7)),(int)(hauteur*(19.0/21.0))) ;
 		paramG.setBackground(Color.green) ; */
 		
-		JLabel angle = new JLabel("Saisir l'angle choisi en degres :") ; //1
+		/*JLabel angle = new JLabel("Saisir l'angle choisi en degres :") ; //1
 		angle.setFont(new Font("Arial",Font.BOLD,20)) ;
 		angle.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(0.7/21)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
 		
@@ -53,6 +56,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		vitesse1.setPaintLabels(true) ;
 		vitesse1.setPaintTicks(true) ; 
 		vitesse1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6.1/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		*/
 		
 		score1 = 0 ; 
 		JLabel score = new JLabel(" Score : "+score1) ; //5
@@ -94,10 +98,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		courbe.setBackground(Color.green);
 		courbe.setVisible(false);
 		
-		FenPrinc.add(angle) ; //1
+		/*FenPrinc.add(angle) ; //1
 		FenPrinc.add(angle1) ; //2
 		FenPrinc.add(vitesse) ; //3
-		FenPrinc.add(vitesse1) ; //4
+		FenPrinc.add(vitesse1) ; //4*/
 		FenPrinc.add(score) ; //5
 		FenPrinc.add(vie) ; //6
 		FenPrinc.add(objet) ; //7
