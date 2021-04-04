@@ -17,15 +17,13 @@ public class Balle {
 	
 	
 	public Balle (){
-		
 	}
-
 
 	public Balle(double m, double r, Vecteur v){
 		
-		this.angleIni = v.getArgument() * Math.PI/180;	// pour convertir en degrés les radians qu'on a reçu
+		this.angleIni = v.getArgument();	
 		
-		this.vitesseInitiale = v.getModule()/10;
+		this.vitesseInitiale = v.getModule();
 		this.masse = m;
 		this.rayon = r;
 		this.pesanteur=9.81;
@@ -45,9 +43,9 @@ public class Balle {
 
 
 	public void initPolynome(){
-		double a = -(pesanteur)/2*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)));
+		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
 		double b = Math.tan(angleIni);
-		double c = depart.getBase().y;
+		double c = 0; //depart.getBase().y;
 		//System.out.println("a est : "+a+" ,b est "+b+" c est "+c);
 		p = new Polynome(a, b, c );
 		

@@ -31,7 +31,7 @@ public class Polynome {
 		this.valeurX = new ArrayList<Double>();
 		this.valeurY = new ArrayList<Double>();
 		
-		for(double i= 0; i<500; i++){
+		for(double i= 0; i<1500; i++){
 			valeurX.add(i);
 	    }
 	    calculFdeX();
@@ -67,8 +67,10 @@ public class Polynome {
 			racines[1] = (-b/(2*a));
 			return; 
 		} if (delta > 0){
-			racines[0] = (-b - Math.sqrt(delta))/(2*a);
-			racines[1] = (-b + Math.sqrt(delta))/(2*a);
+			double premiereRacine=(-b - Math.sqrt(delta))/(2*a);
+			double deuxiemeRacine=(-b + Math.sqrt(delta))/(2*a);
+			racines[0] = Math.min(premiereRacine,deuxiemeRacine);
+			racines[1] = Math.max(premiereRacine,deuxiemeRacine);
 		}
 	}
 	

@@ -62,7 +62,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	
 		if (e.getSource()==time){
 			if(!atterrie()){
-				Xparcourus.add(balle.getPolynome().getValeurX().get((int)(System.currentTimeMillis()-tpsIni)));
+				Xparcourus.add(balle.getPolynome().getValeurX().get((int)(System.currentTimeMillis()-tpsIni-1)));
 				Yparcourus.add(balle.getPolynome().getValeurY().get((int)(System.currentTimeMillis()-tpsIni)));
 				repaint();
 			}else{
@@ -93,7 +93,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		APoint pointeFleche= new APoint(e.getX(),e.getY());
 		flecheInit=new Vecteur (departFleche, pointeFleche);
 		
-		repaint(); //tout marche jusque là
+		//repaint(); //tout marche jusque là
 		lancerBalle(new Balle(1.0,1.0,flecheInit));
 		repaint();
 	}
@@ -130,13 +130,23 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 			super.paint(g);
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
-			//Polynome p=new Polynome(-1,3,400);
-			ArrayList<Double> YAffiches = new ArrayList<Double>();
+			//Polynome p=new Polynome(-0.2,42,0);
 			if(balle!=null){
-				for(int i=0; i<balle.getPolynome().getValeurY().size(); i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
-					YAffiches.add(getHeight()-balle.getPolynome().getValeurY().get(i));
+				
+				int[] YAffiches = new int[(int)balle.getPolynome().getRacines()[1]+1];
+				for(int i=0; i<(int)balle.getPolynome().getRacines()[1]+1; i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
+					YAffiches[i]=(this.getHeight()-balle.getPolynome().getValeurY().get(i).intValue());
 				}
-				g.drawPolyline(conversionTableau(balle.getPolynome().getValeurX()), conversionTableau(YAffiches), balle.getPolynome().getValeurX().size());
+				int[] XAffiches = new int[YAffiches.length];
+				for(int i=0; i<YAffiches.length; i++){ 
+					XAffiches[i]=i;
+				}
+				
+				g.drawPolyline(XAffiches, YAffiches, YAffiches.length);
+				/*System.out.println("la hauteur de la fenetre est "+this.getHeight());
+				for(int i=0; i<YAffiches.length; i++){
+					System.out.println(YAffiches[i]);
+				}*/
 				//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
 			}
 			if(flecheInit!=null){
@@ -155,14 +165,14 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		return b; 
 	}
 	
-	public int[] conversionTableau(ArrayList<Double> liste){
+	/*public int[] conversionTableau(ArrayList<Double> liste){
 		
 		int[] t = new int[liste.size()];
 		for (int i = 0 ; i < t.length ; i ++){
 			t[i] = liste.get(i).intValue();
 		}
 		return t;
-	}
+	}*/
 	
 	
 }

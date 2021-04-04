@@ -33,7 +33,7 @@ public class FenetreFinJeu extends JFrame {
 	
 	public FenetreFinJeu(String type, String affichage){
 		super(type);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setBounds(550, 400, 550, 250);
 		
 		JLabel etiquette = new JLabel(affichage);
