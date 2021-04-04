@@ -6,10 +6,8 @@ public class Balle {
 	private double taille;
 	private double vitesseInitiale;
 	private double angleIni;			// angle en radians 
-	private double pesenteur;
-	private ArrayList <Double> valeurX;
-	private ArrayList <Double> valeurY;
-	// faudra le remplacer par un vecteur les coordonées du point origine
+	private double pesanteur;
+	// on a enlevé valeurX et valeurY de balle pour les mettre dans polynomes pour créer un polynome indépendamment de la balle et pouvoir l'afficher 
 	private Vecteur depart; 
 	private Polynome p; 
 	
@@ -19,72 +17,44 @@ public class Balle {
 	
 	
 	public Balle (){
-		
 	}
 
-
-	public Balle(double angle, double v0 , double masse, double rayon , double taille, ArrayList <Double> X, APoint b, APoint p){
+	public Balle(double m, double r, Vecteur v){
 		
-		angleIni = angle * Math.PI/180;	// pour convertir les degrés reçus en radians 
+		this.angleIni = v.getArgument();	
 		
-		vitesseInitiale = v0;
-		this.masse = masse;
-		this.rayon = rayon;
-		this.taille = taille; 
-		valeurX = new ArrayList<Double>();
-		valeurY = new ArrayList<Double>();
+		this.vitesseInitiale = v.getModule();
+		this.masse = m;
+		this.rayon = r;
+		this.pesanteur=9.81;
 		
-		for(double i= 0; i<500; i=i+1){
-			X.add(i);
-			
-	    }
-	    
-	    depart = new Vecteur (b,p);
-	    
+		      
+	    this.depart = v;
 	    initPolynome();
-	   
-	    
-	    
 	}
 
 
-	public Balle(double angle, double v0 , double masse, double rayon , double taille, ArrayList <Double> X, APoint b, APoint p, double g){
-		this(angle, v0 , masse, rayon ,taille, X, b, p);
-		pesenteur = g;
+	public Balle(double m, double r, Vecteur v, double g){
+		this(m, r, v);
+		this.pesanteur = g;
 		
 	}
 
 
 
 	public void initPolynome(){
-		double a = -(pesenteur)/2*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)));
+		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
 		double b = Math.tan(angleIni);
-		double c = depart.getBase().y;
+		double c = 0; //depart.getBase().y;
+		//System.out.println("a est : "+a+" ,b est "+b+" c est "+c);
 		p = new Polynome(a, b, c );
-		
-		
-	}
-	
-	public void calculTrajectoire(){
-		double y = 0;
-		for( int i = 0; i<valeurX.size(); i++){
-			y = p.calculFdeX(i);
-			//-(pesenteur)/2*(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)))*(Math.pow(i-depart.getBase().x,2))+Math.tan(angleIni)*(i-depart.getBase().x)+depart.getBase().y;
-			valeurY.add(y);
-		}
 		
 		
 	}
 	
 	// accesseurs en lecture 
 	
-	public ArrayList <Double> getValeurX(){
-		return valeurX;
-	}
 	
-	public ArrayList <Double> getValeurY(){
-		return valeurY;
-	}
 	
 	public Polynome getPolynome(){
 		return this.p;

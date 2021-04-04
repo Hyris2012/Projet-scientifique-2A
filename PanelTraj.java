@@ -28,7 +28,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	private Balle balle;
 	//private ImageIcon fond;
 	private Timer time;
-	private int tps;
+	private long tpsIni; // temps zéro pris pris à partir de l'heure system
 	private ArrayList<Double> Xparcourus;
 	private ArrayList<Double> Yparcourus;
 	private Vecteur flecheInit; // définira le vecteur pour lancer la balle 
@@ -37,9 +37,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		super();
 		
 		
-		time = new Timer (100, this);
-	
-		balle = new Balle();
+		time = new Timer (1, this);
 		
 		Xparcourus = new ArrayList<Double>();
 		Yparcourus = new ArrayList<Double>();
@@ -55,20 +53,23 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
+		tpsIni=System.currentTimeMillis();
 		time.start();
 	}
 	
 	
 	public void actionPerformed(ActionEvent e){//lié au timer
 	
-		if(!atterrie()){
-			Xparcourus.add(balle.getValeurX().get(tps));
-			repaint();
-		}else{
-			time.stop();
-			new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// en supposant que la fenetre affiche l'altitude max atteinte et la longueur parcourue, qui seraient tout deux attributs de balle 
+		if (e.getSource()==time){
+			if(!atterrie()){
+				Xparcourus.add(balle.getPolynome().getValeurX().get((int)(System.currentTimeMillis()-tpsIni-1)));
+				Yparcourus.add(balle.getPolynome().getValeurY().get((int)(System.currentTimeMillis()-tpsIni)));
+				repaint();
+			}else{
+				time.stop();
+				new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// la fenetre affiche l'altitude max atteinte et la longueur parcourue
+			}
 		}
-		
 	}
 	
 	public void mouseExited(MouseEvent e){
@@ -91,6 +92,9 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		APoint departFleche=new APoint(0,this.getHeight());
 		APoint pointeFleche= new APoint(e.getX(),e.getY());
 		flecheInit=new Vecteur (departFleche, pointeFleche);
+		
+		//repaint(); //tout marche jusque là
+		lancerBalle(new Balle(1.0,1.0,flecheInit));
 		repaint();
 	}
 	
@@ -123,10 +127,28 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 		g.fillPolygon(xpoints, ypoints, 3);
 	}
 	public void paint(Graphics g){
-			//super.paint(g);
+			super.paint(g);
 		 // dessine la trajectoire jusqu'à --> tps 
 			g.setColor(Color.black);
-			g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
+			//Polynome p=new Polynome(-0.2,42,0);
+			if(balle!=null){
+				
+				int[] YAffiches = new int[(int)balle.getPolynome().getRacines()[1]+1];
+				for(int i=0; i<(int)balle.getPolynome().getRacines()[1]+1; i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
+					YAffiches[i]=(this.getHeight()-balle.getPolynome().getValeurY().get(i).intValue());
+				}
+				int[] XAffiches = new int[YAffiches.length];
+				for(int i=0; i<YAffiches.length; i++){ 
+					XAffiches[i]=i;
+				}
+				
+				g.drawPolyline(XAffiches, YAffiches, YAffiches.length);
+				/*System.out.println("la hauteur de la fenetre est "+this.getHeight());
+				for(int i=0; i<YAffiches.length; i++){
+					System.out.println(YAffiches[i]);
+				}*/
+				//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
+			}
 			if(flecheInit!=null){
 				drawArrowLine(g);
 			}
@@ -135,19 +157,22 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	public boolean atterrie(){
 		boolean b = true;
 		// doit déterminer si la balle a atteri 
-		b = ((Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]));		
+		if(Xparcourus.size()>0){
+			b = (Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]);		
+		}else{
+			b=false;
+		}
 		return b; 
-		
 	}
 	
-	public int[] conversionTableau(ArrayList<Double> liste){
+	/*public int[] conversionTableau(ArrayList<Double> liste){
 		
 		int[] t = new int[liste.size()];
 		for (int i = 0 ; i < t.length ; i ++){
 			t[i] = liste.get(i).intValue();
 		}
 		return t;
-	}
+	}*/
 	
 	
 }

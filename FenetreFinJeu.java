@@ -33,11 +33,11 @@ public class FenetreFinJeu extends JFrame {
 	
 	public FenetreFinJeu(String type, String affichage){
 		super(type);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(550, 400, 400, 200);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setBounds(550, 400, 550, 250);
 		
 		JLabel etiquette = new JLabel(affichage);
-		etiquette.setBounds(10, 10, 200, 80);
+		etiquette.setBounds(10, 10, 450, 150);
 		
 		JPanel unique = new JPanel();
 		unique.setLayout(null);
@@ -45,7 +45,7 @@ public class FenetreFinJeu extends JFrame {
 		
 		JPanel second = new JPanel();
 		second.setLayout(null);
-		second.setBounds(60, 40, 280, 100);
+		second.setBounds(60, 40, 500, 200);
 		second.setBackground(Color.white);
 		
 		second.add(etiquette);
