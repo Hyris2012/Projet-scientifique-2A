@@ -25,7 +25,7 @@ public class APoint {
     }
     
     public double getHauteurEntre(APoint autrePoint){
-		return(Math.abs(x - autrePoint.x));
+		return(Math.abs(y - autrePoint.y));
 	}
     
     /**
