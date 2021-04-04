@@ -62,7 +62,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e){//lié au timer
 	
 		if (e.getSource()==time){
-			if(dernierXAffiche<909){
+			if(dernierXAffiche<this.getWidth()){
 				if(!atterrie()){
 					XParcourus.add(balle.getPolynome().getValeurX().get(dernierXAffiche));
 					YParcourus.add(balle.getPolynome().getValeurY().get(dernierXAffiche));
