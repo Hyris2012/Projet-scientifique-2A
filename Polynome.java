@@ -11,6 +11,7 @@ public class Polynome {
 	//forme canonique
 	private double alpha;
 	private double beta;
+	private int taille; //taille est le nombre de points dont on veut le Y, soit la taille du panel courbe
 	//valeurs des abscises et ordonnées des pts du polynome
 	private ArrayList <Double> valeurX;
 	private ArrayList <Double> valeurY;
@@ -21,7 +22,7 @@ public class Polynome {
 		//tous les attributs initialisés à 0.0 par défaut ??
 	}
 	
-	public Polynome(double a, double b, double c) {
+	public Polynome(double a, double b, double c, int taille) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -30,17 +31,19 @@ public class Polynome {
 		alpha = -b/(2*a);
 		this.valeurX = new ArrayList<Double>();
 		this.valeurY = new ArrayList<Double>();
-		
-		for(double i= 0; i<1500; i++){
-			valeurX.add(i);
-	    }
+		this.taille = taille;
+	    
 	    calculFdeX();
+	    
 	    beta = valeurY.get(0);			//beta est l'ordonnée à l'origine 
 	}
 	
 	
-	public void calculFdeX(){
-		for( int i = 0; i<valeurX.size(); i++){
+	public void calculFdeX(){ 
+		for(double i= 0; i<this.taille; i++){
+			valeurX.add(i);
+	    }
+		for( int i = 0; i<this.taille; i++){
 			double y = a * Math.pow(valeurX.get(i),2) + b * valeurX.get(i) + c;
 			valeurY.add(y);
 		}

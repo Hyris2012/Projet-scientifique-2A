@@ -21,12 +21,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	public FenetreJeu () {
 		super("Trajectory Manager") ;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setBounds(180,10,largeur,hauteur);
 		
 		FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 
 		FenPrinc.setBounds(0,0,largeur,hauteur) ;
 		FenPrinc.setBackground(Color.white) ; 
+		
 		
 		
 		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?

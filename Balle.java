@@ -19,7 +19,7 @@ public class Balle {
 	public Balle (){
 	}
 
-	public Balle(double m, double r, Vecteur v){
+	public Balle(double m, double r, Vecteur v, int distMax){
 		
 		this.angleIni = v.getArgument();	
 		
@@ -30,24 +30,24 @@ public class Balle {
 		
 		      
 	    this.depart = v;
-	    initPolynome();
+	    initPolynome(distMax);
 	}
 
 
-	public Balle(double m, double r, Vecteur v, double g){
-		this(m, r, v);
+	public Balle(double m, double r, Vecteur v, int distMax, double g){
+		this(m, r, v, distMax);
 		this.pesanteur = g;
 		
 	}
 
 
 
-	public void initPolynome(){
+	public void initPolynome(int distMax){
 		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
 		double b = Math.tan(angleIni);
 		double c = 0; //depart.getBase().y;
 		//System.out.println("a est : "+a+" ,b est "+b+" c est "+c);
-		p = new Polynome(a, b, c );
+		p = new Polynome(a, b, c, distMax);
 		
 		
 	}
