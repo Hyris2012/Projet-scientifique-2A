@@ -1,129 +1,196 @@
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics;
-import javax.swing.JLabel; // pas sure que les import en dessous soient utiles 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.lang.String;
 
-public class FenetreJeu extends JFrame implements ActionListener{
-	private JPanel FenPrinc ; 
-	//private JPanel paramG ;
-	private PanelTraj courbe ; 
-	private JLabel equa ;
-	private JButton lancer ;
-	private int largeur = 1500;
-	private int hauteur = 1000; 
-	public int score1 ;
-	public int vie1 ; 
-
+public class FenetreJeu extends FenetreMere{
+	
+	protected int score ;
+	protected int vie ;
+	
+	protected PanelTrajJeu courbe;
+	 
+	public JComboBox objet1 ;
+	public JComboBox decor;
+	public JLabel equa ;
+	public JLabel labelScore;
+	private JLabel labelVie; 
+	protected JButton sonOnOff;
+	public JPanel panel;
+	
 	public FenetreJeu () {
-		super("Trajectory Manager") ;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(180,10,largeur,hauteur);
+		super();
+	
 		
-		FenPrinc = new JPanel() ; 
-		FenPrinc.setLayout(null) ; 
-		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(Color.white) ; 
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBounds((int)(getWidth()*(10/29.7)),(int)(getHeight()*(2.5/21.0)),(int)(getWidth()*(18/29.7)),(int)(getHeight()*(14/21.0)));
+		panel.setBackground(Color.white);
 		
+		JLabel minion = new JLabel();
+		minion.setBounds(0, 0, panel.getWidth(), panel.getHeight());
+		minion.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("minions.gif").getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT)));
+		panel.add(minion);
 		
-		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?
-		
-		
-		/*paramG = new JPanel() ; 
-		paramG.setLayout(null) ;
-		paramG.setBounds((int)(largeur*(0.2/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(8.0/29.7)),(int)(hauteur*(19.0/21.0))) ;
-		paramG.setBackground(Color.green) ; */
-		
-		/*JLabel angle = new JLabel("Saisir l'angle choisi en degres :") ; //1
-		angle.setFont(new Font("Arial",Font.BOLD,20)) ;
-		angle.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(0.7/21)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
-		
-		JSlider angle1 = new JSlider(0,90,45) ; //2
-		angle1.setMajorTickSpacing(15);
-		angle1.setPaintLabels(true) ; 
-		angle1.setPaintTicks(true) ; 
-		angle1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(2.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
-		
-		JLabel vitesse = new JLabel("saisir la vitesse initiale choisie (m/s) :") ; //3
-		vitesse.setFont(new Font("Arial",Font.BOLD,20)) ;
-		vitesse.setBounds((int)(largeur*(0.7/21.0)),(int)(hauteur*(4.3/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
-		
-		JSlider vitesse1 = new JSlider(0,90,45) ; //4
-		vitesse1.setMajorTickSpacing(15);
-		vitesse1.setPaintLabels(true) ;
-		vitesse1.setPaintTicks(true) ; 
-		vitesse1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6.1/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
-		*/
-		
-		score1 = 0 ; 
-		JLabel score = new JLabel(" Score : "+score1) ; //5
-		score.setFont(new Font("Serif",Font.BOLD,36)) ;
-		score.setBounds((int)(largeur*(3/29.7)),(int)(hauteur*(7.9/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
-		
-		vie1 = 0 ;
-		JLabel vie = new JLabel("Encore "+vie1+" vies") ; //6
-		vie.setFont(new Font("Serif",Font.BOLD,36)) ;
-		vie.setBounds((int)(largeur*(3/29.7)),(int)(hauteur*(9.7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
 		JLabel objet = new JLabel("Choisissez l'objet :") ; //7
 		objet.setFont(new Font("Arial",Font.BOLD,20)) ;
 		objet.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(11.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
-		JComboBox objet1 = new JComboBox() ; //8
+		String obj1 = new String ("Girafe");	
+		String obj2 = new String ("Ballon");			 
+		String obj3 = new String ("Vaisseau spatial");	
+		String obj4 = new String ("Balle");
+		String [] choixObj = {obj1, obj2, obj3, obj4};
+		objet1 = new JComboBox(choixObj) ; //8
 		objet1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(13.3/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
 		JLabel endroit = new JLabel("Choisissez l'endroit :") ; //9
 		endroit.setFont(new Font("Arial",Font.BOLD,20)) ;
 		endroit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(14.6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
-		JComboBox endroit1 = new JComboBox() ; //10
-		endroit1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16.4/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
+		String decor1 = new String ("Savane");	
+		String decor2 = new String ("Jungle");			 
+		String decor3 = new String ("Espace");	
+		String decor4 = new String ("Bob l'eponge");	
+		String [] choixDecor = {decor1, decor2, decor3, decor4};
+		decor = new JComboBox(choixDecor) ; //10
+		decor.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16.4/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
-		lancer = new JButton("Jouer ! ") ; //11
-		lancer.setFont(new Font("Stencil",Font.BOLD,50)) ;
-		lancer.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(17.7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
-		lancer.setBackground(Color.red) ; 
-		lancer.addActionListener(this);
+		labelScore = new JLabel(" Score : " + score) ;
+		labelScore.setBounds(panel.getX(),jouer.getY(),(int) (panel.getWidth()/4),jouer.getHeight());
+		labelScore.setBackground(Color.white); 
+		labelScore.setFont(new Font("Arial",Font.BOLD,26));
 		
-		equa = new JLabel("Equation de la trajectoire : ") ; //12
-		equa.setBounds((int)(largeur*(15/29.7)),(int)(hauteur*(15/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(3/21.0))) ; 
-		equa.setFont(new Font("Arial",Font.BOLD,32)) ;
+		labelVie = new JLabel("Encore "+vie+" vies") ;
+		labelVie.setBounds((int) (panel.getX()+0.75*panel.getWidth()),jouer.getY(),(int) (panel.getWidth()/4),jouer.getHeight());
+		labelVie.setBackground(Color.white); 
+		labelVie.setFont(new Font("Arial",Font.BOLD,26));
 		
-		courbe = new PanelTraj();
-		courbe.setLayout(null);
-		courbe.setBounds((int)(1500*(10/29.7)),(int)(1000*(1/21.0)),(int)(1500*(18/29.7)),(int)(1000*(14/21.0)));
-		courbe.setBackground(Color.green);
-		courbe.setVisible(false);
+		sonOnOff = new JButton ("Son : on");
+		sonOnOff.setFont(new Font("Serif",Font.BOLD,20)) ;
+		sonOnOff.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)));
+		sonOnOff.setForeground(Color.white);
+		sonOnOff.setBackground(new Color (90,90,90)); 
+		sonOnOff.addActionListener(this);
 		
-		/*FenPrinc.add(angle) ; //1
-		FenPrinc.add(angle1) ; //2
-		FenPrinc.add(vitesse) ; //3
-		FenPrinc.add(vitesse1) ; //4*/
-		FenPrinc.add(score) ; //5
-		FenPrinc.add(vie) ; //6
+		FenPrinc.add(panel);
+		FenPrinc.add(labelScore) ; //5
+		FenPrinc.add(labelVie) ; //6
 		FenPrinc.add(objet) ; //7
 		FenPrinc.add(objet1) ; //8 
 		FenPrinc.add(endroit) ; //9
-		FenPrinc.add(endroit1) ; //10
-		FenPrinc.add(lancer) ; //11
-		FenPrinc.add(equa) ; //12
-		FenPrinc.add(courbe) ;
-
+		FenPrinc.add(decor) ; //10
+		FenPrinc.add(sonOnOff);
 		
-		this.add(FenPrinc) ;
-		setVisible(false) ;
+		
+		
+		
+		
+		this.add(FenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à FenPrinc APRES ??
+		setVisible(true);
 		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==lancer){
+		super.actionPerformed(e);
+		
+		if(e.getSource() == retourFenAccueil && enJeu){
+			courbe.getFond().musiqueChoisie.stop();
+		}
+		
+		// tentative bouton son on/off ; ne fonctionne pas 
+		if(e.getSource() == sonOnOff){
+			if(sonOnOff.getText() == "Son : on"){
+				courbe.getFond().musiqueChoisie.suspend();
+				sonOnOff.setText("Son : off");
+			}
+			if(sonOnOff.getText() == "Son : off"){
+				courbe.getFond().musiqueChoisie.resume();
+				//etatSon = true;
+				sonOnOff.setText("Son : on");
+			}
+		}
+		
+		
+		if(e.getSource() == jouer){
 			
-			courbe.setVisible(true);
+			
+			// pour qu'on ne puisse pas changer de décor en cours de partie : ci après 
+			if(!enJeu){
+				enJeu = true ;
+				
+				panelPleinEcran();
+				
+				courbe.cible.time.start();
+				
+				gestionMusique();
+				
+				courbe.setVisible(true);
+				courbe.flecheSuitSouris = true;
+				courbe.reInit();
+				courbe.repaint();	// fonctionne !
+				
+				objet1.setVisible(false);
+				decor.setVisible(false);
+				jouer.setVisible(false);
+				
+			}
 			
 		}
-	}	
+		
+	}
 	
+	// méthodes pour une meilleure lisibilité du code
+	
+	public void panelPleinEcran(){
+		//changement de la taille du PanelTraj pour l'afficher en plein écran
+		panel.setVisible(false);
+		courbe = new PanelTrajJeu(this, (int)(jouer.getX()),(int)(this.getHeight()*(2.5/21.0)),(this.getWidth()-2*jouer.getX()),(int)(this.getHeight()*(14/21.0)));
+		courbe.setLayout(null);
+		courbe.setBackground(Color.red);
+		courbe.setVisible(true);
+		FenPrinc.add(courbe);	
+		labelScore.setBounds(courbe.getX(),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
+		labelVie.setBounds((int) (courbe.getX()+0.75*courbe.getWidth()),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
+	}
+	
+	public void gestionMusique(){
+		boolean b = courbe.getFond().musiqueChoisie == null;
+		if(!b){	//si la musique n'est pas nulle = il y en a une qui a déjà été choisie AVANT = qui est en train de tourner
+			courbe.getFond().musiqueChoisie.suspend();
+		}
+		courbe.setDecor((String) decor.getSelectedItem());
+		// test : la musique choisie n'a jamais encore été jouée (donc jamais interrompue)
+		b = !courbe.getFond().musiqueChoisie.isAlive();		//isAlive = a déjà été starté 
+		if(b){
+			courbe.getFond().musiqueChoisie.start();
+		}
+		// sinon, elle a déjà été starté donc interrupted, il faut utiliser resume()
+		else{
+			courbe.getFond().musiqueChoisie.resume();
+		}	
+		// méthode changerDecor qui s'occuper aussi de changer la musique 
+		courbe.setObjet((String) objet1.getSelectedItem());	
+	}
+	
+	// accesseurs en lecture
+	
+	public int getScore() {
+		return score ; 
+	}
+	
+	public int getVie() {
+		return vie ; 
+	}
+	
+	// accesseurs en écriture 
+	
+	public void setScore(int sco) {
+		this.score = sco ;
+	}
+	
+	public void setVie(int v) {
+		this.vie = v ; 
+	}
 }

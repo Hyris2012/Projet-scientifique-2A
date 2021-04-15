@@ -7,57 +7,58 @@ public class Balle {
 	private double vitesseInitiale;
 	private double angleIni;			// angle en radians 
 	private double pesanteur;
-	// on a enlevé valeurX et valeurY de balle pour les mettre dans polynomes pour créer un polynome indépendamment de la balle et pouvoir l'afficher 
-	private Vecteur depart; 
-	private Polynome p; 
 	
-	// distanceAterrissage esr distance en x entre le point de départ et le point d'arrivée
+	private Vecteur depart; 
+	private Polynome traj; 
+	
+	// distanceAterrissage est distance en x entre le point de départ et le point d'arrivée
 	// hauteurMax = hauteur de la flèche au plus haut 
 
 	
 	
 	public Balle (){
+		
 	}
 
-	public Balle(double m, double r, Vecteur v){
+	public Balle(double m, double r, Vecteur v, int largeur, int hauteur){
 		
 		this.angleIni = v.getArgument();	
 		
 		this.vitesseInitiale = v.getModule();
 		this.masse = m;
 		this.rayon = r;
-		this.pesanteur=9.81;
+		this.pesanteur = 9.81*4;
 		
 		      
 	    this.depart = v;
-	    initPolynome();
+	    initPolynome(largeur, hauteur);		// la largeur et la hauteur du panel pour le calcul des coordonnées pixel
 	}
 
 
-	public Balle(double m, double r, Vecteur v, double g){
-		this(m, r, v);
-		this.pesanteur = g;
+	public Balle(double m, double r, Vecteur v, int hauteur, int largeur, double g){
+		this(m, r, v, hauteur, largeur);
+		this.pesanteur = g*4;
 		
 	}
 
 
 
-	public void initPolynome(){
+	public void initPolynome(int largeurPanel, int hauteurPanel){
 		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
 		double b = Math.tan(angleIni);
-		double c = 0; //depart.getBase().y;
-		//System.out.println("a est : "+a+" ,b est "+b+" c est "+c);
-		p = new Polynome(a, b, c );
+		double c = depart.getBase().y; 
 		
-		
+		traj = new Polynome(a, b, c, largeurPanel, hauteurPanel);
+	}
+	
+	public String toString (){
+		return ("La balle a parcouru " + (int)(traj.distanceEntreRacines())+" pixels "+ "et a atteint une hauteur maximale de " + (int)(traj.calculSommet())+" pixels");
 	}
 	
 	// accesseurs en lecture 
 	
-	
-	
-	public Polynome getPolynome(){
-		return this.p;
+	public Polynome getPolynome(){		// devrait s'appeler getTraj
+		return this.traj;
 	}
 
 }
