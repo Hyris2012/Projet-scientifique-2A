@@ -8,12 +8,19 @@ public class Polynome {
 	private double a;
 	private double b;
 	private double c;
+	
 	//forme canonique
 	private double alpha;
 	private double beta;
-	//valeurs des abscises et ordonnées des pts du polynome
+	
+	// info sur le JPanel pour taille des arraylist 
+	private int largeurPanel; 
+	private int hauteurPanel;
+	
+	//valeurs des abscises et ordonnées EN PIXEL des pts du polynome, pour être affiché 
 	private ArrayList <Double> valeurX;
 	private ArrayList <Double> valeurY;
+	
 	//racines
 	private double[] racines; 
 	
@@ -21,38 +28,43 @@ public class Polynome {
 		//tous les attributs initialisés à 0.0 par défaut ??
 	}
 	
-	public Polynome(double a, double b, double c) {
+	public Polynome(double a, double b, double c, int largeur, int hauteur) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
+		
 		racines= new double[2];
 		calculRacines();
+		
 		alpha = -b/(2*a);
+		beta = calculFdeX(0);		
+		
 		this.valeurX = new ArrayList<Double>();
 		this.valeurY = new ArrayList<Double>();
-		
-		for(double i= 0; i<1500; i++){
-			valeurX.add(i);
-	    }
-	    calculFdeX();
-	    beta = valeurY.get(0);			//beta est l'ordonnée à l'origine 
+		this.largeurPanel = largeur;
+		this.hauteurPanel = hauteur;
+	    
+	    remplissageListe();
 	}
 	
 	
-	public void calculFdeX(){
-		for( int i = 0; i<valeurX.size(); i++){
-			double y = a * Math.pow(valeurX.get(i),2) + b * valeurX.get(i) + c;
+	public double calculFdeX(double x){ 
+	
+		double y = a * Math.pow(x,2) + b * x + c;
+		return y;
+	}
+	
+	public void remplissageListe(){
+		
+		for(double i = 0; i < this.largeurPanel; i++){
+			valeurX.add(i);
+	    }
+	    double y;
+		for(int i = 0; i < this.largeurPanel; i++){
+			y = hauteurPanel - calculFdeX(valeurX.get(i));
 			valeurY.add(y);
 		}
 	}
-	
-	/*public void calculTrajectoire(){
-		double y = 0;
-		
-			y = p.calculFdeX(i);
-			//-(pesanteur)/2*(angleIni)*(1/(Math.pow(vitesseInitiale*Math.cos(angleIni),2)))*(Math.pow(i-depart.getBase().x,2))+Math.tan(angleIni)*(i-depart.getBase().x)+depart.getBase().y;
-				
-	}*/
 	
 	public void calculRacines(){
 		
@@ -123,12 +135,45 @@ public class Polynome {
 	}
 	
 	public String toString (){
-		return ("La balle a parcouru " + distanceEntreRacines() + " et a atteint une hauteur de "+ calculSommet());
+		return ("P(X) = " + coupeDecimale(a) + " * X^2 + " + coupeDecimale(b) + " * X + " + coupeDecimale(c));// arrondir les a, b, c
 	}
 	
 	public double distanceEntreRacines(){
-		double d= Math.abs(racines[0]-racines[1]);
+		double d = Math.abs(racines[0]-racines[1]);
 		return d;
 	}
+	/*methode pour enlever les decimales des coefficients du polynome
+	 public static double decimale(double coeff){
+		 String s=String.valueOf(coeff);  
+		 //boolean decimale = false;
+		 int i = 0;
+		 while(i<s.length()){
+			 if (s.charAt(i) == '.'){
+			 s = s.substring(0, i+2);	 
+		     }
+		     i++;
+	     }
+		 coeff = Double.parseDouble(s);  
+		 return coeff;
+		 
+	}*/
+	
+	public static String coupeDecimale(double a){
+        String str = Double.toString(a);
+        int i = 0;
+        boolean b = false;
+                
+        while(!b && i < str.length()){
+            b = str.charAt(i) == '.';
+            i++;
+        }
+                
+        if(b){
+            int j = Math.min(str.length() , i+3);
+            str = str.substring(0 ,j);               
+        }
+        return (str);      
+    } 
 }
+
 

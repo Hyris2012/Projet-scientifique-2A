@@ -1,73 +1,144 @@
-/*
- *
- * qq problèmes :
- * histoire d'échelle pour que tout soit toujours contenu entier dans le panel
- * 
- * il faut avoir accès aux arraylist de la balle -> passer en public ou écrire un get 
- * il faut connaitre la racine positive du polynôme, càd là où elle touche le sol (attribut nommé 'atterissage' ici en attendant)
- * 
- * 
- * 
- * 
- */
 
- 
- import java.awt.event.*;
- import java.awt.Color;
- import java.util.ArrayList;
- import javax.swing.*;
- import java.awt.*;
- import java.awt.Graphics;
- import java.awt.event.MouseEvent;
- import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class PanelTraj extends JPanel implements ActionListener, MouseListener {
+public class PanelTraj extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+
+	// import des images 
+	Toolkit T =  Toolkit.getDefaultToolkit();
+	protected Decor fond;
+	FenetreMere fen;
+	
+	public Balle balle;
+	
+	protected Timer time;
+	protected int dernierXAffiche; // l'abscisse de l'extrémité de la courbe affichée à un instant donné
+	protected ArrayList<Double> XParcourus;
+	protected ArrayList<Double> YParcourus;
+	protected Vecteur flecheInit; // définira le vecteur pour lancer la balle 
+	protected int[] X;
+	protected int[] Y;
+	
+	public boolean flecheSuitSouris = false;
 	
 	
-	private Balle balle;
-	//private ImageIcon fond;
-	private Timer time;
-	private long tpsIni; // temps zéro pris pris à partir de l'heure system
-	private ArrayList<Double> Xparcourus;
-	private ArrayList<Double> Yparcourus;
-	private Vecteur flecheInit; // définira le vecteur pour lancer la balle 
 	
-	public PanelTraj() {
+	// constructeur 
+	
+	public PanelTraj(FenetreMere fen, int x, int y, int l, int h) {
 		super();
-		
+		this.fen = fen;
+		setBounds(x, y, l, h);
 		
 		time = new Timer (1, this);
 		
-		Xparcourus = new ArrayList<Double>();
-		Yparcourus = new ArrayList<Double>();
+		XParcourus = new ArrayList<Double>();
+		YParcourus = new ArrayList<Double>();
 		
 		addMouseListener(this);
 		
+		addMouseMotionListener(this);
+		fond = new Decor();
+	
 	}
 	
 	public String toString(){
-		return ("je suis une String");
+		return ("Je suis le JPanel d'affichage de la trajectoire du splendide projet 'Trajectory Manager' :) ");
 		//juste pour le principe
 	}
 	
+	// méthode appelée à l'appui du bouton 'Jouer' ; initialise la balle et lance la trajectoire 
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
-		tpsIni=System.currentTimeMillis();
+		dernierXAffiche = 0;
+		
 		time.start();
 	}
 	
+	// déterminé si la balle a touché le sol ; pour arrêter le timer 
+	public boolean atterrie(){
+		boolean b = false; 
+		if(XParcourus.size() > 0){
+			b = (XParcourus.get(XParcourus.size()-1) >= balle.getPolynome().getRacines()[1]);		
+		}	
+		return b; 
+	}
 	
-	public void actionPerformed(ActionEvent e){//lié au timer
+	// conversion d'arrayList Double en tableau de int pour les besoins de la méthode drawPolyline
+	public int[] conversionTableau(ArrayList<Double> liste){
+		
+		int[] t = new int[liste.size()];
+		for (int i = 0 ; i < t.length ; i ++){
+			t[i] = liste.get(i).intValue();
+		}
+		return t;
+	}
 	
-		if (e.getSource()==time){
-			if(!atterrie()){
-				Xparcourus.add(balle.getPolynome().getValeurX().get((int)(System.currentTimeMillis()-tpsIni-1)));
-				Yparcourus.add(balle.getPolynome().getValeurY().get((int)(System.currentTimeMillis()-tpsIni)));
-				repaint();
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g); 
+		
+		// dessin de la portion de trajectoire où on en est 
+		
+		g.drawImage(fond.imageChoisie, 0, 0, null);
+		g.setColor(fond.couleurChoisie);
+		
+	
+ 		if(balle != null && fond !=null && XParcourus.size() > 0 && YParcourus.size() > 0 ){
+			X = conversionTableau(XParcourus);
+			Y = conversionTableau(YParcourus);
+			g.drawPolyline(X, Y, X.length);
+		}
+		
+		if(flecheInit != null && fond!=null){
+			drawArrowLine(g);
+		}
+		
+	}
+	
+	
+	// ************* méthodes utiles au paint *******************
+	
+	
+	public void drawArrowLine(Graphics g) {
+		
+		final int d = 12, h = 10; 
+		
+		// sommet bas : pointe du vecteur qui part de la pointe de flecheInit, fait un angle de PI/2, et avance de la moitié de la largeur 
+		APoint sommetBas = (new Vecteur(flecheInit.getPointe(), h/2, flecheInit.getArgument() - Math.PI/2)).getPointe();	
+		APoint sommetHaut = (new Vecteur(flecheInit.getPointe(), h/2, flecheInit.getArgument() + Math.PI/2)).getPointe();	
+		APoint sommetPointe = (new Vecteur(flecheInit.getPointe(), d, flecheInit.getArgument())).getPointe();
+
+
+		int[] xpoints = {(int)sommetBas.x, (int)sommetHaut.x, (int) sommetPointe.x};
+		int[] ypoints = {(int) (this.getHeight() - sommetBas.y), (int) (this.getHeight() - sommetHaut.y), (int) (this.getHeight() - sommetPointe.y)};
+
+		g.drawLine((int) flecheInit.getBase().x, (int) (this.getHeight() - flecheInit.getBase().y), (int) flecheInit.getPointe().x, (int) (this.getHeight() - flecheInit.getPointe().y));
+		g.fillPolygon(xpoints, ypoints, 3);
+	}
+	
+	
+	public void actionPerformed(ActionEvent e){ 
+	
+		if (e.getSource() == time){
+			if(dernierXAffiche < this.getWidth()){
+				 
+				if(!atterrie()){
+					XParcourus.add(balle.getPolynome().getValeurX().get(dernierXAffiche));
+					YParcourus.add(balle.getPolynome().getValeurY().get(dernierXAffiche));
+					dernierXAffiche++;
+					repaint();
+				}else{
+					time.stop();
+
+					//new FenetreFinJeu("L'OBJET A ATTERRI" , balle.toString());	// la fenetre affiche l'altitude max atteinte et la longueur parcourue
+				}
 			}else{
 				time.stop();
-				new FenetreFinJeu("NOM FENETRE" , balle.getPolynome().toString());	// la fenetre affiche l'altitude max atteinte et la longueur parcourue
+				//new FenetreFinJeu("Rate, essaie encore !" , "L'objet a atteri trop loin.");
 			}
 		}
 	}
@@ -77,7 +148,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	}
 	
 	public void mouseEntered(MouseEvent e){
-		
+
 	}
 	
 	public void mouseReleased(MouseEvent e){
@@ -89,92 +160,45 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener {
 	}
 	
 	public void mouseClicked(MouseEvent e){
-		APoint departFleche=new APoint(0,this.getHeight());
-		APoint pointeFleche= new APoint(e.getX(),e.getY());
-		flecheInit=new Vecteur (departFleche, pointeFleche);
 		
-		//repaint(); //tout marche jusque là
-		lancerBalle(new Balle(1.0,1.0,flecheInit));
-		repaint();
+		if (fond != null) {	// normalement on devrait pouvoir l'enlever, puisque la condition est déjà dans le paint
+			reInit();
+			APoint departFleche = new APoint(0,0);
+			APoint pointeFleche = new APoint(e.getX(),this.getHeight()-e.getY());
+			flecheInit = new Vecteur (departFleche, pointeFleche);
+			
+			lancerBalle(new Balle(1.0, 1.0, flecheInit, this.getWidth(), this.getHeight()));
+			//reInit();
+			flecheSuitSouris = false;
+			
+			//repaint();	// on le fait dans les classes filles our faire une condition sur imageObj dans PanelTrajJeu
+	    }
 	}
 	
-	public void drawArrowLine(Graphics g) {
-		int x1= (int) flecheInit.getBase().x; // valeur abscisse base flèche 
-		int y1= (int) flecheInit.getBase().y; // ordonnée base flèche
-		int x2= (int) flecheInit.getPointe().x; // abscisse pointe
-		int y2= (int) flecheInit.getPointe().y; // ordonnée pointe
-		final int d=12, h=5; // hauteur et largeur de la petite pointe au bout de la flèche
-		
-		int dx = x2 - x1;
-		int dy = y2 - y1;
-		double xm = flecheInit.getModule() - d;
-		double xn = xm, ym = h, yn = -h, var; // on les déclare à la suite les indices n et m servent à stocket les coordonnées de la flèche du bout pour pouvoir la remplir ensuite
-		double sin = dy / flecheInit.getModule();
-		double cos = dx / flecheInit.getModule();
-
-		var = xm*cos - ym*sin + x1;
-		ym = xm*sin + ym*cos + y1;
-		xm = var;
-
-		var = xn*cos - yn*sin + x1;
-		yn = xn*sin + yn*cos + y1;
-		xn = var;
-
-		int[] xpoints = {x2, (int) xm, (int) xn};
-		int[] ypoints = {y2, (int) ym, (int) yn};
-
-		g.drawLine(x1, y1, x2, y2);
-		g.fillPolygon(xpoints, ypoints, 3);
-	}
-	public void paint(Graphics g){
-			super.paint(g);
-		 // dessine la trajectoire jusqu'à --> tps 
-			g.setColor(Color.black);
-			//Polynome p=new Polynome(-0.2,42,0);
-			if(balle!=null){
-				
-				int[] YAffiches = new int[(int)balle.getPolynome().getRacines()[1]+1];
-				for(int i=0; i<(int)balle.getPolynome().getRacines()[1]+1; i++){ // on transforme les valeurs de y pour afficher la courbe dans le bon sens (et pas renversée)
-					YAffiches[i]=(this.getHeight()-balle.getPolynome().getValeurY().get(i).intValue());
-				}
-				int[] XAffiches = new int[YAffiches.length];
-				for(int i=0; i<YAffiches.length; i++){ 
-					XAffiches[i]=i;
-				}
-				
-				g.drawPolyline(XAffiches, YAffiches, YAffiches.length);
-				/*System.out.println("la hauteur de la fenetre est "+this.getHeight());
-				for(int i=0; i<YAffiches.length; i++){
-					System.out.println(YAffiches[i]);
-				}*/
-				//g.drawPolyline(conversionTableau(Xparcourus), conversionTableau(Yparcourus), Xparcourus.size());
-			}
-			if(flecheInit!=null){
-				drawArrowLine(g);
-			}
-		}
-	
-	public boolean atterrie(){
-		boolean b = true;
-		// doit déterminer si la balle a atteri 
-		if(Xparcourus.size()>0){
-			b = (Xparcourus.get(Xparcourus.size()-1) >= balle.getPolynome().getRacines()[1]);		
-		}else{
-			b=false;
-		}
-		return b; 
+	public void reInit(){
+		YParcourus.clear();
+		XParcourus.clear();
+		dernierXAffiche = 0;
 	}
 	
-	/*public int[] conversionTableau(ArrayList<Double> liste){
+	public void mouseMoved(MouseEvent e) {
+		if(flecheSuitSouris){
+			APoint departFleche = new APoint(0,0);
+			APoint pointeFleche = new APoint(e.getX(),this.getHeight() - e.getY());
+			flecheInit = new Vecteur (departFleche, pointeFleche);
 		
-		int[] t = new int[liste.size()];
-		for (int i = 0 ; i < t.length ; i ++){
-			t[i] = liste.get(i).intValue();
+			repaint();
 		}
-		return t;
-	}*/
+		
+	}
+	public void mouseDragged(MouseEvent e) {
+		
+	}
 	
-	
+	//accesseur en lecture de panelTraj
+	public Decor getFond(){
+		return fond ;
+	}
 }
 
 
