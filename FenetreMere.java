@@ -13,7 +13,7 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	protected Color fondBleu = new Color(135,206,235);
 	protected JButton retourFenAccueil;
 	protected boolean enJeu = false;
-	protected JLabel info;	// ancien 'equa' A METTRE EN PRIVATE 
+	public JLabel info;	// ancien 'equa' A METTRE EN PRIVATE 
 	
 	public FenetreMere(){
 		super("Trajectory Manager") ;
