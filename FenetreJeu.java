@@ -5,22 +5,20 @@ import java.lang.String;
 
 public class FenetreJeu extends FenetreMere{
 	
-	protected int score ;
-	protected int vie ;
+	private int score ;
+	private int vie ;
 	
-	protected PanelTrajJeu courbe;
+	private PanelTrajJeu courbe;
 	 
-	public JComboBox objet1 ;
-	public JComboBox decor;
-	public JLabel equa ;
-	public JLabel labelScore;
+	private JComboBox objet1 ;
+	private JComboBox decor;
+	private JLabel labelScore;
 	private JLabel labelVie; 
-	protected JButton sonOnOff;
-	public JPanel panel;
+	private JButton sonOnOff;
+	private JPanel panel;
 	
 	public FenetreJeu () {
-		super();
-	
+		super();	
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -67,7 +65,7 @@ public class FenetreJeu extends FenetreMere{
 		labelVie.setBackground(Color.white); 
 		labelVie.setFont(new Font("Arial",Font.BOLD,26));
 		
-		sonOnOff = new JButton ("Son : on");
+		sonOnOff = new JButton ("Son:on");
 		sonOnOff.setFont(new Font("Serif",Font.BOLD,20)) ;
 		sonOnOff.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)));
 		sonOnOff.setForeground(Color.white);
@@ -82,11 +80,7 @@ public class FenetreJeu extends FenetreMere{
 		FenPrinc.add(endroit) ; //9
 		FenPrinc.add(decor) ; //10
 		FenPrinc.add(sonOnOff);
-		
-		
-		
-		
-		
+				
 		this.add(FenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à FenPrinc APRES ??
 		setVisible(true);
 		
@@ -99,16 +93,16 @@ public class FenetreJeu extends FenetreMere{
 			courbe.getFond().musiqueChoisie.stop();
 		}
 		
-		// tentative bouton son on/off ; ne fonctionne pas 
 		if(e.getSource() == sonOnOff){
-			if(sonOnOff.getText() == "Son : on"){
+			String texteOnOff = sonOnOff.getText(); // parfaitement équivalent à ce que vous aviez écrit avant mais seulement cette maniere d'écrire marche , je sais pas pk
+			if(texteOnOff.equals("Son:on")){
 				courbe.getFond().musiqueChoisie.suspend();
-				sonOnOff.setText("Son : off");
+				sonOnOff.setText("Son:off");
 			}
-			if(sonOnOff.getText() == "Son : off"){
+			if(texteOnOff.equals("Son:off")){
 				courbe.getFond().musiqueChoisie.resume();
 				//etatSon = true;
-				sonOnOff.setText("Son : on");
+				sonOnOff.setText("Son:on");
 			}
 		}
 		
