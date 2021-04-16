@@ -9,12 +9,12 @@ import java.awt.*;
 
 public class Cible implements ActionListener {	//extends JPanel
 	
-	public int hauteur;
-	public int largeur; 
-	public PanelTraj courbe;
-	public int positionX = 0;
-	public Timer time = new Timer(1, this);
-	int sens;
+	private int hauteur;
+	private int largeur; 
+	private PanelTraj courbe;
+	private int positionX = 0;
+	private Timer time = new Timer(1, this);
+	private int sens;
 	
 	
 	public Cible(double h, double l, PanelTraj p){
@@ -55,4 +55,45 @@ public class Cible implements ActionListener {	//extends JPanel
 		courbe.repaint();
 		
 	}
+	// geteurs et seteurs 
+	public int getHauteurCible(){
+		return this.hauteur;
+	}
+	
+	public void setHauteurCible(int h){
+		this.hauteur=h;
+	}
+	
+	public int getLargeurCible(){
+		return this.largeur;
+	}
+	
+	public void setLargeurCible(int l){
+		this.largeur=l;
+	}
+	
+	public PanelTraj getCourbe(){
+		return this.courbe;
+	}
+	
+	public void setCourbe(PanelTraj c){
+		this.courbe=c;
+	}
+	
+	public int getPositionX(){
+		return this.positionX;
+	}
+	
+	public void setPositionX(int x){
+		this.positionX=x;
+	}
+	
+	public Timer getTimerCible(){
+		return this.time;
+	}
+	
+	public void setTimerCible(Timer t){
+		this.time=t;
+	}
+	
 }

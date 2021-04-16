@@ -6,11 +6,11 @@ import java.awt.*;
 
 public class PanelTrajJeu extends PanelTraj{
 	
-	FenetreJeu fenJ;
-	public Decor espace;
-	public Decor savane;
-	public Decor jungle;
-	public Decor bobLeponge;
+	private FenetreJeu fenJ;
+	private Decor espace;
+	private Decor savane;
+	private Decor jungle;
+	private Decor bobLeponge;
 	
 	private final Image ballon = T.getImage("ballon.png");
 	private final Image girafe = T.getImage("girafe.png");
@@ -19,7 +19,7 @@ public class PanelTrajJeu extends PanelTraj{
 	
 	private Image imageObj;
 	
-	public Cible cible;
+	private Cible cible;
 	
 	public PanelTrajJeu(FenetreJeu fenJ, int x, int y, int l, int h){
 		super(fenJ, x, y, l, h);
@@ -31,7 +31,8 @@ public class PanelTrajJeu extends PanelTraj{
 		jungle = new Decor(new AePlayWave("mowgli.wav"), Color.yellow, T.getImage("./jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		savane = new Decor(new AePlayWave("lion.wav"), Color.red, T.getImage("./savane.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		bobLeponge = new Decor(new AePlayWave("eponge.wav"), Color.black, T.getImage("./bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
-		
+		System.out.println("hauteur du panel : "+this.getHeight());
+		System.out.println("largeur panel : " + this.getWidth());
 	}
 	
 	public void setDecor(String decor){
@@ -57,19 +58,19 @@ public class PanelTrajJeu extends PanelTraj{
     public void setObjet(String objet){
 		switch (objet){
         case "Girafe" :
-			imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.1), Image.SCALE_DEFAULT);
+			imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
 			break;
         case "Ballon":
-            imageObj = ballon.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.1), Image.SCALE_DEFAULT);
+            imageObj = ballon.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
         case "Vaisseau spatial":
-            imageObj = vaisseau.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.1), Image.SCALE_DEFAULT);
+            imageObj = vaisseau.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.13), Image.SCALE_DEFAULT);
             break;
         case "Balle":
-            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.1), Image.SCALE_DEFAULT);
+            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
         default :
-            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.1), Image.SCALE_DEFAULT);
+            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
         }
 	}
@@ -78,9 +79,9 @@ public class PanelTrajJeu extends PanelTraj{
 		boolean b = super.atterrie();
 		
 		if(b){
-			this.cible.time.stop();
+			this.cible.getTimerCible().stop();
 			Outils.pause(2000);
-			this.cible.time.start();
+			this.cible.getTimerCible().start();
 			this.flecheSuitSouris = true;
 			this.reInit();
 			this.repaint();	
@@ -93,7 +94,7 @@ public class PanelTrajJeu extends PanelTraj{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
-		g.fillRect(cible.positionX, (int) this.getHeight() - cible.hauteur, cible.largeur, cible.hauteur);
+		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());
 		
 		if(balle != null && XParcourus.size() > 0 && YParcourus.size() > 0 && fond !=null){
 			g.drawImage(imageObj, X[X.length - 1]- imageObj.getWidth(null)/2, Y[Y.length - 1] - imageObj.getHeight(null)/2, null);
@@ -113,12 +114,12 @@ public class PanelTrajJeu extends PanelTraj{
 					if(cible.touche(dernierXAffiche, YParcourus.get(dernierXAffiche-1).intValue())){		
 
 						fenJ.setScore(fenJ.getScore() + 300); 				// = fenJ.score + 300;
-						fenJ.labelScore.setText("Score : " + fenJ.getScore());
+						fenJ.getLabelScore().setText("Score : " + fenJ.getScore());
 						// ci-dessus : résumer sous une méthode de fenJ 'miseAJourScore' 
 						time.stop();
-						cible.time.stop(); 
+						cible.getTimerCible().stop(); 
 						Outils.pause(2000);
-						this.cible.time.start();
+						this.cible.getTimerCible().start();
 						this.flecheSuitSouris = true;
 						this.reInit();
 						this.repaint();		
@@ -127,9 +128,9 @@ public class PanelTrajJeu extends PanelTraj{
 				}
 				
 			}else{		// si on sort de la fenetre en largeur
-				cible.time.stop();
+				cible.getTimerCible().stop();
 				Outils.pause(2000);
-				this.cible.time.start();
+				this.cible.getTimerCible().start();
 				this.flecheSuitSouris = true;
 				this.reInit();
 				this.repaint();	
@@ -159,5 +160,13 @@ public class PanelTrajJeu extends PanelTraj{
 			repaint();
 	    }
 	}	
+	
+	public Cible getCible(){
+		return this.cible;
+	}
+	
+	public FenetreJeu getFenetreJeu(){
+		return this.fenJ;
+	}
 
 }

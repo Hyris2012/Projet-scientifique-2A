@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelTrajScienti extends PanelTraj {
-	FenetreScientifique fenS;
+	private FenetreScientifique fenS;
 	
 	public PanelTrajScienti(FenetreScientifique fenS, int x, int y, int l, int h){
 		super(fenS, x, y, l, h);

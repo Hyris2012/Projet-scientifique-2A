@@ -5,7 +5,7 @@ import java.lang.String;
 
 public class FenetreScientifique extends FenetreMere {
 	
-	protected PanelTrajScienti courbe ; 
+	private PanelTrajScienti courbe ; 
 	private JSlider hauteurInit;
 	private JSlider vitesseAffichage;
 	private JSlider rayonChoisi;
@@ -22,31 +22,31 @@ public class FenetreScientifique extends FenetreMere {
 		courbe.setBackground(Color.white);
 		
 		info = new JLabel("Equation de la trajectoire : ") ;
-		info.setBounds(courbe.getX(),jouer.getY(),courbe.getWidth(),jouer.getHeight());
+		info.setBounds(courbe.getX(),jouer.getY()-65,(int)courbe.getWidth()/2,jouer.getHeight());
 		info.setBackground(Color.white); 
-		info.setFont(new Font("Arial",Font.BOLD,26));
+		info.setFont(new Font("Arial",Font.BOLD,22));
 		
 		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?
 		
 		JLabel hInit = new JLabel("Hauteur initiale :"); //3 
 		hInit.setFont(new Font("Arial",Font.BOLD,20)) ;
-		hInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
+		hInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
 		
 		hauteurInit = new JSlider(0,courbe.getHeight(),45) ; //2
 		hauteurInit.setMajorTickSpacing((int)(courbe.getHeight()/6));
 		hauteurInit.setPaintLabels(true) ; 
 		hauteurInit.setPaintTicks(true) ; 
-		hauteurInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(8/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		hauteurInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(4/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
 		JLabel vitesse = new JLabel("Vitesse d'affichage :"); //3
 		vitesse.setFont(new Font("Arial",Font.BOLD,20)) ;
-		vitesse.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
+		vitesse.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
 		
-		vitesseAffichage = new JSlider(0,90,45) ; //4 //JE SAIS PAS ENCORE QUELLE VITESSE METTRE
-		vitesseAffichage.setMajorTickSpacing(15);
+		vitesseAffichage = new JSlider(0,10,1) ; //4 
+		vitesseAffichage.setMajorTickSpacing(2);
 		vitesseAffichage.setPaintLabels(true) ;
 		vitesseAffichage.setPaintTicks(true) ; 
-		vitesseAffichage.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
+		vitesseAffichage.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(8/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
 		
 		/*changePar = new JButton("changer parametres");
 		changePar.setFont(new Font("Arial",Font.BOLD,20)) ;
@@ -57,23 +57,23 @@ public class FenetreScientifique extends FenetreMere {
 		
 		JLabel gravite = new JLabel("Gravité :"); //3
 		gravite.setFont(new Font("Arial",Font.BOLD,20)) ;
-		gravite.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; // changer les bounds
+		gravite.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
-		graviteChoisie = new JSlider(0,90,45) ; //4 //JE SAIS PAS ENCORE QUELLE ECHELLE METTRE
-		graviteChoisie.setMajorTickSpacing(15);
+		graviteChoisie = new JSlider(0,25,1) ; //4 
+		graviteChoisie.setMajorTickSpacing(5);
 		graviteChoisie.setPaintLabels(true) ;
 		graviteChoisie.setPaintTicks(true) ; 
-		graviteChoisie.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))); // changer les bounds 
+		graviteChoisie.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))); 
 		
-		JLabel rayonBalle = new JLabel("Vitesse d'affichage :"); //3
+		JLabel rayonBalle = new JLabel("Rayon de l'objet :"); //3
 		rayonBalle.setFont(new Font("Arial",Font.BOLD,20)) ;
-		rayonBalle.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; // changer les bonds
+		rayonBalle.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(14/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
 		
-		rayonChoisi = new JSlider(0,90,45) ; //4 //JE SAIS PAS ENCORE QUELLE ECHELLE METTRE
+		rayonChoisi = new JSlider(0,90,45) ; //4 //JE SAIS PAS ENCORE QUELLE ECHELLE METTRE : est ce qu'on laisse tout en pixels ou en fait une sorte de conversion en metre 
 		rayonChoisi.setMajorTickSpacing(15);
 		rayonChoisi.setPaintLabels(true) ;
 		rayonChoisi.setPaintTicks(true) ; 
-		rayonChoisi.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))); // changer les bounds
+		rayonChoisi.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
 		
 		FenPrinc.add(courbe);
 		FenPrinc.add(hauteurInit);
