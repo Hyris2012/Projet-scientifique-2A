@@ -1,8 +1,3 @@
-/*
- * 
- * 
- */
-
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +15,7 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	protected boolean enJeu = false;
 	
 	
-	public JLabel info;	// ancien 'equa'
+	public JLabel info;	// ancien 'equa' A METTRE EN PRIVATE
 	
 	public FenetreMere(){
 		super("Trajectory Manager") ;
