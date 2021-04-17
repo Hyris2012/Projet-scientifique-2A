@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,9 +9,9 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	// import des images 
 	Toolkit T =  Toolkit.getDefaultToolkit();
 	protected Decor fond;
-	FenetreMere fen;
+	protected FenetreMere fen;
 	
-	public Balle balle;
+	protected Balle balle;
 	
 	protected Timer time;
 	protected int dernierXAffiche; // l'abscisse de l'extrémité de la courbe affichée à un instant donné
@@ -22,7 +21,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	protected int[] X;
 	protected int[] Y;
 	
-	public boolean flecheSuitSouris = false;
+	protected boolean flecheSuitSouris = false;
 	
 	
 	
@@ -83,8 +82,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		
 		// dessin de la portion de trajectoire où on en est 
 		
-		g.drawImage(fond.imageChoisie, 0, 0, null);
-		g.setColor(fond.couleurChoisie);
+		g.drawImage(fond.getImageChoisie(), 0, 0, null);
+		g.setColor(fond.getCouleurChoisie());
 		
 	
  		if(balle != null && fond !=null && XParcourus.size() > 0 && YParcourus.size() > 0 ){
