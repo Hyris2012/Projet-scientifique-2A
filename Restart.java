@@ -4,9 +4,9 @@ import java.awt.*;
 import java.lang.String;
 
 public class Restart extends JFrame implements ActionListener{
-	FenetreJeu fenJ;
-	int largeur = 1100;
-	int hauteur = 800;
+	private FenetreJeu fenJ;
+	private int largeur = 1100;
+	private int hauteur = 800;
 	private Color fondBleu = new Color(135,206,235);
 	private JButton quitte; 
 	private JButton restart;
