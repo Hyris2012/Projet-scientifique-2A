@@ -1,9 +1,9 @@
 import java.awt.*;
 public class Decor {
 	
-	AePlayWave musiqueChoisie;
-	Color couleurChoisie; 		// black par défaut
-	Image imageChoisie; 
+	private AePlayWave musiqueChoisie;
+	private Color couleurChoisie; 		// black par défaut
+	private Image imageChoisie; 
 	
 	public Decor(){
 	}
@@ -15,4 +15,17 @@ public class Decor {
 	imageChoisie = i;
 
 	}
+	
+	public AePlayWave getMusiqueChoisie(){
+		return this.musiqueChoisie;
+	}
+	
+	public Color getCouleurChoisie(){
+		return this.couleurChoisie;
+	}
+	
+	public Image getImageChoisie(){
+		return this.imageChoisie;
+	}
+
 }
