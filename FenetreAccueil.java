@@ -8,7 +8,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 	private JButton scientifique ; 
 	private JButton jeu ;
 	
-	FenetreMere trajectory ;	// ancienne fenetreJeu (qui était de type FenetreJeu)
+	private FenetreMere trajectory ;	// ancienne fenetreJeu (qui était de type FenetreJeu)
 	private JPanel FenPrinc ; 
 	private Color fondBleu = new Color(135,206,235);//ancien Color couleur
 	
