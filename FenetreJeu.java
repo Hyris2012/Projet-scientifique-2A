@@ -5,22 +5,21 @@ import java.lang.String;
 
 public class FenetreJeu extends FenetreMere{
 	
-	protected int score ;
-	protected int vie ;
+	private int score ;
+	private int vie ;
 	
-	protected PanelTrajJeu courbe;
+	private PanelTrajJeu courbe;
 	 
-	public JComboBox objet1 ;
-	public JComboBox decor;
-	public JLabel equa ;
-	public JLabel labelScore;
+	private JComboBox difficulteJeu; 
+	private JComboBox objet1 ;
+	private JComboBox decor;
+	private JLabel labelScore;
 	private JLabel labelVie; 
-	protected JButton sonOnOff;
-	public JPanel panel;
+	private JButton sonOnOff;
+	private JPanel panel;
 	
 	public FenetreJeu () {
-		super();
-	
+		super();	
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -67,12 +66,23 @@ public class FenetreJeu extends FenetreMere{
 		labelVie.setBackground(Color.white); 
 		labelVie.setFont(new Font("Arial",Font.BOLD,26));
 		
-		sonOnOff = new JButton ("Son : on");
+		sonOnOff = new JButton ("Son:on");
 		sonOnOff.setFont(new Font("Serif",Font.BOLD,20)) ;
 		sonOnOff.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)));
 		sonOnOff.setForeground(Color.white);
 		sonOnOff.setBackground(new Color (90,90,90)); 
 		sonOnOff.addActionListener(this);
+		
+		JLabel diff = new JLabel("Choisissez la difficulté") ; //7
+		diff.setFont(new Font("Arial",Font.BOLD,20)) ;
+		diff.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		
+		String diff1 = new String ("Débutant");	
+		String diff2 = new String ("Intermédiaire");			 
+		String diff3 = new String ("Expert");	
+		String [] choixDiff = {diff1, diff2, diff3};
+		difficulteJeu = new JComboBox(choixDiff) ; //8
+		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
 		FenPrinc.add(panel);
 		FenPrinc.add(labelScore) ; //5
@@ -82,11 +92,9 @@ public class FenetreJeu extends FenetreMere{
 		FenPrinc.add(endroit) ; //9
 		FenPrinc.add(decor) ; //10
 		FenPrinc.add(sonOnOff);
-		
-		
-		
-		
-		
+		FenPrinc.add(diff);
+		FenPrinc.add(difficulteJeu);
+				
 		this.add(FenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à FenPrinc APRES ??
 		setVisible(true);
 		
@@ -96,19 +104,19 @@ public class FenetreJeu extends FenetreMere{
 		super.actionPerformed(e);
 		
 		if(e.getSource() == retourFenAccueil && enJeu){
-			courbe.getFond().musiqueChoisie.stop();
+			courbe.getFond().getMusiqueChoisie().stop();
 		}
 		
-		// tentative bouton son on/off ; ne fonctionne pas 
 		if(e.getSource() == sonOnOff){
-			if(sonOnOff.getText() == "Son : on"){
-				courbe.getFond().musiqueChoisie.suspend();
-				sonOnOff.setText("Son : off");
+			String texteOnOff = sonOnOff.getText(); // parfaitement équivalent à ce que vous aviez écrit avant mais seulement cette maniere d'écrire marche , je sais pas pk
+			if(texteOnOff.equals("Son:on")){
+				courbe.getFond().getMusiqueChoisie().suspend();
+				sonOnOff.setText("Son:off");
 			}
-			if(sonOnOff.getText() == "Son : off"){
-				courbe.getFond().musiqueChoisie.resume();
+			if(texteOnOff.equals("Son:off")){
+				courbe.getFond().getMusiqueChoisie().resume();
 				//etatSon = true;
-				sonOnOff.setText("Son : on");
+				sonOnOff.setText("Son:on");
 			}
 		}
 		
@@ -122,7 +130,7 @@ public class FenetreJeu extends FenetreMere{
 				
 				panelPleinEcran();
 				
-				courbe.cible.time.start();
+				courbe.getCible().getTimerCible().start();
 				
 				gestionMusique();
 				
@@ -156,19 +164,19 @@ public class FenetreJeu extends FenetreMere{
 	}
 	
 	public void gestionMusique(){
-		boolean b = courbe.getFond().musiqueChoisie == null;
+		boolean b = courbe.getFond().getMusiqueChoisie() == null;
 		if(!b){	//si la musique n'est pas nulle = il y en a une qui a déjà été choisie AVANT = qui est en train de tourner
-			courbe.getFond().musiqueChoisie.suspend();
+			courbe.getFond().getMusiqueChoisie().suspend();
 		}
 		courbe.setDecor((String) decor.getSelectedItem());
 		// test : la musique choisie n'a jamais encore été jouée (donc jamais interrompue)
-		b = !courbe.getFond().musiqueChoisie.isAlive();		//isAlive = a déjà été starté 
+		b = !courbe.getFond().getMusiqueChoisie().isAlive();		//isAlive = a déjà été starté 
 		if(b){
-			courbe.getFond().musiqueChoisie.start();
+			courbe.getFond().getMusiqueChoisie().start();
 		}
 		// sinon, elle a déjà été starté donc interrupted, il faut utiliser resume()
 		else{
-			courbe.getFond().musiqueChoisie.resume();
+			courbe.getFond().getMusiqueChoisie().resume();
 		}	
 		// méthode changerDecor qui s'occuper aussi de changer la musique 
 		courbe.setObjet((String) objet1.getSelectedItem());	
@@ -184,6 +192,10 @@ public class FenetreJeu extends FenetreMere{
 		return vie ; 
 	}
 	
+	public JLabel getLabelScore(){
+		return this.labelScore;
+	}
+	
 	// accesseurs en écriture 
 	
 	public void setScore(int sco) {
@@ -193,4 +205,5 @@ public class FenetreJeu extends FenetreMere{
 	public void setVie(int v) {
 		this.vie = v ; 
 	}
+	
 }
