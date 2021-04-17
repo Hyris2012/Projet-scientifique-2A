@@ -31,8 +31,8 @@ public class PanelTrajJeu extends PanelTraj{
 		jungle = new Decor(new AePlayWave("mowgli.wav"), Color.yellow, T.getImage("./jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		savane = new Decor(new AePlayWave("lion.wav"), Color.red, T.getImage("./savane.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		bobLeponge = new Decor(new AePlayWave("eponge.wav"), Color.black, T.getImage("./bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
-		System.out.println("hauteur du panel : "+this.getHeight());
-		System.out.println("largeur panel : " + this.getWidth());
+		//System.out.println("hauteur du panel : "+this.getHeight());
+		//System.out.println("largeur panel : " + this.getWidth());
 	}
 	
 	public void setDecor(String decor){
