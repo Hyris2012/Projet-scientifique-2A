@@ -123,18 +123,43 @@ public class PanelTrajJeu extends PanelTraj{
 						this.flecheSuitSouris = true;
 						this.reInit();
 						this.repaint();		
+						return; //QUESTION : A QUOI SERT CE RETURN ?
+					}else if(atterrie()){
+						fenJ.setVie(fenJ.getVie() - 1); 			
+						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
+						time.stop();
+						cible.getTimerCible().stop(); 
+						Outils.pause(2000);
+						this.cible.getTimerCible().start();
+						this.flecheSuitSouris = true;
+						this.reInit();
+						this.repaint();		
+						
+						if(fenJ.getVie()<=0){
+							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+							fenJ.setVisible(false);
+						}
 						return;
 					}
 				}
 				
 			}else{		// si on sort de la fenetre en largeur
+				fenJ.setVie(fenJ.getVie() - 1); 			
+				fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
+				time.stop(); // pour éviter que la trajectoir reparte en boucle
 				cible.getTimerCible().stop();
 				Outils.pause(2000);
 				this.cible.getTimerCible().start();
 				this.flecheSuitSouris = true;
 				this.reInit();
 				this.repaint();	
+				
+				if(fenJ.getVie()<=0){
+					new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+					fenJ.setVisible(false);
+				}
 			}
+			
 		}	
 	}
 	
