@@ -6,7 +6,7 @@ import java.lang.String;
 public class FenetreJeu extends FenetreMere{
 	
 	private int score ;
-	private int vie ;
+	private int vie = 5 ;
 	
 	private PanelTrajJeu courbe;
 	 
@@ -61,7 +61,7 @@ public class FenetreJeu extends FenetreMere{
 		labelScore.setBackground(Color.white); 
 		labelScore.setFont(new Font("Arial",Font.BOLD,26));
 		
-		labelVie = new JLabel("Encore "+vie+" vies") ;
+		labelVie = new JLabel("Nombre de vies : "+vie) ;
 		labelVie.setBounds((int) (panel.getX()+0.75*panel.getWidth()),jouer.getY(),(int) (panel.getWidth()/4),jouer.getHeight());
 		labelVie.setBackground(Color.white); 
 		labelVie.setFont(new Font("Arial",Font.BOLD,26));
@@ -137,7 +137,7 @@ public class FenetreJeu extends FenetreMere{
 				courbe.setVisible(true);
 				courbe.flecheSuitSouris = true;
 				courbe.reInit();
-				courbe.repaint();	// fonctionne !
+				courbe.repaint();
 				
 				objet1.setVisible(false);
 				decor.setVisible(false);
@@ -194,6 +194,10 @@ public class FenetreJeu extends FenetreMere{
 	
 	public JLabel getLabelScore(){
 		return this.labelScore;
+	}
+	
+	public JLabel getLabelVie(){
+		return this.labelVie;
 	}
 	
 	// accesseurs en écriture 

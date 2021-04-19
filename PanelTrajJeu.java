@@ -31,8 +31,8 @@ public class PanelTrajJeu extends PanelTraj{
 		jungle = new Decor(new AePlayWave("mowgli.wav"), Color.yellow, T.getImage("./jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		savane = new Decor(new AePlayWave("lion.wav"), Color.red, T.getImage("./savane.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		bobLeponge = new Decor(new AePlayWave("eponge.wav"), Color.black, T.getImage("./bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
-		System.out.println("hauteur du panel : "+this.getHeight());
-		System.out.println("largeur panel : " + this.getWidth());
+		//System.out.println("hauteur du panel : "+this.getHeight());
+		//System.out.println("largeur panel : " + this.getWidth());
 	}
 	
 	public void setDecor(String decor){
@@ -123,18 +123,43 @@ public class PanelTrajJeu extends PanelTraj{
 						this.flecheSuitSouris = true;
 						this.reInit();
 						this.repaint();		
+						return; //QUESTION : A QUOI SERT CE RETURN ?
+					}else if(atterrie()){
+						fenJ.setVie(fenJ.getVie() - 1); 			
+						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
+						time.stop();
+						cible.getTimerCible().stop(); 
+						Outils.pause(2000);
+						this.cible.getTimerCible().start();
+						this.flecheSuitSouris = true;
+						this.reInit();
+						this.repaint();		
+						
+						if(fenJ.getVie()<=0){
+							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+							fenJ.setVisible(false);
+						}
 						return;
 					}
 				}
 				
 			}else{		// si on sort de la fenetre en largeur
+				fenJ.setVie(fenJ.getVie() - 1); 			
+				fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
+				time.stop(); // pour éviter que la trajectoir reparte en boucle
 				cible.getTimerCible().stop();
 				Outils.pause(2000);
 				this.cible.getTimerCible().start();
 				this.flecheSuitSouris = true;
 				this.reInit();
 				this.repaint();	
+				
+				if(fenJ.getVie()<=0){
+					new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+					fenJ.setVisible(false);
+				}
 			}
+			
 		}	
 	}
 	

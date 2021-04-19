@@ -2,8 +2,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class FenetreFinJeu extends JFrame {
+public class FenetreFinJeu extends JFrame implements ActionListener {
 	private Color couleur = new Color(135,206,235);
+	private JButton retourFenAccueil;
 	
 	public FenetreFinJeu(){
 		setLayout(null);
@@ -42,16 +43,33 @@ public class FenetreFinJeu extends JFrame {
 		coord.setFont(new Font("Arial",Font.BOLD,18)) ;
 		coord.setBackground(couleur) ;
 		
-		JLabel conv = new JLabel("Un pixel vaut approximativement 5.3*10^-6 m"); 
+		/*JLabel conv = new JLabel("Un pixel vaut approximativement 5.3*10^-6 m"); 
 		conv.setBounds(100, 60, 700, 100);
 		conv.setFont(new Font("Arial",Font.BOLD,18)) ;
 		conv.setBackground(couleur) ;
+		*/
+		
+		retourFenAccueil = new JButton ("Retour");
+		retourFenAccueil.setFont(new Font("Serif",Font.BOLD,20)) ;
+		retourFenAccueil.setBounds(100,60,(int)(1500*(2/29.7)),1000*(1/21));
+		retourFenAccueil.setForeground(Color.white);
+		retourFenAccueil.setBackground(new Color (90,90,90)); 
+		retourFenAccueil.addActionListener(this);
+		
+		
 		
 		texte.add(coord);
-		texte.add(conv) ;
+		//texte.add(conv) ;
 		add(texte);
+		add(retourFenAccueil);
 		setVisible(true);
 		
+	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == retourFenAccueil){
+			this.setVisible(false);
+			new FenetreAccueil();
+		}
 	}
 	
 }

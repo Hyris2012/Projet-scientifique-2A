@@ -16,8 +16,8 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void lancerBalle(Balle balle){
 		super.lancerBalle(balle);
-		
-		fenS.info.setText("Equation de la trajectoire : " + balle.getPolynome().toString());
+	
+		fenS.info.setText("<html> Equation de la trajectoire : <br>"+ balle.getPolynome().toString()+"</html>"); // juste .info marche parce qu'il est en protected dans FenetreMere et donc accessible dans tout le package
 		
 	}
 	

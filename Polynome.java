@@ -135,7 +135,7 @@ public class Polynome {
 	}
 	
 	public String toString (){
-		return ("P(X) = " + coupeDecimale(a) + " * X^2 + " + coupeDecimale(b) + " * X + " + coupeDecimale(c));// arrondir les a, b, c
+		return ("<html> P(X) = " + coupeDecimale(a) + " * X <sup>2</sup> + " + coupeDecimale(b) + " * X + " + coupeDecimale(c)+"</html>");// arrondir les a, b, c
 	}
 	
 	public double distanceEntreRacines(){
