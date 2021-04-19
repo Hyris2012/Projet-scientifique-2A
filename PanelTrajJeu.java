@@ -80,7 +80,7 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		if(b){
 			this.cible.getTimerCible().stop();
-			Outils.pause(2000);
+			Outils.pause(1000);
 			this.cible.getTimerCible().start();
 			this.flecheSuitSouris = true;
 			this.reInit();
@@ -116,7 +116,7 @@ public class PanelTrajJeu extends PanelTraj{
 						// ci-dessus : résumer sous une méthode de fenJ 'miseAJourScore' 
 						time.stop();
 						cible.getTimerCible().stop(); 
-						Outils.pause(2000);
+						Outils.pause(1000);
 						this.cible.getTimerCible().start();
 						this.flecheSuitSouris = true;
 						this.reInit();
@@ -127,7 +127,7 @@ public class PanelTrajJeu extends PanelTraj{
 						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
 						time.stop();
 						cible.getTimerCible().stop(); 
-						Outils.pause(2000);
+						Outils.pause(1000);
 						this.cible.getTimerCible().start();
 						this.flecheSuitSouris = true;
 						this.reInit();
@@ -136,6 +136,7 @@ public class PanelTrajJeu extends PanelTraj{
 						if(fenJ.getVie()<=0){
 							//new Restart ("Perdu!");
 							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+							this.getFond().getMusiqueChoisie().stop();
 							fenJ.setVisible(false);
 						}
 						return;
@@ -147,7 +148,7 @@ public class PanelTrajJeu extends PanelTraj{
 				fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
 				time.stop(); // pour éviter que la trajectoir reparte en boucle
 				cible.getTimerCible().stop();
-				Outils.pause(2000);
+				Outils.pause(1000);
 				this.cible.getTimerCible().start();
 				this.flecheSuitSouris = true;
 				this.reInit();
@@ -157,6 +158,7 @@ public class PanelTrajJeu extends PanelTraj{
 					//new Restart("Perdu!");
 					new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
 					fenJ.setVisible(false);
+					this.getFond().getMusiqueChoisie().stop();
 				}
 			}
 			
@@ -183,7 +185,7 @@ public class PanelTrajJeu extends PanelTraj{
 		super.mouseClicked(e);
 		if (imageObj == null) {	// normalement on devrait pouvoir l'enlever, puisque la condition est déjà dans le paint
 			repaint();
-	    }
+		}
 	}	
 	
 	public void setVitesseAffichage(String s){

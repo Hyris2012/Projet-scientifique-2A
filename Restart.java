@@ -13,7 +13,7 @@ public class Restart extends JFrame implements ActionListener{
 	
 	public Restart(String affichage){ //Pour vérifier que l'IHM est correcte 
 		super("Trajectory Manager") ;
-		setResizable(true);
+		setResizable(false);
 		setBounds(300,100,largeur,hauteur);
 		setBackground(fondBleu) ;
 		
@@ -47,7 +47,7 @@ public class Restart extends JFrame implements ActionListener{
 	public Restart(FenetreJeu fenJ, String affichage){
 		super("Trajectory Manager") ;
 		this.fenJ = fenJ;
-		setResizable(true);
+		setResizable(false);
 		setBounds(300,100,largeur,hauteur);
 		setBackground(fondBleu) ;
 		

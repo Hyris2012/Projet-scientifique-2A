@@ -18,11 +18,12 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	protected ArrayList<Double> XParcourus;
 	protected ArrayList<Double> YParcourus;
 	protected Vecteur flecheInit; // définira le vecteur pour lancer la balle 
+	protected APoint departFleche=new APoint(0,0);
 	protected int[] X;
 	protected int[] Y;
 	protected int vitesseAffichage;
 	protected boolean flecheSuitSouris = false;
-	
+	protected double pesanteurChoisie=9.81;
 	
 	
 	// constructeur 
@@ -55,7 +56,6 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
 		dernierXAffiche = 0;
-		
 		time.start();
 	}
 	
@@ -161,19 +161,20 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	}
 	
 	public void mouseClicked(MouseEvent e){
-		
-		if (fond != null) {	// normalement on devrait pouvoir l'enlever, puisque la condition est déjà dans le paint
-			reInit();
-			APoint departFleche = new APoint(0,0);
-			APoint pointeFleche = new APoint(e.getX(),this.getHeight()-e.getY());
-			flecheInit = new Vecteur (departFleche, pointeFleche);
-			
-			lancerBalle(new Balle(1.0, 1.0, flecheInit, this.getWidth(), this.getHeight()));
-			//reInit();
-			flecheSuitSouris = false;
-			
-			//repaint();	// on le fait dans les classes filles our faire une condition sur imageObj dans PanelTrajJeu
-	    }
+		if(flecheSuitSouris){ // si flecheSuitSouris est true, la trajectoire est "libre", si on a cliqué le vecteur reste fixe
+			if (fond != null) {	// normalement on devrait pouvoir l'enlever, puisque la condition est déjà dans le paint
+				reInit();
+				//APoint pointeFleche = new APoint(e.getX(),this.getHeight()-e.getY());
+				//flecheInit = new Vecteur (departFleche, pointeFleche);
+				
+				lancerBalle(new Balle(1.0, 1.0, flecheInit, this.getWidth(), this.getHeight(), pesanteurChoisie));
+				System.out.println(balle.getPesanteur() +" est la pesanteur");
+				//reInit();
+				flecheSuitSouris = false;
+				
+				//repaint();	// on le fait dans les classes filles our faire une condition sur imageObj dans PanelTrajJeu
+			}
+		}
 	}
 	
 	public void reInit(){
@@ -184,10 +185,15 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	
 	public void mouseMoved(MouseEvent e) {
 		if(flecheSuitSouris){
-			APoint departFleche = new APoint(0,0);
-			APoint pointeFleche = new APoint(e.getX(),this.getHeight() - e.getY());
-			flecheInit = new Vecteur (departFleche, pointeFleche);
+			APoint pointeFleche;
+			if(departFleche.y-(this.getHeight() - e.getY())<0){ // pour bloquer l'affigage du vecteur et faire en sorte qu'il n'aille pas vers le bas 
+			pointeFleche = new APoint(e.getX(),this.getHeight() - e.getY());
+			
+			}else{
+			pointeFleche = new APoint(e.getX(),departFleche.y);
+			}
 		
+			flecheInit = new Vecteur (departFleche, pointeFleche);
 			repaint();
 		}
 		

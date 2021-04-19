@@ -8,8 +8,8 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	
 	protected JPanel FenPrinc ;
 	protected JButton jouer ;
-	protected int largeur = 1500;
-	protected int hauteur = 1000;
+	protected int largeur;
+	protected int hauteur;
 	protected Color fondBleu = new Color(135,206,235);
 	protected JButton retourFenAccueil;
 	protected boolean enJeu = false;
@@ -18,8 +18,13 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	public FenetreMere(){
 		super("Trajectory Manager") ;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(true);
-		setBounds(180,10,largeur,hauteur);
+		
+		Rectangle r = Outils.tailleUtileEcran();
+		hauteur = (int) r.getHeight();
+		largeur = (int) r.getWidth();
+		setBounds((int) r.getX(),(int) r.getY(),largeur,hauteur);
+		setResizable(false);
+		
 		
 		FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 

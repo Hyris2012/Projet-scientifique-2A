@@ -17,6 +17,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		// trajectory = new FenetreMere(); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300,100,largeur,hauteur);
+		setResizable(false);
 		// setVisible(false) par défaut ?
 		
 		FenPrinc = new JPanel() ; 
