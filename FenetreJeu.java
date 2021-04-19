@@ -6,10 +6,8 @@ import java.lang.String;
 public class FenetreJeu extends FenetreMere{
 	
 	private int score ;
-	private int vie = 5 ;
-	
-	private PanelTrajJeu courbe;
-	 
+	private int vie = 5 ;	
+	private PanelTrajJeu courbe;	 
 	private JComboBox difficulteJeu; 
 	private JComboBox objet1 ;
 	private JComboBox decor;
@@ -62,7 +60,7 @@ public class FenetreJeu extends FenetreMere{
 		labelScore.setFont(new Font("Arial",Font.BOLD,26));
 		
 		labelVie = new JLabel("Nombre de vies : "+vie) ;
-		labelVie.setBounds((int) (panel.getX()+0.75*panel.getWidth()),jouer.getY(),(int) (panel.getWidth()/4),jouer.getHeight());
+		labelVie.setBounds((int) (panel.getX()+0.7*panel.getWidth()),jouer.getY(),(int) (panel.getWidth()/3),jouer.getHeight());
 		labelVie.setBackground(Color.white); 
 		labelVie.setFont(new Font("Arial",Font.BOLD,26));
 		
@@ -72,6 +70,7 @@ public class FenetreJeu extends FenetreMere{
 		sonOnOff.setForeground(Color.white);
 		sonOnOff.setBackground(new Color (90,90,90)); 
 		sonOnOff.addActionListener(this);
+		sonOnOff.setVisible(false);
 		
 		JLabel diff = new JLabel("Choisissez la difficulté") ; //7
 		diff.setFont(new Font("Arial",Font.BOLD,20)) ;
@@ -123,26 +122,29 @@ public class FenetreJeu extends FenetreMere{
 		
 		if(e.getSource() == jouer){
 			
-			
 			// pour qu'on ne puisse pas changer de décor en cours de partie : ci après 
 			if(!enJeu){
 				enJeu = true ;
 				
 				panelPleinEcran();
 				
-				courbe.getCible().getTimerCible().start();
-				
-				gestionMusique();
-				
-				courbe.setVisible(true);
-				courbe.flecheSuitSouris = true;
-				courbe.reInit();
-				courbe.repaint();
-				
 				objet1.setVisible(false);
 				decor.setVisible(false);
 				jouer.setVisible(false);
+				difficulteJeu.setVisible(false);
 				
+				courbe.getCible().getTimerCible().start();				
+				courbe.getCible().setVitesseCible((String) difficulteJeu.getSelectedItem());
+				courbe.setVitesseAffichage((String) difficulteJeu.getSelectedItem());
+				
+				gestionMusiqueEtDecor();
+				
+				courbe.setVisible(true);
+				sonOnOff.setVisible(true);
+				courbe.flecheSuitSouris = true;
+				courbe.reInit();
+				courbe.repaint();
+							
 			}
 			
 		}
@@ -154,16 +156,16 @@ public class FenetreJeu extends FenetreMere{
 	public void panelPleinEcran(){
 		//changement de la taille du PanelTraj pour l'afficher en plein écran
 		panel.setVisible(false);
-		courbe = new PanelTrajJeu(this, (int)(jouer.getX()),(int)(this.getHeight()*(2.5/21.0)),(this.getWidth()-2*jouer.getX()),(int)(this.getHeight()*(14/21.0)));
+		courbe = new PanelTrajJeu(this, (int)(jouer.getX()),(int)(this.getHeight()*(2.5/21.0)),(this.getWidth()-2*jouer.getX()),(int)(this.getHeight()*(14/21.0))); // on pourrait mettre ça dans le constructeur pour éviter un temps de latence quand on clique sur jouer, ça changerait pas grand chose mais irait dans le sens de l'optimisation
 		courbe.setLayout(null);
-		courbe.setBackground(Color.red);
+		courbe.setBackground(Color.red); // au cas où l'image mise en superposition n'apparaisse pas
 		courbe.setVisible(true);
 		FenPrinc.add(courbe);	
 		labelScore.setBounds(courbe.getX(),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 		labelVie.setBounds((int) (courbe.getX()+0.75*courbe.getWidth()),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 	}
 	
-	public void gestionMusique(){
+	public void gestionMusiqueEtDecor(){
 		boolean b = courbe.getFond().getMusiqueChoisie() == null;
 		if(!b){	//si la musique n'est pas nulle = il y en a une qui a déjà été choisie AVANT = qui est en train de tourner
 			courbe.getFond().getMusiqueChoisie().suspend();

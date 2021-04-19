@@ -12,9 +12,11 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int hauteur;
 	private int largeur; 
 	private PanelTraj courbe;
-	private int positionX = 0;
+	private int positionX;
 	private Timer time = new Timer(1, this);
-	private int sens;
+	private int sens=1;
+	private int vitesse;
+	private final int positionMin=142;
 	
 	
 	public Cible(double h, double l, PanelTraj p){
@@ -24,7 +26,12 @@ public class Cible implements ActionListener {	//extends JPanel
 		courbe = p;
 		hauteur = (int) (h*courbe.getHeight());
 		largeur = (int) (l*courbe.getWidth());
+		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
 		
+		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
+			positionX=positionMin;
+		}
+				
 	}
 	//paint
 	/*public void paint(Graphics g){
@@ -36,12 +43,12 @@ public class Cible implements ActionListener {	//extends JPanel
 	
 	public void deplaceX(){
 		
-		if (positionX == 0){
+		if (positionX <= positionMin){
 			sens = 1;
-		}else if(positionX == courbe.getWidth()-largeur){
+		}else if(positionX >= courbe.getWidth()-largeur){
 			sens = -1;
 		}
-		positionX = positionX + sens*4;
+		positionX = positionX + sens*vitesse;
 	}
 	
 	public boolean touche(int x, int y){
@@ -53,8 +60,26 @@ public class Cible implements ActionListener {	//extends JPanel
 	public void actionPerformed(ActionEvent e) {
 		deplaceX();
 		courbe.repaint();
-		
+			
 	}
+	
+	public void setVitesseCible(String s){
+		switch (s){
+        case "Débutant" :
+			this.vitesse = 0;
+			break;
+        case "Intermédiaire":
+            this.vitesse=2;
+            break;
+        case "Expert":
+            this.vitesse=4;
+            break;
+        default :
+            this.vitesse = 0;
+            break;
+        }
+	}
+	
 	// geteurs et seteurs 
 	public int getHauteurCible(){
 		return this.hauteur;
@@ -95,5 +120,10 @@ public class Cible implements ActionListener {	//extends JPanel
 	public void setTimerCible(Timer t){
 		this.time=t;
 	}
+	
+	public int getVitesseCible(){
+		return this.vitesse;
+	}
+	
 	
 }

@@ -20,7 +20,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	protected Vecteur flecheInit; // définira le vecteur pour lancer la balle 
 	protected int[] X;
 	protected int[] Y;
-	
+	protected int vitesseAffichage;
 	protected boolean flecheSuitSouris = false;
 	
 	
@@ -31,6 +31,8 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		super();
 		this.fen = fen;
 		setBounds(x, y, l, h);
+		
+		vitesseAffichage=1;
 		
 		time = new Timer (1, this);
 		
@@ -128,7 +130,7 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 				if(!atterrie()){
 					XParcourus.add(balle.getPolynome().getValeurX().get(dernierXAffiche));
 					YParcourus.add(balle.getPolynome().getValeurY().get(dernierXAffiche));
-					dernierXAffiche++;
+					dernierXAffiche=dernierXAffiche+vitesseAffichage;
 					repaint();
 				}else{
 					time.stop();

@@ -101,8 +101,6 @@ public class PanelTrajJeu extends PanelTraj{
 		}
 	}
 	
-	
-	
 	public void actionPerformed(ActionEvent e){ //lié au timer
 		super.actionPerformed(e);
 		
@@ -111,7 +109,7 @@ public class PanelTrajJeu extends PanelTraj{
 				 
 				if(YParcourus.size() > 0){		// condition anti-exception : les arraylist de la trajectoire ne sont pas nulles 
 					
-					if(cible.touche(dernierXAffiche, YParcourus.get(dernierXAffiche-1).intValue())){		
+					if(cible.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 
 						fenJ.setScore(fenJ.getScore() + 300); 				// = fenJ.score + 300;
 						fenJ.getLabelScore().setText("Score : " + fenJ.getScore());
@@ -136,6 +134,7 @@ public class PanelTrajJeu extends PanelTraj{
 						this.repaint();		
 						
 						if(fenJ.getVie()<=0){
+							//new Restart ("Perdu!");
 							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
 							fenJ.setVisible(false);
 						}
@@ -155,6 +154,7 @@ public class PanelTrajJeu extends PanelTraj{
 				this.repaint();	
 				
 				if(fenJ.getVie()<=0){
+					//new Restart("Perdu!");
 					new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
 					fenJ.setVisible(false);
 				}
@@ -185,6 +185,23 @@ public class PanelTrajJeu extends PanelTraj{
 			repaint();
 	    }
 	}	
+	
+	public void setVitesseAffichage(String s){
+		switch (s){
+        case "Débutant" :
+			this.vitesseAffichage = 1;
+			break;
+        case "Intermédiaire":
+            this.vitesseAffichage = 2;
+            break;
+        case "Expert":
+            this.vitesseAffichage = 4;
+            break;
+        default :
+            this.vitesseAffichage = 1;
+            break;
+        }
+	}
 	
 	public Cible getCible(){
 		return this.cible;

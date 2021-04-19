@@ -24,7 +24,7 @@ public class Balle {
 		
 		this.angleIni = v.getArgument();	
 		
-		this.vitesseInitiale = v.getModule();
+		this.vitesseInitiale = v.getModule()/2;
 		this.masse = m;
 		this.rayon = r;
 		this.pesanteur = 9.81*4;
@@ -40,8 +40,6 @@ public class Balle {
 		this.pesanteur = g*4;
 		
 	}
-
-
 
 	public void initPolynome(int largeurPanel, int hauteurPanel){
 		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
