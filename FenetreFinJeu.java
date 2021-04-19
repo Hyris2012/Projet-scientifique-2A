@@ -9,7 +9,7 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 	public FenetreFinJeu(){
 		setLayout(null);
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(500, 400, 800, 200);
+		setBounds(500, 400, 800, 300);
 		
 		JLabel etiquette = new JLabel("hum hum");
 		etiquette.setBounds(20, 20, 700, 100);
@@ -17,7 +17,7 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		etiquette.setBackground(couleur) ;
 		
 		JPanel texte = new JPanel();
-		texte.setBounds(0, 0, 800, 200);
+		texte.setBounds(0, 0, 800, 300);
 		texte.setLayout(null);
 		texte.setBackground(couleur);
 		
@@ -31,15 +31,15 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		super(type);
 		setLayout(null);
 		//setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(500, 400, 800, 200);
-		
+		setBounds(500, 400, 800, 300);
+		this.setResizable(false);
 		JPanel texte = new JPanel();
-		texte.setBounds(0, 0, 800, 200);
+		texte.setBounds(0, 0, 800, 300);
 		texte.setLayout(null);
 		texte.setBackground(couleur);
 		
 		JLabel coord = new JLabel(affichage);
-		coord.setBounds(20, 20, 700, 100);
+		coord.setBounds(180, 20, 700, 100);
 		coord.setFont(new Font("Arial",Font.BOLD,18)) ;
 		coord.setBackground(couleur) ;
 		
@@ -51,7 +51,7 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		
 		retourFenAccueil = new JButton ("Retour");
 		retourFenAccueil.setFont(new Font("Serif",Font.BOLD,20)) ;
-		retourFenAccueil.setBounds(100,60,(int)(1500*(2/29.7)),1000*(1/21));
+		retourFenAccueil.setBounds(325,150,150,35);
 		retourFenAccueil.setForeground(Color.white);
 		retourFenAccueil.setBackground(new Color (90,90,90)); 
 		retourFenAccueil.addActionListener(this);
