@@ -134,6 +134,7 @@ public class PanelTrajJeu extends PanelTraj{
 						this.repaint();		
 						
 						if(fenJ.getVie()<=0){
+							//new Restart ("Perdu!");
 							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
 							fenJ.setVisible(false);
 						}
@@ -153,6 +154,7 @@ public class PanelTrajJeu extends PanelTraj{
 				this.repaint();	
 				
 				if(fenJ.getVie()<=0){
+					//new Restart("Perdu!");
 					new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
 					fenJ.setVisible(false);
 				}
