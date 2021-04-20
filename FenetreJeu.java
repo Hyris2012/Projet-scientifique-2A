@@ -13,7 +13,7 @@ public class FenetreJeu extends FenetreMere{
 	private JComboBox decor;
 	private JLabel labelScore;
 	private JLabel labelVie; 
-	private JButton sonOnOff;
+	private BoutonPersonnalise sonOnOff;
 	private JPanel panel;
 	
 	public FenetreJeu () {
@@ -64,11 +64,20 @@ public class FenetreJeu extends FenetreMere{
 		labelVie.setBackground(Color.white); 
 		labelVie.setFont(new Font("Arial",Font.BOLD,26));
 		
-		sonOnOff = new JButton ("Son:on");
+		/*sonOnOff = new JButton ("Son:on");
 		sonOnOff.setFont(new Font("Serif",Font.BOLD,20)) ;
 		sonOnOff.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)));
 		sonOnOff.setForeground(Color.white);
 		sonOnOff.setBackground(new Color (90,90,90)); 
+		sonOnOff.addActionListener(this);
+		sonOnOff.setVisible(false);*/
+		
+		sonOnOff = new BoutonPersonnalise ("Son:on", (int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)), "./sonOn.png");
+		sonOnOff.setFont(new Font("Serif",Font.BOLD,20)) ;
+		//sonOnOff.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(0.5/21.0)),(int)(largeur*(2/29.7)),(int)(hauteur*(1/21.0)));
+		sonOnOff.setForeground(Color.white);
+		//sonOnOff.setBackground(new Color (90,90,90)); 
+		//sonOnOff.setImage("./sonOn.png");
 		sonOnOff.addActionListener(this);
 		sonOnOff.setVisible(false);
 		
@@ -111,11 +120,12 @@ public class FenetreJeu extends FenetreMere{
 			if(texteOnOff.equals("Son:on")){
 				courbe.getFond().getMusiqueChoisie().suspend();
 				sonOnOff.setText("Son:off");
+				sonOnOff.setFond("/.sonOff");
 			}
 			if(texteOnOff.equals("Son:off")){
 				courbe.getFond().getMusiqueChoisie().resume();
-				//etatSon = true;
 				sonOnOff.setText("Son:on");
+				sonOnOff.setFond("/.sonOn");
 			}
 		}
 		
