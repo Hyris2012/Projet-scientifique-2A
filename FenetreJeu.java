@@ -12,6 +12,7 @@ public class FenetreJeu extends FenetreMere{
 	// attributs pour la partie de jeu 
 	private int score ;
 	private int vie;
+	private int combo;
 		
 	// éléments d'IHM 
 	private JComboBox difficulteJeu; 
@@ -247,6 +248,7 @@ public class FenetreJeu extends FenetreMere{
 	 */
 	
 	public void perdVies(int perte){
+		combo = 0;
 		vie = vie - 1; 			
 		labelVie.setText("Nombre de vies: " + vie);
 	}
@@ -258,7 +260,13 @@ public class FenetreJeu extends FenetreMere{
 	 */
 	
 	public void mAjScore(int ajout){
-		score = score + ajout; 				
+		if(combo < 3){
+			score = score + ajout; 
+			combo++;
+		}else{
+			score = score + ajout*2;
+			// est-ce qu'on remet le combo à 0 ou bien on enchaine les combo jusqu'à tomber à côté ?
+		}				
 		labelScore.setText("Score : " + score);
 	}
 	

@@ -19,16 +19,19 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int vitesse;
 	private final int positionMin=142;
 	private boolean estUneCible; // pour différencier la cible de l'obstacle
+	private Image imageCible;
 	
 	
 	public Cible(double h, double l, PanelTraj p, boolean b){
-		//super();
-		//setBounds(0,0, p.getWidth(), p.getHeight());
-		//setLayout(null);
+	
+	/*public Cible(double h, double l, PanelTraj p, boolean b, String imageUrl){
+		Toolkit T = Toolkit.getDefaultToolkit();
+	  	imageCible = T.getImage(imageUrl).getScaledInstance(largeur, hauteur, Image.SCALE_DEFAULT);*/
+	  	
 		estUneCible=b;
 		courbe = p;
+		
 		hauteur = (int) (h*courbe.getHeight());
-       
 		largeur = (int) (l*courbe.getWidth());
         
 		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
@@ -41,17 +44,13 @@ public class Cible implements ActionListener {	//extends JPanel
 			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
 		}else{
 			positionY=courbe.getHeight()-hauteur;
-		}
-		
-				
+		}	
 	}
-	//paint
-	/*public void paint(Graphics g){
-		g.fillRect(positionX, (int)courbe.getHeight()-hauteur,largeur, hauteur);
-		
-		
+	
+	/*public void dessine(Graphics g){
+		g.drawImage(imageCible, positionX, positionY, null);
 	}*/
-	//deltaX = la vitesse de deplacement de la cible
+	
 	
 	public void deplaceX(){
 		

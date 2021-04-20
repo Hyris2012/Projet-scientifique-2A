@@ -71,9 +71,9 @@ public class PanelTrajJeu extends PanelTraj{
 		super.paintComponent(g);
 		
 		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());		// dans l'idéal ça se passerait dans Cible ça non ? 
+		//cible.dessine(g);
 		
 		if(cible.getVitesseCible()!=0){ // pour que l'obstacle ne s'affiche pas en mode débutant
-			//g.fillRect(obstacle.getPositionX(),obstacle.getPositionY(), obstacle.getLargeurCible(), obstacle.getHauteurCible());
 			g.drawImage(imageObstacle, obstacle.getPositionX(), obstacle.getPositionY(),null);
 		}
 		
@@ -138,10 +138,10 @@ public class PanelTrajJeu extends PanelTraj{
 	 */
 	
 	public void finDuLancer(){
-		time.stop(); // pour éviter que la trajectoir reparte en boucle	-> ne fonctionne pas manifestement 
+		time.stop(); 
 		cible.getTimerCible().stop();
         obstacle.getTimerCible().stop();
-		Outils.pause(1000);
+		Outils.pause(750);
 		this.cible.getTimerCible().start();
         this.obstacle.getTimerCible().start();
 		this.flecheSuitSouris = true;
