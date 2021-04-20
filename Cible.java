@@ -86,7 +86,6 @@ public class Cible implements ActionListener {	//extends JPanel
 			deplaceY(); // pour que l'obstacle se déplace verticalement (expert)
 		}
 		courbe.repaint();
-			
 	}
 	
 	public void setVitesseCible(String s){
@@ -96,9 +95,9 @@ public class Cible implements ActionListener {	//extends JPanel
 			break;
         case "Intermédiaire":
 			if (estUneCible){
-				this.vitesse=2;
+				this.vitesse = 2;
 			}else{
-				this.vitesse=0; // la cible bouge mais l'obstacle ne bouge pas
+				this.vitesse = 0; // la cible bouge mais l'obstacle ne bouge pas
 			}
             break;
         case "Expert":

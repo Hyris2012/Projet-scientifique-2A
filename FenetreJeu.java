@@ -3,11 +3,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.lang.String;
 
+/** Fenetre de Trajectory Manager gérant le mode Jeu.
+ */
+
 public class FenetreJeu extends FenetreMere{
 	
+	
+	// attributs pour la partie de jeu 
 	private int score ;
-	private int vie = 5 ;	
-	private PanelTrajJeu courbe;	 
+	private int vie;
+		
+	// éléments d'IHM 
 	private JComboBox difficulteJeu; 
 	private JComboBox objet1 ;
 	private JComboBox decor;
@@ -16,9 +22,18 @@ public class FenetreJeu extends FenetreMere{
 	private JButton sonOnOff;
 	private JPanel panel;
 	
+	// panel dans lequel la trajectoire est gérée
+	private PanelTrajJeu courbe;
+	
+	/**
+	 * Construit une fenetre de jeu.
+	 */
+	
 	public FenetreJeu () {
 		super();	
 		
+		score = 0;
+		vie = 5;
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBounds((int)(getWidth()*(10/29.7)),(int)(getHeight()*(2.5/21.0)),(int)(getWidth()*(18/29.7)),(int)(getHeight()*(14/21.0)));
@@ -84,12 +99,12 @@ public class FenetreJeu extends FenetreMere{
 		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
 		FenPrinc.add(panel);
-		FenPrinc.add(labelScore) ; //5
-		FenPrinc.add(labelVie) ; //6
-		FenPrinc.add(objet) ; //7
-		FenPrinc.add(objet1) ; //8 
-		FenPrinc.add(endroit) ; //9
-		FenPrinc.add(decor) ; //10
+		FenPrinc.add(labelScore) ; 
+		FenPrinc.add(labelVie) ; 
+		FenPrinc.add(objet);
+		FenPrinc.add(objet1) ; 
+		FenPrinc.add(endroit) ; 
+		FenPrinc.add(decor); 
 		FenPrinc.add(sonOnOff);
 		FenPrinc.add(diff);
 		FenPrinc.add(difficulteJeu);
@@ -98,6 +113,9 @@ public class FenetreJeu extends FenetreMere{
 		setVisible(true);
 		
 	}
+	
+	/** Implémentation de l'interface ActionListener. Gère les interactions avec les éléments d'IHM branchés.
+	 */
 	
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
@@ -114,7 +132,6 @@ public class FenetreJeu extends FenetreMere{
 			}
 			if(texteOnOff.equals("Son:off")){
 				courbe.getFond().getMusiqueChoisie().resume();
-				//etatSon = true;
 				sonOnOff.setText("Son:on");
 			}
 		}
@@ -154,6 +171,12 @@ public class FenetreJeu extends FenetreMere{
 	
 	// méthodes pour une meilleure lisibilité du code
 	
+	/**
+	 * Méthode permettant d'afficher le panel de jeu sur tout la fenetre lors du clic du bouton 'lancer'.
+	 * @param aucun
+	 * @return void
+	 */
+	
 	public void panelPleinEcran(){
 		//changement de la taille du PanelTraj pour l'afficher en plein écran
 		panel.setVisible(false);
@@ -166,6 +189,12 @@ public class FenetreJeu extends FenetreMere{
 		labelVie.setBounds((int) (courbe.getX()+0.75*courbe.getWidth()),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 	}
 	
+	/**
+	 * Méthode gérant le lancement des musiques.
+	 * @param aucun
+	 * @return void
+	 */
+	 
 	public void gestionMusiqueEtDecor(){
 		boolean b = courbe.getFond().getMusiqueChoisie() == null;
 		if(!b){	//si la musique n'est pas nulle = il y en a une qui a déjà été choisie AVANT = qui est en train de tourner
@@ -184,6 +213,53 @@ public class FenetreJeu extends FenetreMere{
 		// méthode changerDecor qui s'occuper aussi de changer la musique 
 		courbe.setObjet((String) objet1.getSelectedItem());	
 		courbe.setObstacle((String) decor.getSelectedItem());
+	}
+	
+	// méthodes de gestion de la partie de jeu : points de vie et points de score
+	
+	/** Méthode permettant de déterminer si la partie est perdue ou gagnée.
+	 * @param aucun
+	 * @return void
+	 */
+	
+	public void victoireOuDefaite(){		// concerne plutôt la fenetre de jeu que le panelTraj -> à appeler dans le setScore et le setVie 
+		if(vie <=0){
+			new FenetreAccueil();
+			//new Restart("Perdu!");
+			new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+			this.setVisible(false);
+			courbe.getFond().getMusiqueChoisie().stop();
+	
+		}else if(score >= 1500){
+			new FenetreAccueil();
+			//new Restart("Gagné!");
+			new FenetreFinJeu("GAGNE" , "Tu as atteint un score de 1500, tu es un.e champion.ne !");
+			this.setVisible(false);
+			courbe.getFond().getMusiqueChoisie().stop();
+			
+		}
+	}
+	
+	/**
+	 * Cette méthode met à jour les vies et leur affichage lorsque le joueur manque un lancer.
+	 * @param perte de type int : le nombre de vie à perdre
+	 * @return void
+	 */
+	
+	public void perdVies(int perte){
+		vie = vie - 1; 			
+		labelVie.setText("Nombre de vies: " + vie);
+	}
+	
+	/**
+	 * Cette méthode met à jour le score lorsque le joueur réussit un tir. Elle est prévue pour gérer dans le futur les combo également.
+	 * @param ajout de type int : les points à ajouter au score
+	 * @return void
+	 */
+	
+	public void mAjScore(int ajout){
+		score = score + ajout; 				
+		labelScore.setText("Score : " + score);
 	}
 	
 	// accesseurs en lecture
