@@ -17,15 +17,23 @@ public class PanelTrajJeu extends PanelTraj{
 	private final Image vaisseau = T.getImage("vaisseau.png");
 	private final Image balleTennis = T.getImage("balleTennis.png");
 	
-	private Image imageObj;
+	private final Image harpe=T.getImage("harpe.png");
+	private final Image bus=T.getImage("bus_a_imperiale.png");
+	private final Image grillePain=T.getImage("grille_pain.png");
+	private final Image phedre=T.getImage("phedre.png");
 	
+	private Image imageObj;
+	private Image imageObstacle;
 	private Cible cible;
+    private Cible obstacle;
 	
 	public PanelTrajJeu(FenetreJeu fenJ, int x, int y, int l, int h){
 		super(fenJ, x, y, l, h);
 		this.fenJ = fenJ;
 		
-		cible = new Cible (0.05, 0.2, this);
+		cible = new Cible (0.05, 0.2, this, true);
+        obstacle = new Cible (0.12, 0.08, this, false);
+        
 		//initialisation des decors
 		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 		jungle = new Decor(new AePlayWave("mowgli.wav"), Color.yellow, T.getImage("./jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
@@ -75,13 +83,35 @@ public class PanelTrajJeu extends PanelTraj{
         }
 	}
 	
+	public void setObstacle(String decor){
+		switch (decor){
+        case "Espace" :
+			imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.2), Image.SCALE_DEFAULT);
+			break;
+        case "Jungle":
+            imageObstacle = bus.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            break;
+        case "Bob l'eponge":
+            imageObstacle = phedre.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
+            break;
+        case "Savane":
+            imageObstacle = grillePain.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            break;
+        default :
+            imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            break;
+        }
+	}
+	
 	public boolean atterrie(){
 		boolean b = super.atterrie();
 		
 		if(b){
 			this.cible.getTimerCible().stop();
-			Outils.pause(1000);
+			this.obstacle.getTimerCible().stop();
+            Outils.pause(1000);
 			this.cible.getTimerCible().start();
+            this.obstacle.getTimerCible().start();
 			this.flecheSuitSouris = true;
 			this.reInit();
 			this.repaint();	
@@ -96,6 +126,10 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());
 		
+		if(cible.getVitesseCible()!=0){ // pour que l'obstacle ne s'affiche pas en mode débutant
+			//g.fillRect(obstacle.getPositionX(),obstacle.getPositionY(), obstacle.getLargeurCible(), obstacle.getHauteurCible());
+			g.drawImage(imageObstacle, obstacle.getPositionX(), obstacle.getPositionY(),null);
+		}
 		if(balle != null && XParcourus.size() > 0 && YParcourus.size() > 0 && fond !=null){
 			g.drawImage(imageObj, X[X.length - 1]- imageObj.getWidth(null)/2, Y[Y.length - 1] - imageObj.getHeight(null)/2, null);
 		}
@@ -109,15 +143,38 @@ public class PanelTrajJeu extends PanelTraj{
 				 
 				if(YParcourus.size() > 0){		// condition anti-exception : les arraylist de la trajectoire ne sont pas nulles 
 					
-					if(cible.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
+					if(cible.getVitesseCible()!=0 && obstacle.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){
+                        fenJ.setVie(fenJ.getVie() - 1); 			
+						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
+						time.stop();
+						cible.getTimerCible().stop(); 
+                        obstacle.getTimerCible().stop();
+						Outils.pause(1000);
+						this.cible.getTimerCible().start();
+                        this.obstacle.getTimerCible().start();
+						this.flecheSuitSouris = true;
+						this.reInit();
+						this.repaint();		
+						
+						if(fenJ.getVie()<=0){
+							//new Restart ("Perdu!");
+							new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
+							this.getFond().getMusiqueChoisie().stop();
+							fenJ.setVisible(false);
+						}
+						return;
+                        
+                    }else if(cible.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 
 						fenJ.setScore(fenJ.getScore() + 300); 				// = fenJ.score + 300;
 						fenJ.getLabelScore().setText("Score : " + fenJ.getScore());
 						// ci-dessus : résumer sous une méthode de fenJ 'miseAJourScore' 
 						time.stop();
 						cible.getTimerCible().stop(); 
-						Outils.pause(1000);
+						obstacle.getTimerCible().stop();
+                        Outils.pause(1000);
 						this.cible.getTimerCible().start();
+                        this.obstacle.getTimerCible().start();
 						this.flecheSuitSouris = true;
 						this.reInit();
 						this.repaint();		
@@ -127,8 +184,10 @@ public class PanelTrajJeu extends PanelTraj{
 						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
 						time.stop();
 						cible.getTimerCible().stop(); 
+                        obstacle.getTimerCible().stop();
 						Outils.pause(1000);
 						this.cible.getTimerCible().start();
+                        this.obstacle.getTimerCible().start();
 						this.flecheSuitSouris = true;
 						this.reInit();
 						this.repaint();		
@@ -148,8 +207,10 @@ public class PanelTrajJeu extends PanelTraj{
 				fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
 				time.stop(); // pour éviter que la trajectoir reparte en boucle
 				cible.getTimerCible().stop();
+                obstacle.getTimerCible().stop();
 				Outils.pause(1000);
 				this.cible.getTimerCible().start();
+                this.obstacle.getTimerCible().start();
 				this.flecheSuitSouris = true;
 				this.reInit();
 				this.repaint();	
@@ -207,6 +268,10 @@ public class PanelTrajJeu extends PanelTraj{
 	
 	public Cible getCible(){
 		return this.cible;
+	}
+    
+    public Cible getObstacle(){
+		return this.obstacle;
 	}
 	
 	public FenetreJeu getFenetreJeu(){

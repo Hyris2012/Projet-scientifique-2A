@@ -12,6 +12,11 @@ public class FenetreScientifique extends FenetreMere {
 	private JSlider graviteChoisie;
 	private JPanel paramG;
 	private JButton changePar;
+    private JLabel historique;
+    private String histo1;
+    private String histo2;
+    private String histo3;
+    
 	
 	
 	public FenetreScientifique(){
@@ -28,6 +33,12 @@ public class FenetreScientifique extends FenetreMere {
 		info.setBackground(Color.white); 
 		info.setFont(new Font("Arial",Font.BOLD,22));
 		
+        historique = new JLabel("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;
+		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),jouer.getY()-150,(int)courbe.getWidth()/2,jouer.getHeight()*5);
+		historique.setBackground(Color.white); 
+		historique.setFont(new Font("Arial",Font.BOLD,22));
+        texteHistorique();
+        
 		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?
 		
 		JLabel hInit = new JLabel("Hauteur initiale :"); //3 
@@ -84,6 +95,7 @@ public class FenetreScientifique extends FenetreMere {
 		FenPrinc.add(hInit);
 		FenPrinc.add(vitesse);
 		FenPrinc.add(info);
+        FenPrinc.add(historique);
 		FenPrinc.add(gravite);
 		FenPrinc.add(graviteChoisie);
 		//FenPrinc.add(rayonBalle);
@@ -98,6 +110,15 @@ public class FenetreScientifique extends FenetreMere {
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		if(e.getSource() == jouer){
+            histo3=histo2;
+            histo2=histo1;
+            if(courbe.balle!=null){
+                histo1=courbe.balle.getPolynome().toString();
+            }
+            texteHistorique();
+            System.out.println(histo1);
+             System.out.println(histo2);
+              System.out.println(histo3);
 			courbe.departFleche.y=hauteurInit.getValue();
 			courbe.pesanteurChoisie=graviteChoisie.getValue();
 			courbe.setVitesseAffichage(vitesseAffichage.getValue());
@@ -119,5 +140,17 @@ public class FenetreScientifique extends FenetreMere {
 			enJeu = false ;
 		}
 	}
+    
+    public void texteHistorique(){
+        if(histo3!=null){
+            historique.setText("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;   
+        }else if(histo2!=null){
+            historique.setText("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"</html>") ;
+        }else if(histo1!=null){
+            historique.setText("<html>Equations précédentes : <br>"+histo1+"</html>") ;
+        }else{
+            historique.setText("Equations précédentes :") ;
+        }
+    }
 
 }

@@ -168,7 +168,6 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 				//flecheInit = new Vecteur (departFleche, pointeFleche);
 				
 				lancerBalle(new Balle(1.0, 1.0, flecheInit, this.getWidth(), this.getHeight(), pesanteurChoisie));
-				System.out.println(balle.getPesanteur() +" est la pesanteur");
 				//reInit();
 				flecheSuitSouris = false;
 				

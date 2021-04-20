@@ -13,24 +13,36 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int largeur; 
 	private PanelTraj courbe;
 	private int positionX;
+	private int positionY;
 	private Timer time = new Timer(1, this);
 	private int sens=1;
 	private int vitesse;
 	private final int positionMin=142;
+	private boolean estUneCible; // pour différencier la cible de l'obstacle
 	
 	
-	public Cible(double h, double l, PanelTraj p){
+	public Cible(double h, double l, PanelTraj p, boolean b){
 		//super();
 		//setBounds(0,0, p.getWidth(), p.getHeight());
 		//setLayout(null);
+		estUneCible=b;
 		courbe = p;
 		hauteur = (int) (h*courbe.getHeight());
+       
 		largeur = (int) (l*courbe.getWidth());
+        
 		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
 		
 		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
 			positionX=positionMin;
 		}
+		
+		if(!estUneCible){
+			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
+		}else{
+			positionY=courbe.getHeight()-hauteur;
+		}
+		
 				
 	}
 	//paint
@@ -51,14 +63,28 @@ public class Cible implements ActionListener {	//extends JPanel
 		positionX = positionX + sens*vitesse;
 	}
 	
+	public void deplaceY(){
+		
+		if (positionY <= 0){
+			sens = 1;
+		}else if(positionY >= courbe.getHeight()-100-hauteur){
+			sens = -1;
+		}
+		positionY = positionY + sens*vitesse;
+	}
+	
 	public boolean touche(int x, int y){
 		boolean b;
-		b = (x >= positionX && x <= (positionX + this.largeur) && y>= (courbe.getHeight()-this.hauteur) && y < courbe.getHeight());
+		b = (x >= positionX && x <= (positionX + this.largeur) && y>= positionY && y<= positionY+this.hauteur);
 		return b;
 	}
 		
 	public void actionPerformed(ActionEvent e) {
-		deplaceX();
+		if(estUneCible){
+			deplaceX();
+		}else{
+			deplaceY(); // pour que l'obstacle se déplace verticalement (expert)
+		}
 		courbe.repaint();
 			
 	}
@@ -69,10 +95,18 @@ public class Cible implements ActionListener {	//extends JPanel
 			this.vitesse = 0;
 			break;
         case "Intermédiaire":
-            this.vitesse=2;
+			if (estUneCible){
+				this.vitesse=2;
+			}else{
+				this.vitesse=0; // la cible bouge mais l'obstacle ne bouge pas
+			}
             break;
         case "Expert":
-            this.vitesse=4;
+			if (estUneCible){
+				this.vitesse=4;
+			}else{
+				this.vitesse=2; // la cible bouge plus vite que l'obstacle
+			}
             break;
         default :
             this.vitesse = 0;
@@ -107,6 +141,10 @@ public class Cible implements ActionListener {	//extends JPanel
 	
 	public int getPositionX(){
 		return this.positionX;
+	}
+	
+	public int getPositionY(){
+		return this.positionY;
 	}
 	
 	public void setPositionX(int x){

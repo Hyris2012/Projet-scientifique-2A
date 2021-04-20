@@ -132,8 +132,10 @@ public class FenetreJeu extends FenetreMere{
 				jouer.setVisible(false);
 				difficulteJeu.setVisible(false);
 				
-				courbe.getCible().getTimerCible().start();				
+				courbe.getCible().getTimerCible().start();
+                courbe.getObstacle().getTimerCible().start();				
 				courbe.getCible().setVitesseCible((String) difficulteJeu.getSelectedItem());
+                courbe.getObstacle().setVitesseCible((String) difficulteJeu.getSelectedItem());
 				courbe.setVitesseAffichage((String) difficulteJeu.getSelectedItem());
 				
 				gestionMusiqueEtDecor();
@@ -181,6 +183,7 @@ public class FenetreJeu extends FenetreMere{
 		}	
 		// méthode changerDecor qui s'occuper aussi de changer la musique 
 		courbe.setObjet((String) objet1.getSelectedItem());	
+		courbe.setObstacle((String) decor.getSelectedItem());
 	}
 	
 	// accesseurs en lecture
