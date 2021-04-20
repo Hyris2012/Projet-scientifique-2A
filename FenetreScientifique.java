@@ -13,9 +13,9 @@ public class FenetreScientifique extends FenetreMere {
 	private JPanel paramG;
 	private JButton changePar;
     private JLabel historique;
-    private String histo1;
-    private String histo2;
-    private String histo3;
+    private JLabel histo1;
+    private JLabel histo2;
+    private JLabel histo3;
     
 	
 	
@@ -33,11 +33,26 @@ public class FenetreScientifique extends FenetreMere {
 		info.setBackground(Color.white); 
 		info.setFont(new Font("Arial",Font.BOLD,22));
 		
-        historique = new JLabel("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;
-		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),jouer.getY()-150,(int)courbe.getWidth()/2,jouer.getHeight()*5);
+        historique = new JLabel("Equations précédentes : ") ;
+		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),info.getY(),(int)courbe.getWidth()/2,jouer.getHeight());
 		historique.setBackground(Color.white); 
 		historique.setFont(new Font("Arial",Font.BOLD,22));
-        texteHistorique();
+      //  texteHistorique();
+        
+        histo1 = new JLabel("") ;
+        histo1.setBounds((courbe.getX() + (int)courbe.getWidth()/2),historique.getY()+historique.getHeight(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
+        histo1.setBackground(Color.white); 
+        histo1.setFont(new Font("Arial",Font.BOLD,22));
+
+        histo2 = new JLabel("") ;
+        histo2.setBounds((courbe.getX() + (int)courbe.getWidth()/2),histo1.getY()+histo1.getHeight(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
+        histo2.setBackground(Color.white); 
+        histo2.setFont(new Font("Arial",Font.BOLD,22));
+
+        histo3 = new JLabel("") ;
+        histo3.setBounds((courbe.getX() + (int)courbe.getWidth()/2),histo2.getY()+histo2.getHeight(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
+        histo3.setBackground(Color.white); 
+        histo3.setFont(new Font("Arial",Font.BOLD,22));
         
 		// on pourrait garder un JSlider pour moduler la vitesse à laquelle on voit la balle bouger ?
 		
@@ -96,8 +111,12 @@ public class FenetreScientifique extends FenetreMere {
 		FenPrinc.add(vitesse);
 		FenPrinc.add(info);
         FenPrinc.add(historique);
+        FenPrinc.add(histo1);
+        FenPrinc.add(histo2);
+        FenPrinc.add(histo3);
 		FenPrinc.add(gravite);
 		FenPrinc.add(graviteChoisie);
+	
 		//FenPrinc.add(rayonBalle);
 		//FenPrinc.add(rayonChoisi);
 		//FenPrinc.add(changePar);
@@ -110,16 +129,13 @@ public class FenetreScientifique extends FenetreMere {
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		if(e.getSource() == jouer){
-            histo3=histo2;
-            histo2=histo1;
+            histo3.setText(histo2.getText());
+            histo2.setText(histo1.getText());
             if(courbe.balle!=null){
-                histo1=courbe.balle.getPolynome().toString();
+                histo1.setText(courbe.balle.getPolynome().toString());
             }
-            texteHistorique();
-            System.out.println(histo1);
-             System.out.println(histo2);
-              System.out.println(histo3);
-			courbe.departFleche.y=hauteurInit.getValue();
+          //  texteHistorique();
+            courbe.departFleche.y=hauteurInit.getValue();
 			courbe.pesanteurChoisie=graviteChoisie.getValue();
 			courbe.setVitesseAffichage(vitesseAffichage.getValue());
 			courbe.flecheSuitSouris = true;
@@ -141,7 +157,7 @@ public class FenetreScientifique extends FenetreMere {
 		}
 	}
     
-    public void texteHistorique(){
+    /*public void texteHistorique(){
         if(histo3!=null){
             historique.setText("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;   
         }else if(histo2!=null){
@@ -151,6 +167,6 @@ public class FenetreScientifique extends FenetreMere {
         }else{
             historique.setText("Equations précédentes :") ;
         }
-    }
+    }*/
 
 }

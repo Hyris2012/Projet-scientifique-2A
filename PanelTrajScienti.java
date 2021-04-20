@@ -28,7 +28,7 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void mouseClicked(MouseEvent e){
 		super.mouseClicked(e);
-		
+		System.out.println(balle.getPesanteur());
 		repaint();
 	}
 	

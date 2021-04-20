@@ -6,7 +6,7 @@ public class Balle {
 	private double taille;
 	private double vitesseInitiale;
 	private double angleIni;			// angle en radians 
-	private double pesanteur;
+	private double pesanteur=9.81*4;
 	
 	private Vecteur depart; 
 	private Polynome traj; 
@@ -25,9 +25,10 @@ public class Balle {
 		this.angleIni = v.getArgument();	
 		
 		this.vitesseInitiale = v.getModule()/2;
+		System.out.println(vitesseInitiale+"v=");
 		this.masse = m;
 		this.rayon = r;
-		this.pesanteur = 9.81*4;
+		//this.pesanteur = 9.81*4;
 		
 		      
 	    this.depart = v;
