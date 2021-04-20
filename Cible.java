@@ -25,7 +25,13 @@ public class Cible implements ActionListener {	//extends JPanel
 		//setLayout(null);
 		courbe = p;
 		hauteur = (int) (h*courbe.getHeight());
+        if(hauteur<1){
+            hauteur=1;
+        }
 		largeur = (int) (l*courbe.getWidth());
+        if(hauteur<1){
+            hauteur=1;
+        }
 		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
 		
 		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner

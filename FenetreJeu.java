@@ -132,8 +132,10 @@ public class FenetreJeu extends FenetreMere{
 				jouer.setVisible(false);
 				difficulteJeu.setVisible(false);
 				
-				courbe.getCible().getTimerCible().start();				
+				courbe.getCible().getTimerCible().start();
+                courbe.getObstacle().getTimerCible().start();				
 				courbe.getCible().setVitesseCible((String) difficulteJeu.getSelectedItem());
+                courbe.getObstacle().setVitesseCible((String) difficulteJeu.getSelectedItem());
 				courbe.setVitesseAffichage((String) difficulteJeu.getSelectedItem());
 				
 				gestionMusiqueEtDecor();
