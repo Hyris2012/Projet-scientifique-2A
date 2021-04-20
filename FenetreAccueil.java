@@ -8,22 +8,19 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 	private JButton scientifique ; 
 	private JButton jeu ;
 	
-	private FenetreMere trajectory ;	// ancienne fenetreJeu (qui était de type FenetreJeu)
+	private FenetreMere trajectory ;	
 	private JPanel FenPrinc ; 
-	private Color fondBleu = new Color(135,206,235);//ancien Color couleur
 	
 	public FenetreAccueil() {
 		super("Trajectory Manager") ; 
-		// trajectory = new FenetreMere(); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300,100,largeur,hauteur);
 		setResizable(false);
-		// setVisible(false) par défaut ?
 		
 		FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 
 		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(fondBleu) ;
+		FenPrinc.setBackground(Outils.FOND_BLEU) ;
 		
 		scientifique = new JButton("<html>Mode<br> scientifique !</html>") ; 
 		scientifique.addActionListener(this) ; 
@@ -43,7 +40,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		
 		JLabel regle = new JLabel("<html>Bienvenue dans notre jeu ludique et scientifique : TRAJECTORY MANAGER.<br>Les regles sont simples, il faut tirer dans le panier et atteindre le score de 1500.<br>Les tirs peuvent vous apporter jusqu'a 300 points.<br>Si vous n'avez plus de vies sans atteindre ce score alors vous avez perdu.<br>Bonne chance ;)</html>");
 		regle.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(9/21.0)),(int)(largeur*(20/29.7)),(int)(hauteur*(4/21.0))) ;
-		regle.setBackground(fondBleu) ;
+		regle.setBackground(Outils.FOND_BLEU) ;
 		regle.setFont(new Font("Arial",Font.BOLD,18)) ;
 		
 		FenPrinc.add(logo); 
@@ -61,7 +58,6 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		}else if (e.getSource() == scientifique){
 			trajectory = new FenetreScientifique();
 		}
-		//trajectory.setVisible(true);
 		this.setVisible(false);
 	}	
 	

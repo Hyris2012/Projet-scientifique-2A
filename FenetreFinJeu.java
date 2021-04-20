@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FenetreFinJeu extends JFrame implements ActionListener {
-	private Color couleur = new Color(135,206,235);
+	
 	private JButton retourFenAccueil;
 	
 	public FenetreFinJeu(){
@@ -14,12 +14,12 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		JLabel etiquette = new JLabel("hum hum");
 		etiquette.setBounds(20, 20, 700, 100);
 		etiquette.setFont(new Font("Arial",Font.BOLD,18)) ;
-		etiquette.setBackground(couleur) ;
+		etiquette.setBackground(Outils.FOND_BLEU) ;
 		
 		JPanel texte = new JPanel();
 		texte.setBounds(0, 0, 800, 300);
 		texte.setLayout(null);
-		texte.setBackground(couleur);
+		texte.setBackground(Outils.FOND_BLEU);
 		
 		texte.add(etiquette);		
 		add(texte) ;
@@ -36,17 +36,17 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		JPanel texte = new JPanel();
 		texte.setBounds(0, 0, 800, 300);
 		texte.setLayout(null);
-		texte.setBackground(couleur);
+		texte.setBackground(Outils.FOND_BLEU);
 		
 		JLabel coord = new JLabel(affichage);
 		coord.setBounds(180, 20, 700, 100);
 		coord.setFont(new Font("Arial",Font.BOLD,18)) ;
-		coord.setBackground(couleur) ;
+		coord.setBackground(Outils.FOND_BLEU) ;
 		
 		/*JLabel conv = new JLabel("Un pixel vaut approximativement 5.3*10^-6 m"); 
 		conv.setBounds(100, 60, 700, 100);
 		conv.setFont(new Font("Arial",Font.BOLD,18)) ;
-		conv.setBackground(couleur) ;
+		conv.setBackground(Outils.FOND_BLEU) ;
 		*/
 		
 		retourFenAccueil = new JButton ("Retour");

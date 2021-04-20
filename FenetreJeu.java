@@ -223,19 +223,13 @@ public class FenetreJeu extends FenetreMere{
 	 * @return void
 	 */
 	
-	public void victoireOuDefaite(){		// concerne plutôt la fenetre de jeu que le panelTraj -> à appeler dans le setScore et le setVie 
-		if(vie <=0){
-			new FenetreAccueil();
-			//new Restart("Perdu!");
-			new FenetreFinJeu("PERDU" , "Tu n'as plus de vies, tente à nouveau ta chance !");
-			this.setVisible(false);
+	public void victoireOuDefaite(){
+		if(vie <= 0){
+			new Restart(this, "Perdu!");
 			courbe.getFond().getMusiqueChoisie().stop();
 	
 		}else if(score >= 1500){
-			new FenetreAccueil();
-			//new Restart("Gagné!");
-			new FenetreFinJeu("GAGNE" , "Tu as atteint un score de 1500, tu es un.e champion.ne !");
-			this.setVisible(false);
+			new Restart(this, "Gagné!");
 			courbe.getFond().getMusiqueChoisie().stop();
 			
 		}
