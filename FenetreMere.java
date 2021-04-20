@@ -12,7 +12,6 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	protected int hauteur;
 	protected JButton retourFenAccueil;
 	protected boolean enJeu = false;
-	protected JLabel info;	// ancien 'equa'
 	
 	public FenetreMere(){
 		super("Trajectory Manager") ;

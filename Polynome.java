@@ -132,11 +132,16 @@ public class Polynome {
 	 */
 	
 	public double calculSommet(){
-		double extremum = valeurY.get((int)alpha);
-		if(beta > extremum){
-			new FenetreFinJeu("Erreur", "Attention, la parabole est tournée vers le bas... trajectoire paranormale");
+		if ((int) alpha < valeurY.size()){
+			
+			double extremum = valeurY.get((int)alpha);
+			if(beta > extremum){
+				// new FenetreFinJeu("Erreur", "Attention, la parabole est tournée vers le bas... trajectoire paranormale");
+			}
+			return extremum;
+		} else {
+			return 0.0;
 		}
-		return extremum;
 	}
 	
 	/**
@@ -156,8 +161,12 @@ public class Polynome {
 	 */
 	 
 	public double distanceEntreRacines(){
-		double d = Math.abs(racines[0]-racines[1]);
-		return d;
+		if (racines != null){
+			double d = Math.abs(racines[0]-racines[1]);
+			return d;
+		} else {
+			return 0.0;
+		}
 	}
 	
 	public double getA(){
