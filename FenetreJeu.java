@@ -183,6 +183,7 @@ public class FenetreJeu extends FenetreMere{
 		}	
 		// méthode changerDecor qui s'occuper aussi de changer la musique 
 		courbe.setObjet((String) objet1.getSelectedItem());	
+		courbe.setObstacle((String) decor.getSelectedItem());
 	}
 	
 	// accesseurs en lecture

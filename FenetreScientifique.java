@@ -34,7 +34,7 @@ public class FenetreScientifique extends FenetreMere {
 		info.setFont(new Font("Arial",Font.BOLD,22));
 		
         historique = new JLabel("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;
-		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),jouer.getY()-65,(int)courbe.getWidth()/2,jouer.getHeight()*3);
+		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),jouer.getY()-150,(int)courbe.getWidth()/2,jouer.getHeight()*5);
 		historique.setBackground(Color.white); 
 		historique.setFont(new Font("Arial",Font.BOLD,22));
         texteHistorique();
@@ -116,6 +116,9 @@ public class FenetreScientifique extends FenetreMere {
                 histo1=courbe.balle.getPolynome().toString();
             }
             texteHistorique();
+            System.out.println(histo1);
+             System.out.println(histo2);
+              System.out.println(histo3);
 			courbe.departFleche.y=hauteurInit.getValue();
 			courbe.pesanteurChoisie=graviteChoisie.getValue();
 			courbe.setVitesseAffichage(vitesseAffichage.getValue());
