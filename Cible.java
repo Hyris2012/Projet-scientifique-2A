@@ -75,7 +75,7 @@ public class Cible implements ActionListener {	//extends JPanel
 	
 	public boolean touche(int x, int y){
 		boolean b;
-		b = (x >= positionX && x <= (positionX + this.largeur) && y>= positionY && y<= positionY+this.hauteur);
+		b = (x > positionX && x < (positionX + this.largeur) && y == positionY );		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
 		return b;
 	}
 		

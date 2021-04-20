@@ -56,7 +56,7 @@ public class Polynome {
 	
 	public void remplissageListe(){
 		
-		for(double i = 0; i < this.largeurPanel; i++){
+		for(double i = 0; i < this.largeurPanel; i++){		
 			valeurX.add(i);
 	    }
 	    double y;

@@ -105,6 +105,12 @@ public class PanelTrajJeu extends PanelTraj{
 	
 	public boolean atterrie(){
 		boolean b = super.atterrie();
+		// tentative infructueuse pour que l'image s'arrête quand c'est le bas qui touche et non pas le centre
+		/*boolean b = false; 
+		if(XParcourus.size() > 0){
+			//b = (XParcourus.get(XParcourus.size()-1) >= (balle.getPolynome().getRacines()[1] - imageObj.getHeight(null)/2));
+			b = (YParcourus.get(YParcourus.size()-1) >= (this.getHeight() - imageObj.getHeight(null)/2));
+		}*/	
 		
 		if(b){
 			this.cible.getTimerCible().stop();
@@ -143,7 +149,7 @@ public class PanelTrajJeu extends PanelTraj{
 				 
 				if(YParcourus.size() > 0){		// condition anti-exception : les arraylist de la trajectoire ne sont pas nulles 
 					
-					if(cible.getVitesseCible()!=0 && obstacle.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){
+					if(cible.getVitesseCible()!=0 && obstacle.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		// tentative infructueuse pour que l'image s'arrête quand c'est le bas qui touche et non pas le centre : + imageObj.getHeight(null)/2
                         fenJ.setVie(fenJ.getVie() - 1); 			
 						fenJ.getLabelVie().setText("Nombre de vies: " + fenJ.getVie());
 						time.stop();
