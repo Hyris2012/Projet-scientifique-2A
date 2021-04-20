@@ -3,6 +3,11 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+ * NOTE : j'ai bloqué le clic dans les 2 panels traj, ce qui implique pour panelTrajScienti qu'il faut recliquer sur jouer pour relancer une trajectoire, mais je me dis que c'est pas trop un problème puisqu'on veut bouger les JSlider entre chaque lancé et donc reAppuyer sur jouer
+ *  
+ * */
+
 public class PanelTrajScienti extends PanelTraj {
 	private FenetreScientifique fenS;
 	
@@ -23,7 +28,12 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void mouseClicked(MouseEvent e){
 		super.mouseClicked(e);
+		
 		repaint();
+	}
+	
+	public void setVitesseAffichage(int i){
+		this.vitesseAffichage=i;
 	}
 
 }

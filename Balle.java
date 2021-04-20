@@ -37,7 +37,7 @@ public class Balle {
 
 	public Balle(double m, double r, Vecteur v, int hauteur, int largeur, double g){
 		this(m, r, v, hauteur, largeur);
-		this.pesanteur = g*4;
+		this.pesanteur = g*4; //*4 car sinon ça sort trop vite de l'écran
 		
 	}
 
@@ -58,5 +58,15 @@ public class Balle {
 	public Polynome getPolynome(){		// devrait s'appeler getTraj
 		return this.traj;
 	}
+	
+	public double getPesanteur(){
+		return this.pesanteur/4;
+	}
+	
+	public void setPesanteur(double p){
+		this.pesanteur=p*4;
+	}
+		
+		
 
 }

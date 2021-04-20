@@ -17,6 +17,8 @@ public class FenetreScientifique extends FenetreMere {
 	public FenetreScientifique(){
 		super();
 		
+		jouer.setText("Lancer !");
+		
 		courbe = new PanelTrajScienti(this, (int)(getWidth()*(10/29.7)),(int)(getHeight()*(2.5/21.0)),(int)(getWidth()*(18/29.7)),(int)(getHeight()*(14/21.0)));
 		courbe.setLayout(null);
 		courbe.setBackground(Color.white);
@@ -42,7 +44,7 @@ public class FenetreScientifique extends FenetreMere {
 		vitesse.setFont(new Font("Arial",Font.BOLD,20)) ;
 		vitesse.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
 		
-		vitesseAffichage = new JSlider(0,10,1) ; //4 
+		vitesseAffichage = new JSlider(1,11,1) ; //4 
 		vitesseAffichage.setMajorTickSpacing(2);
 		vitesseAffichage.setPaintLabels(true) ;
 		vitesseAffichage.setPaintTicks(true) ; 
@@ -59,12 +61,12 @@ public class FenetreScientifique extends FenetreMere {
 		gravite.setFont(new Font("Arial",Font.BOLD,20)) ;
 		gravite.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
-		graviteChoisie = new JSlider(0,25,1) ; //4 
+		graviteChoisie = new JSlider(1,26,1) ; //4 
 		graviteChoisie.setMajorTickSpacing(5);
 		graviteChoisie.setPaintLabels(true) ;
 		graviteChoisie.setPaintTicks(true) ; 
 		graviteChoisie.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))); 
-		
+		/* choix du rayon inutile en mode scientifique : on pourrait le changer par un SLider masse, mais ça revient au même que la gravité
 		JLabel rayonBalle = new JLabel("Rayon de l'objet :"); //3
 		rayonBalle.setFont(new Font("Arial",Font.BOLD,20)) ;
 		rayonBalle.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(14/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
@@ -74,6 +76,7 @@ public class FenetreScientifique extends FenetreMere {
 		rayonChoisi.setPaintLabels(true) ;
 		rayonChoisi.setPaintTicks(true) ; 
 		rayonChoisi.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
+		*/
 		
 		FenPrinc.add(courbe);
 		FenPrinc.add(hauteurInit);
@@ -83,8 +86,8 @@ public class FenetreScientifique extends FenetreMere {
 		FenPrinc.add(info);
 		FenPrinc.add(gravite);
 		FenPrinc.add(graviteChoisie);
-		FenPrinc.add(rayonBalle);
-		FenPrinc.add(rayonChoisi);
+		//FenPrinc.add(rayonBalle);
+		//FenPrinc.add(rayonChoisi);
 		//FenPrinc.add(changePar);
 		
 		this.add(FenPrinc);		// est-ce que ce serait possible de le mettre dans FenetreMere
@@ -95,6 +98,9 @@ public class FenetreScientifique extends FenetreMere {
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		if(e.getSource() == jouer){
+			courbe.departFleche.y=hauteurInit.getValue();
+			courbe.pesanteurChoisie=graviteChoisie.getValue();
+			courbe.setVitesseAffichage(vitesseAffichage.getValue());
 			courbe.flecheSuitSouris = true;
 			courbe.reInit();
 			courbe.repaint();

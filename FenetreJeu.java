@@ -121,7 +121,6 @@ public class FenetreJeu extends FenetreMere{
 		
 		
 		if(e.getSource() == jouer){
-			
 			// pour qu'on ne puisse pas changer de décor en cours de partie : ci après 
 			if(!enJeu){
 				enJeu = true ;
