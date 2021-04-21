@@ -1,65 +1,38 @@
+/**
+ * Fenetre apparaissant la fin d'une partie permettant d'en démarrer une nouvelle.
+ */
+ 
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.String;
 
 public class Restart extends JFrame implements ActionListener{
+	
 	private FenetreJeu fenJ;
 	private int largeur = 1100;
 	private int hauteur = 800;
-	private Color fondBleu = new Color(135,206,235);
 	private JButton quitte; 
 	private JButton restart;
 	
-	public Restart(String affichage){ //Pour vérifier que l'IHM est correcte 
-		super("Trajectory Manager") ;
-		setResizable(false);
-		setBounds(300,100,largeur,hauteur);
-		setBackground(fondBleu) ;
-		
-		JPanel FenPrinc = new JPanel() ; 
-		FenPrinc.setLayout(null) ; 
-		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(fondBleu) ;
-		
-		JLabel ecriture = new JLabel(affichage); 
-		ecriture.setBounds((int)(largeur*(10/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(10/21.0)));
-		ecriture.setFont(new Font("Serif",Font.BOLD,26)) ;
-		ecriture.setBackground(fondBleu);
-		
-		quitte = new JButton("Quitter le Jeu");
-		quitte.setBounds((int)(largeur*(16.5/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(6/21.0))) ;
-		quitte.setFont(new Font("Stencil",Font.BOLD,26));
-		quitte.setBackground(new Color (90,90,90)); 
-		
-		restart = new JButton("<html>Recommencer <br>une partie");
-		restart.setBounds((int)(largeur*(3.5/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(6/21.0)));
-		restart.setFont(new Font("Stencil",Font.BOLD,26));
-		restart.setBackground(Color.red); 
-		
-		FenPrinc.add(ecriture);
-		FenPrinc.add(restart);
-		FenPrinc.add(quitte);
-		add(FenPrinc);
-		setVisible(true);
-	}
+	// je me suis permise d'enlever le constructeur de test ; on peut la retrouver dans la version précédente si besoin
 	
 	public Restart(FenetreJeu fenJ, String affichage){
 		super("Trajectory Manager") ;
 		this.fenJ = fenJ;
 		setResizable(false);
 		setBounds(300,100,largeur,hauteur);
-		setBackground(fondBleu) ;
+		setBackground(Outils.FOND_BLEU) ;
 		
 		JPanel FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 
 		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(fondBleu) ;
+		FenPrinc.setBackground(Outils.FOND_BLEU) ;
 		
 		JLabel ecriture = new JLabel(affichage); 
 		ecriture.setBounds((int)(largeur*(10/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(10/21.0)));
-		ecriture.setFont(new Font("Serif",Font.BOLD,36)) ;
-		ecriture.setBackground(fondBleu);
+		ecriture.setFont(new Font("Serif",Font.BOLD,60)) ;
+		ecriture.setBackground(Outils.FOND_BLEU);
 		
 		quitte = new JButton("Quitter le Jeu");
 		quitte.setBounds((int)(largeur*(16.5/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(6/21.0))) ;
@@ -84,10 +57,13 @@ public class Restart extends JFrame implements ActionListener{
 		fenJ.setVisible(false);
 		
 		if(e.getSource()==restart){
+			setVisible(false);
 			new FenetreJeu();
 		}
+		
 		if(e.getSource()==quitte){
 			setVisible(false);
+			new FenetreAccueil();
 		}
 	}
 }

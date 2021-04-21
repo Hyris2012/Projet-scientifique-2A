@@ -21,8 +21,8 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void lancerBalle(Balle balle){
 		super.lancerBalle(balle);
-	
-		fenS.info.setText("<html> Equation de la trajectoire : <br>"+ balle.getPolynome().toString()+"</html>"); // juste .info marche parce qu'il est en protected dans FenetreMere et donc accessible dans tout le package
+		fenS.info.setText("<html> " + Outils.coupeDecimale(balle.getPolynome().calculAtterrissage()) + " mètres parcourus<br>" + Outils.coupeDecimale(this.getHeight() - balle.getPolynome().calculSommet()) + " mètres d'altitude atteints</html>");
+		fenS.equa.setText("<html> Equation de la trajectoire : <br>"+ balle.getPolynome().toString()+"</html>"); // juste .equa marche parce qu'il est en protected dans FenetreMere et donc accessible dans tout le package
 		
 	}
 	

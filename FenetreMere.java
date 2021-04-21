@@ -10,10 +10,8 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 	protected JButton jouer ;
 	protected int largeur;
 	protected int hauteur;
-	protected Color fondBleu = new Color(135,206,235);
 	protected JButton retourFenAccueil;
 	protected boolean enJeu = false;
-	protected JLabel info;	// ancien 'equa'
 	
 	public FenetreMere(){
 		super("Trajectory Manager") ;
@@ -29,7 +27,7 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 		FenPrinc = new JPanel() ; 
 		FenPrinc.setLayout(null) ; 
 		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(fondBleu) ; 
+		FenPrinc.setBackground(Outils.FOND_BLEU) ; 
 		FenPrinc.repaint();
 		
 		jouer = new JButton("Jouer ! ") ; 
