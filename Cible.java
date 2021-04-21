@@ -15,9 +15,9 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int positionX;
 	private int positionY;
 	private Timer time = new Timer(1, this);
-	private int sens=1;
+	private int sens = 1;
 	private int vitesse;
-	private final int positionMin=142;
+	private final int positionMin = 142;
 	private boolean estUneCible; // pour différencier la cible de l'obstacle
 	private Image imageCible;
 	
@@ -72,9 +72,15 @@ public class Cible implements ActionListener {	//extends JPanel
 		positionY = positionY + sens*vitesse;
 	}
 	
-	public boolean touche(int x, int y){
+	public boolean toucheCible(int x, int y){
 		boolean b;
 		b = (x > positionX && x < (positionX + this.largeur) && y == positionY );		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
+		return b;
+	}
+	
+	public boolean toucheObstacle(int x, int y){
+		boolean b;
+		b = (x > positionX && x < (positionX + this.largeur) && y >= positionY && y <= (positionY + hauteur));
 		return b;
 	}
 		
