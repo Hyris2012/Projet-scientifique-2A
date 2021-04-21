@@ -37,7 +37,7 @@ public class FenetreScientifique extends FenetreMere {
 		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),info.getY(),(int)courbe.getWidth()/2,jouer.getHeight());
 		historique.setBackground(Color.white); 
 		historique.setFont(new Font("Arial",Font.BOLD,22));
-      //  texteHistorique();
+		// texteHistorique();
         
         histo1 = new JLabel("") ;
         histo1.setBounds((courbe.getX() + (int)courbe.getWidth()/2),historique.getY()+historique.getHeight(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
