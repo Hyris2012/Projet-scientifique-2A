@@ -1,4 +1,4 @@
-/*
+/** Classe cible représente un objet cible OU obstacle de taille et vitesse variable.
  * 
  * 
  */
@@ -21,6 +21,10 @@ public class Cible implements ActionListener {	//extends JPanel
 	private boolean estUneCible; // pour différencier la cible de l'obstacle
 	private Image imageCible;
 	
+	/**
+	 * Construit une cible associée au PanelTraj p
+	 * @param h hauteur, l largeur de la cible, p PanelTraj associé, b booléen déterminant la nature de l'objet : true = cible, false = obstacle
+	 */
 	
 	public Cible(double h, double l, PanelTraj p, boolean b){
 	
@@ -51,6 +55,12 @@ public class Cible implements ActionListener {	//extends JPanel
 		g.drawImage(imageCible, positionX, positionY, null);
 	}*/
 	
+	/**
+	 * Methode déplace la coordonnée X de telle manière que l'objet fasse des aller-retour dans le panel
+	 * A la vitesse en nb de pixels en attribut de l'objet
+	 * @param aucun
+	 * @return void
+	 */
 	
 	public void deplaceX(){
 		
@@ -72,12 +82,24 @@ public class Cible implements ActionListener {	//extends JPanel
 		positionY = positionY + sens*vitesse;
 	}
 	
+	/**
+	 * Méthode détermine si un point de coordonée x et y touche la cible (par le dessus).
+	 * @param x et y les coordonnées du point
+	 * @return booléen 
+	 */
+	 
 	public boolean toucheCible(int x, int y){
 		boolean b;
-		b = (x > positionX && x < (positionX + this.largeur) && y == positionY );		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
+		b = (x > positionX && x < (positionX + this.largeur) && y >= positionY && y <= (positionY + vitesse));		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
 		return b;
 	}
 	
+	/**
+	 * Méthode détermine si un point de coordonée x et y touche l'obstacle.
+	 * @param x et y les coordonnées du point
+	 * @return booléen 
+	 */
+	 
 	public boolean toucheObstacle(int x, int y){
 		boolean b;
 		b = (x > positionX && x < (positionX + this.largeur) && y >= positionY && y <= (positionY + hauteur));
