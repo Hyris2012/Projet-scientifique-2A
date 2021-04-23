@@ -105,7 +105,7 @@ public class PanelTrajJeu extends PanelTraj{
 			}else if(YParcourus.size() > 0){		 // condition anti-exception : les arraylist de la trajectoire ne doivent pas être nulles 
 				
 				// la balle touche l'obstacle
-				if(cible.getVitesseCible()!=0 && obstacle.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		// tentative infructueuse pour que l'image s'arrête quand c'est le bas qui touche et non pas le centre : + imageObj.getHeight(null)/2
+				if(cible.getVitesseCible()!=0 && obstacle.toucheObstacle(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		// tentative infructueuse pour que l'image s'arrête quand c'est le bas qui touche et non pas le centre : + imageObj.getHeight(null)/2
 					fenJ.perdVies(1);
 					fenJ.victoireOuDefaite();
 					finDuLancer();
@@ -119,7 +119,7 @@ public class PanelTrajJeu extends PanelTraj{
 					return;
 					
 				// cas où le joueur GAGNE son lancer : il touche la cible
-				}else if(cible.touche(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
+				}else if(cible.toucheCible(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 					fenJ.mAjScore(300);
 					fenJ.victoireOuDefaite();
 					finDuLancer();
