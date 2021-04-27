@@ -58,7 +58,7 @@ public class FenetreScientifique extends FenetreMere {
 		JLabel hInit = new JLabel("Hauteur initiale :"); //3 
 		hInit.setFont(new Font("Arial",Font.BOLD,20)) ;
 		hInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
-		
+				
 		hauteurInit = new JSlider(0,courbe.getHeight(),45) ; //2
 		hauteurInit.setMajorTickSpacing((int)(courbe.getHeight()/6));
 		hauteurInit.setPaintLabels(true) ; 
@@ -89,6 +89,7 @@ public class FenetreScientifique extends FenetreMere {
         info.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(11/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(5/21.0)));
         info.setBackground(Outils.FOND_BLEU); 
         info.setFont(new Font("Arial",Font.BOLD,22));
+		info.setVisible(false);
 		
 		FenPrinc.add(courbe);
 		FenPrinc.add(hauteurInit);
@@ -112,8 +113,10 @@ public class FenetreScientifique extends FenetreMere {
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		
-		if(e.getSource() == jouer){
-		
+		if(e.getSource() == jouer && !enJeu){
+			
+			enJeu = true;
+			info.setVisible(false);
             histo3.setText(histo2.getText());
             histo2.setText(histo1.getText());
             
@@ -128,7 +131,7 @@ public class FenetreScientifique extends FenetreMere {
 			courbe.reInit();
 			courbe.repaint();
 			
-			if(!enJeu){
+			/*if(!enJeu){ on optimise encore + le enJeu en le mettant dans le if en haut et en le rééxploitant dans fenetre scienti
 				enJeu = true;
 				courbe.setVisible(true);
 			
@@ -136,6 +139,7 @@ public class FenetreScientifique extends FenetreMere {
 				courbe.reInit();
 				courbe.repaint();	
 			}
+			*/
 		}
 	}
     

@@ -37,6 +37,8 @@ public class Cible implements ActionListener {	//extends JPanel
 		
 		hauteur = (int) (h*courbe.getHeight());
 		largeur = (int) (l*courbe.getWidth());
+		
+		//System.out.println("h : "+hauteur+", l : "+largeur);
         
 		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
 		
@@ -90,7 +92,13 @@ public class Cible implements ActionListener {	//extends JPanel
 	 
 	public boolean toucheCible(int x, int y){
 		boolean b;
-		b = (x > positionX && x < (positionX + this.largeur) && y >= positionY && y <= (positionY + vitesse));		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
+		b = (x >= positionX && x <= (positionX + this.largeur) && y >= positionY);
+		return b;
+	}
+	
+	public boolean toucheCoteCible(int x, int y){ // pas infaillible : si on tire en ligne droite sur le coin on gagne, si on tombe verticalement sur le coin on risque de perdre ; mais la proba est très faible
+		boolean b;
+		b = (x >= positionX && x <= (positionX + 10) && y >= positionY+5);	// 5 parce que la vitesse en expert est de 4
 		return b;
 	}
 	

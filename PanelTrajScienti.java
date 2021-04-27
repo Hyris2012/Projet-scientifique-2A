@@ -28,12 +28,24 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void mouseClicked(MouseEvent e){
 		super.mouseClicked(e);
-		System.out.println(balle.getPesanteur());
+		//System.out.println(balle.getPesanteur());
 		repaint();
 	}
 	
 	public void setVitesseAffichage(int i){
 		this.vitesseAffichage=i;
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		super.actionPerformed(e);
+		
+		if(e.getSource()==time && (atterrie()|| dernierXAffiche >= this.getWidth())){
+			fenS.info.setVisible(true);
+			fenS.enJeu=false;
+		}
+		
+		
+		
 	}
 
 }

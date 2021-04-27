@@ -11,7 +11,7 @@ public class Restart extends JFrame implements ActionListener{
 	
 	private FenetreJeu fenJ;
 	private int largeur = 1100;
-	private int hauteur = 800;
+	private int hauteur = 600;
 	private JButton quitte; 
 	private JButton restart;
 	
@@ -30,8 +30,8 @@ public class Restart extends JFrame implements ActionListener{
 		FenPrinc.setBackground(Outils.FOND_BLEU) ;
 		
 		JLabel ecriture = new JLabel(affichage); 
-		ecriture.setBounds((int)(largeur*(10/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(10/21.0)));
-		ecriture.setFont(new Font("Serif",Font.BOLD,60)) ;
+		ecriture.setBounds((int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(10/21.0)));
+		ecriture.setFont(new Font("Serif",Font.BOLD,42)) ;
 		ecriture.setBackground(Outils.FOND_BLEU);
 		
 		quitte = new JButton("Quitter le Jeu");
@@ -40,7 +40,7 @@ public class Restart extends JFrame implements ActionListener{
 		quitte.setBackground(new Color (90,90,90));
 		quitte.addActionListener(this); 
 		
-		restart = new JButton("Recommencer une partie");
+		restart = new JButton("<html> Recommencer <br> une partie </html>");
 		restart.setBounds((int)(largeur*(3.5/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(6/21.0)));
 		restart.setFont(new Font("Stencil",Font.BOLD,30));
 		restart.setBackground(Color.red); 
