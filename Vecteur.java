@@ -24,7 +24,7 @@ public class Vecteur {
 		double y = module*Math.sin(argument) + b.y;
 		pointe = new APoint(x , y);
 	}
-	
+
 	public APoint getBase(){
 		return this.base;
 	}
@@ -48,5 +48,6 @@ public class Vecteur {
 	public double ordonnee(){
 		return (pointe.y - base.y);
 	}
+
 }
 
