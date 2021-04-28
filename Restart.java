@@ -30,7 +30,7 @@ public class Restart extends JFrame implements ActionListener{
 		FenPrinc.setBackground(Outils.FOND_BLEU) ;
 		
 		JLabel ecriture = new JLabel(affichage); 
-		ecriture.setBounds((int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0)),(int)(largeur*(15/29.7)),(int)(hauteur*(10/21.0)));
+		ecriture.setBounds((int)(largeur*(6/29.7)),(int)(hauteur*(1/21.0)),(int)(largeur*(19/29.7)),(int)(hauteur*(10/21.0)));
 		ecriture.setFont(new Font("Serif",Font.BOLD,42)) ;
 		ecriture.setBackground(Outils.FOND_BLEU);
 		
@@ -40,7 +40,7 @@ public class Restart extends JFrame implements ActionListener{
 		quitte.setBackground(new Color (90,90,90));
 		quitte.addActionListener(this); 
 		
-		restart = new JButton("<html> Recommencer <br> une partie </html>");
+		restart = new JButton("<html><center> Recommencer <br> une partie </center></html>");
 		restart.setBounds((int)(largeur*(3.5/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(6/21.0)));
 		restart.setFont(new Font("Stencil",Font.BOLD,30));
 		restart.setBackground(Color.red); 

@@ -18,6 +18,7 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int sens = 1;
 	private int vitesse;
 	private final int positionMin = 142;
+	private final int positionMax = 1042; // car si l'obstacle est trop loin, il ne sert à rien
 	private boolean estUneCible; // pour différencier la cible de l'obstacle
 	private Image imageCible;
 	
@@ -40,17 +41,7 @@ public class Cible implements ActionListener {	//extends JPanel
 		
 		//System.out.println("h : "+hauteur+", l : "+largeur);
         
-		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
-		
-		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
-			positionX=positionMin;
-		}
-		
-		if(!estUneCible){
-			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
-		}else{
-			positionY=courbe.getHeight()-hauteur;
-		}	
+        setPosition();
 	}
 	
 	/*public void dessine(Graphics g){
@@ -181,8 +172,23 @@ public class Cible implements ActionListener {	//extends JPanel
 		return this.positionY;
 	}
 	
-	public void setPositionX(int x){
-		this.positionX=x;
+	public void setPosition(){
+		
+		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
+		
+		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
+			positionX=positionMin;
+		}
+		
+		if(!estUneCible && positionX>positionMax){
+			positionX = positionMax;
+		}
+		
+		if(!estUneCible){
+			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
+		}else{
+			positionY=courbe.getHeight()-hauteur;
+		}	
 	}
 	
 	public Timer getTimerCible(){

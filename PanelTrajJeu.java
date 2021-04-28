@@ -24,6 +24,9 @@ public class PanelTrajJeu extends PanelTraj{
 	private final Image grillePain=T.getImage("grille_pain.png");
 	private final Image phedre=T.getImage("phedre.png");
 	
+	private final Image picsDroite;
+	private final Image picsGauche;
+	
 	private Image imageObj;
 	private Image imageObstacle;
 	private Cible cible;
@@ -35,6 +38,10 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		cible = new Cible (0.05, 0.2, this, true);
         obstacle = new Cible (0.12, 0.08, this, false);
+        
+        //initialisation des pics sur la cible
+        picsDroite=T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        picsGauche=T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
         
 		//initialisation des decors
 		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
@@ -72,6 +79,8 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());		// dans l'idéal ça se passerait dans Cible ça non ? 
 		//cible.dessine(g);
+		g.drawImage(picsGauche, cible.getPositionX() - (int) (this.getWidth()*0.01), cible.getPositionY(),null);
+		g.drawImage(picsDroite, cible.getPositionX() + cible.getLargeurCible(), cible.getPositionY(),null);
 		
 		if(cible.getVitesseCible()!=0){ // pour que l'obstacle ne s'affiche pas en mode débutant
 			g.drawImage(imageObstacle, obstacle.getPositionX(), obstacle.getPositionY(),null);
@@ -120,6 +129,8 @@ public class PanelTrajJeu extends PanelTraj{
 				// cas où le joueur GAGNE son lancer : il touche la cible
 				}else if(cible.toucheCible(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 					fenJ.mAjScore(300);
+					cible.setPosition();
+					obstacle.setPosition();
 					fenJ.victoireOuDefaite();
 					finDuLancer();
 					

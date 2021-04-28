@@ -34,7 +34,7 @@ public class FenetreJeu extends FenetreMere{
 		super();	
 		
 		score = 0;
-		vie = 5;
+		vie = 7;
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBounds((int)(getWidth()*(10/29.7)),(int)(getHeight()*(2.5/21.0)),(int)(getWidth()*(18/29.7)),(int)(getHeight()*(14/21.0)));
@@ -225,12 +225,12 @@ public class FenetreJeu extends FenetreMere{
 	
 	public void victoireOuDefaite(){
 		if(vie <= 0){
-			new Restart(this, "<html> Tu as perdu ! <br> Tu peux tenter à nouveau ta chance ou quitter le jeu !</html>");
+			new Restart(this, "<html><center> Tu as perdu ! <br> Tu peux tenter à nouveau ta chance <br> ou quitter le jeu !</center></html>");
 			courbe.getFond().getMusiqueChoisie().stop();
 			this.setVisible(false); // sinon on peut recliquer dans la fenêtre et continuer à jouer
 				
 		}else if(score >= 1500){
-			new Restart(this, "Gagné!");
+			new Restart(this, "<html><center> Gagné! Bravo ! <br> Tu peux recommencer une partie <br> ou explorer le mode scientifique </center></html>");
 			courbe.getFond().getMusiqueChoisie().stop();
 			this.setVisible(false);
 			

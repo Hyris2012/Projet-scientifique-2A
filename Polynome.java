@@ -151,7 +151,7 @@ public class Polynome {
 	 */
 	
 	public String toString (){
-		return ("<html> P(X) = " + Outils.coupeDecimale(a) + " * X <sup>2</sup> + " + Outils.coupeDecimale(b) + " * X + " + Outils.coupeDecimale(c)+"</html>");
+		return ("<html><center> P(X) = " + Outils.coupeDecimale(a) + " * X <sup>2</sup> + " + Outils.coupeDecimale(b) + " * X + " + Outils.coupeDecimale(c)+"</center></html>");
 	}
 	
 	/**
