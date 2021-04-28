@@ -18,6 +18,7 @@ public class Cible implements ActionListener {	//extends JPanel
 	private int sens = 1;
 	private int vitesse;
 	private final int positionMin = 142;
+	private final int positionMax = 1042; // car si l'obstacle est trop loin, il ne sert à rien
 	private boolean estUneCible; // pour différencier la cible de l'obstacle
 	private Image imageCible;
 	
@@ -37,18 +38,10 @@ public class Cible implements ActionListener {	//extends JPanel
 		
 		hauteur = (int) (h*courbe.getHeight());
 		largeur = (int) (l*courbe.getWidth());
+		
+		//System.out.println("h : "+hauteur+", l : "+largeur);
         
-		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
-		
-		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
-			positionX=positionMin;
-		}
-		
-		if(!estUneCible){
-			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
-		}else{
-			positionY=courbe.getHeight()-hauteur;
-		}	
+        setPosition();
 	}
 	
 	/*public void dessine(Graphics g){
@@ -90,7 +83,13 @@ public class Cible implements ActionListener {	//extends JPanel
 	 
 	public boolean toucheCible(int x, int y){
 		boolean b;
-		b = (x > positionX && x < (positionX + this.largeur) && y >= positionY && y <= (positionY + vitesse));		// si pb avec le '==' tester un encadrement mais entre positionY et positionY+vitesse ; on aura le problème juste dans l'angle...
+		b = (x >= positionX && x <= (positionX + this.largeur) && y >= positionY);
+		return b;
+	}
+	
+	public boolean toucheCoteCible(int x, int y){ // pas infaillible : si on tire en ligne droite sur le coin on gagne, si on tombe verticalement sur le coin on risque de perdre ; mais la proba est très faible
+		boolean b;
+		b = (x >= positionX && x <= (positionX + 10) && y >= positionY+5);	// 5 parce que la vitesse en expert est de 4
 		return b;
 	}
 	
@@ -173,8 +172,23 @@ public class Cible implements ActionListener {	//extends JPanel
 		return this.positionY;
 	}
 	
-	public void setPositionX(int x){
-		this.positionX=x;
+	public void setPosition(){
+		
+		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
+		
+		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
+			positionX=positionMin;
+		}
+		
+		if(!estUneCible && positionX>positionMax){
+			positionX = positionMax;
+		}
+		
+		if(!estUneCible){
+			positionY=(int)(Math.random()*(courbe.getHeight()-hauteur-100));
+		}else{
+			positionY=courbe.getHeight()-hauteur;
+		}	
 	}
 	
 	public Timer getTimerCible(){

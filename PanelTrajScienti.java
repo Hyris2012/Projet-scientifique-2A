@@ -21,19 +21,34 @@ public class PanelTrajScienti extends PanelTraj {
 	
 	public void lancerBalle(Balle balle){
 		super.lancerBalle(balle);
-		fenS.info.setText("<html> " + Outils.coupeDecimale(balle.getPolynome().calculAtterrissage()) + " mètres parcourus<br>" + Outils.coupeDecimale(this.getHeight() - balle.getPolynome().calculSommet()) + " mètres d'altitude atteints</html>");
-		fenS.equa.setText("<html> Equation de la trajectoire : <br>"+ balle.getPolynome().toString()+"</html>"); // juste .equa marche parce qu'il est en protected dans FenetreMere et donc accessible dans tout le package
+		fenS.vInit.setText("<html><center> " +  Outils.coupeDecimale((balle.getVitesseInitiale())/100) + " m/s </center></html>"); // divisé par 100 car on choisit arbitrairement que 1m = 100 pixels
+		fenS.aInit.setText("<html><center> " +  Outils.coupeDecimale(balle.getAngleInitial()) + " ° </center></html>");
+		fenS.equationCourante.setText("<html><center> " + balle.getPolynome().toString() + "</center></html>"); // juste .equationCourante marche parce qu'il est en protected dans FenetreMere et donc accessible dans tout le package
 		
 	}
 	
 	public void mouseClicked(MouseEvent e){
 		super.mouseClicked(e);
-		System.out.println(balle.getPesanteur());
+		//System.out.println(balle.getPesanteur());
 		repaint();
 	}
 	
 	public void setVitesseAffichage(int i){
 		this.vitesseAffichage=i;
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		super.actionPerformed(e);
+		
+		if(e.getSource()==time && (atterrie()|| dernierXAffiche >= this.getWidth())){
+			
+			fenS.distParcourue.setText("<html><center> " + Outils.coupeDecimale((balle.getPolynome().calculAtterrissage())/100) + " m parcourus </center></html>"); // divisé par 100 car on choisit que 1m = 100 pixels
+			fenS.hAtteinte.setText("<html><center>" + Outils.coupeDecimale((this.getHeight() - balle.getPolynome().calculSommet())/100) + " m d'altitude atteints</center></html>");
+			fenS.enJeu=false;
+		}
+		
+		
+		
 	}
 
 }

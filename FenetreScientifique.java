@@ -12,11 +12,21 @@ public class FenetreScientifique extends FenetreMere {
 	private JSlider rayonChoisi;
 	private JSlider graviteChoisie;
 	
-	protected JLabel equa;
+	protected JLabel equa; // va stocker la phrase "Equation de la trajectoire : "
+	protected JLabel equationCourante; // va stocker l'équation affichée
     private JLabel historique;
     private JLabel histo1;
     private JLabel histo2;
     private JLabel histo3;
+    
+    private JLabel infoVitesseInitiale; // stocke la phrase "Vitesse initiale :"
+    protected JLabel vInit; // stocke la valeur de la vitesse initiale
+    private JLabel infoAngleInitial;
+    protected JLabel aInit;
+    private JLabel infoDistanceParcourue;
+    protected JLabel distParcourue;
+    private JLabel infoHauteurAtteinte;
+    protected JLabel hAtteinte;
     
 	protected JLabel info;
 	
@@ -29,13 +39,18 @@ public class FenetreScientifique extends FenetreMere {
 		courbe.setLayout(null);
 		courbe.setBackground(Color.white);
 		
-		equa = new JLabel("Equation de la trajectoire : ") ;
-		equa.setBounds(courbe.getX(),jouer.getY()-50,(int)courbe.getWidth()/2,jouer.getHeight());
+		equa = new JLabel("<html><u> Equation de la trajectoire :</u></html>") ;
+		equa.setBounds(courbe.getX(),jouer.getY()-50,(int)courbe.getWidth()/2,jouer.getHeight()/2);
 		equa.setBackground(Color.white); 
 		equa.setFont(new Font("Arial",Font.BOLD,22));
 		
-        historique = new JLabel("Equations précédentes : ") ;
-		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),equa.getY(),(int)courbe.getWidth()/2,jouer.getHeight());
+		equationCourante = new JLabel("") ;
+		equationCourante.setBounds(courbe.getX(),jouer.getY()-30,(int)courbe.getWidth()/2,jouer.getHeight());
+		equationCourante.setBackground(Color.white); 
+		equationCourante.setFont(new Font("Arial",Font.BOLD,22));
+		
+        historique = new JLabel("<html><u>Equations précédentes :</u></html>") ;
+		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),equa.getY(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
 		historique.setBackground(Color.white); 
 		historique.setFont(new Font("Arial",Font.BOLD,22));
       //  texteHistorique();
@@ -55,54 +70,98 @@ public class FenetreScientifique extends FenetreMere {
         histo3.setBackground(Color.white); 
         histo3.setFont(new Font("Arial",Font.BOLD,22));
 		
-		JLabel hInit = new JLabel("Hauteur initiale :"); //3 
+		JLabel hInit = new JLabel("<html><u>  Hauteur initiale (cm) :</u></html>"); //3 
 		hInit.setFont(new Font("Arial",Font.BOLD,20)) ;
-		hInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(2/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
-		
-		hauteurInit = new JSlider(0,courbe.getHeight(),45) ; //2
-		hauteurInit.setMajorTickSpacing((int)(courbe.getHeight()/6));
+		hInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(1.3/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0))) ; 
+				
+		hauteurInit = new JSlider(0,600,1) ; //2
+		hauteurInit.setMajorTickSpacing(100);
 		hauteurInit.setPaintLabels(true) ; 
 		hauteurInit.setPaintTicks(true) ; 
-		hauteurInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(3.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		hauteurInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(2.6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0))) ;
 		
-		JLabel vitesse = new JLabel("Vitesse d'affichage :"); //3
+		JLabel vitesse = new JLabel("<html><u> Vitesse d'affichage :</u></html>"); //3
 		vitesse.setFont(new Font("Arial",Font.BOLD,20)) ;
-		vitesse.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ; 
+		vitesse.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(3.9/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0))) ; 
 		
 		vitesseAffichage = new JSlider(1,11,1) ; //4 
 		vitesseAffichage.setMajorTickSpacing(2);
 		vitesseAffichage.setPaintLabels(true) ;
 		vitesseAffichage.setPaintTicks(true) ; 
-		vitesseAffichage.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0)));
+		vitesseAffichage.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(5.2/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0)));
 		
-		JLabel gravite = new JLabel("Gravité :"); //3
+		JLabel gravite = new JLabel("<html><u> Gravité :</u></html>"); //3
 		gravite.setFont(new Font("Arial",Font.BOLD,20)) ;
-		gravite.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(8/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		gravite.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(6.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0))) ;
 		
 		graviteChoisie = new JSlider(1,26,1) ; //4 
 		graviteChoisie.setMajorTickSpacing(5);
 		graviteChoisie.setPaintLabels(true) ;
 		graviteChoisie.setPaintTicks(true) ; 
-		graviteChoisie.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(9.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))); 
+		graviteChoisie.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7.8/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.2/21.0))); 
 		
-		info = new JLabel("") ;
-        info.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(11/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(5/21.0)));
-        info.setBackground(Outils.FOND_BLEU); 
-        info.setFont(new Font("Arial",Font.BOLD,22));
+		infoVitesseInitiale = new JLabel("<html><u> Vitesse Initiale :</u></html>") ;
+        infoVitesseInitiale.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(9.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1.2/21.0)));
+        infoVitesseInitiale.setBackground(Outils.FOND_BLEU); 
+        infoVitesseInitiale.setFont(new Font("Arial",Font.BOLD,22));
 		
+		vInit = new JLabel("<html><center> ... </center></html>") ;
+        vInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1/21.0)));
+        vInit.setBackground(Outils.FOND_BLEU); 
+        vInit.setFont(new Font("Arial",Font.BOLD,22));
+        
+        infoAngleInitial = new JLabel("<html><u> Angle Initial :</u></html>") ;
+        infoAngleInitial.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(11.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1.2/21.0)));
+        infoAngleInitial.setBackground(Outils.FOND_BLEU); 
+        infoAngleInitial.setFont(new Font("Arial",Font.BOLD,22));
+        
+        aInit = new JLabel("<html><center> ... </center></html>") ;
+        aInit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(12.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1/21.0)));
+        aInit.setBackground(Outils.FOND_BLEU); 
+        aInit.setFont(new Font("Arial",Font.BOLD,22));
+        
+        infoDistanceParcourue = new JLabel("<html><u> Distance parcourue :</u></html>") ;
+        infoDistanceParcourue.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(13.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1.2/21.0)));
+        infoDistanceParcourue.setBackground(Outils.FOND_BLEU); 
+        infoDistanceParcourue.setFont(new Font("Arial",Font.BOLD,22));
+        
+        distParcourue = new JLabel("<html><center> ... </center></html>") ;
+        distParcourue.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(14.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1/21.0)));
+        distParcourue.setBackground(Outils.FOND_BLEU); 
+        distParcourue.setFont(new Font("Arial",Font.BOLD,22));
+		
+		infoHauteurAtteinte = new JLabel("<html><u> Hauteur Atteinte :</u></html>") ;
+        infoHauteurAtteinte.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(15.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1.2/21.0)));
+        infoHauteurAtteinte.setBackground(Outils.FOND_BLEU); 
+        infoHauteurAtteinte.setFont(new Font("Arial",Font.BOLD,22));
+        
+        hAtteinte = new JLabel("<html><center> ... </center></html>") ;
+        hAtteinte.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16.1/21.0)),(int)(largeur*(12/29.7)),(int)(hauteur*(1/21.0)));
+        hAtteinte.setBackground(Outils.FOND_BLEU); 
+        hAtteinte.setFont(new Font("Arial",Font.BOLD,22));
+        
+        		
 		FenPrinc.add(courbe);
 		FenPrinc.add(hauteurInit);
 		FenPrinc.add(vitesseAffichage);
 		FenPrinc.add(hInit);
 		FenPrinc.add(vitesse);
 		FenPrinc.add(equa);
+		FenPrinc.add(equationCourante);
         FenPrinc.add(historique);
         FenPrinc.add(histo1);
         FenPrinc.add(histo2);
         FenPrinc.add(histo3);
 		FenPrinc.add(gravite);
 		FenPrinc.add(graviteChoisie);
-		FenPrinc.add(info);
+		FenPrinc.add(infoVitesseInitiale);
+		FenPrinc.add(vInit);
+		FenPrinc.add(infoAngleInitial);
+		FenPrinc.add(aInit);
+		FenPrinc.add(infoDistanceParcourue);
+		FenPrinc.add(distParcourue);
+		FenPrinc.add(infoHauteurAtteinte);
+		FenPrinc.add(hAtteinte);
 		
 		this.add(FenPrinc);
 		setVisible(true);
@@ -112,8 +171,13 @@ public class FenetreScientifique extends FenetreMere {
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		
-		if(e.getSource() == jouer){
-		
+		if(e.getSource() == jouer && !enJeu){
+			
+			enJeu = true;
+			vInit.setText("<html><center> ... </center></html>");
+			aInit.setText("<html><center> ... </center></html>");
+			distParcourue.setText("<html><center> ... </center></html>");
+			hAtteinte.setText("<html><center> ... </center></html>");
             histo3.setText(histo2.getText());
             histo2.setText(histo1.getText());
             
@@ -128,7 +192,7 @@ public class FenetreScientifique extends FenetreMere {
 			courbe.reInit();
 			courbe.repaint();
 			
-			if(!enJeu){
+			/*if(!enJeu){ on optimise encore + le enJeu en le mettant dans le if en haut et en le rééxploitant dans fenetre scienti
 				enJeu = true;
 				courbe.setVisible(true);
 			
@@ -136,16 +200,17 @@ public class FenetreScientifique extends FenetreMere {
 				courbe.reInit();
 				courbe.repaint();	
 			}
+			*/
 		}
 	}
     
     /*public void texteHistorique(){
         if(histo3!=null){
-            historique.setText("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</html>") ;   
+            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</center></html>") ;   
         }else if(histo2!=null){
-            historique.setText("<html>Equations précédentes : <br>"+histo1+"<br>"+histo2+"</html>") ;
+            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"<br>"+histo2+"</center></html>") ;
         }else if(histo1!=null){
-            historique.setText("<html>Equations précédentes : <br>"+histo1+"</html>") ;
+            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"</center></html>") ;
         }else{
             historique.setText("Equations précédentes :") ;
         }

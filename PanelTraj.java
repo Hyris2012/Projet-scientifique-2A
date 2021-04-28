@@ -128,10 +128,12 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 			if(dernierXAffiche < this.getWidth()){
 				 
 				if(!atterrie()){
-					XParcourus.add(balle.getPolynome().getValeurX().get(dernierXAffiche));
-					YParcourus.add(balle.getPolynome().getValeurY().get(dernierXAffiche));
-					dernierXAffiche=dernierXAffiche+vitesseAffichage;
-					repaint();
+				//	for(int i=0; i<vitesseAffichage; i++){
+						XParcourus.add(balle.getPolynome().getValeurX().get(dernierXAffiche));
+						YParcourus.add(balle.getPolynome().getValeurY().get(dernierXAffiche));
+						dernierXAffiche=dernierXAffiche+vitesseAffichage;
+						repaint();
+				//	}
 				}else{
 					time.stop();
 

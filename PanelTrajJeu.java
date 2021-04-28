@@ -14,7 +14,7 @@ public class PanelTrajJeu extends PanelTraj{
 	private Decor jungle;
 	private Decor bobLeponge;
 	
-	private final Image ballon = T.getImage("ballon.png");
+	private final Image pommeDouche = T.getImage("pomme_de_douche.png");
 	private final Image girafe = T.getImage("girafe.png");
 	private final Image vaisseau = T.getImage("vaisseau.png");
 	private final Image balleTennis = T.getImage("balleTennis.png");
@@ -23,6 +23,9 @@ public class PanelTrajJeu extends PanelTraj{
 	private final Image bus=T.getImage("bus_a_imperiale.png");
 	private final Image grillePain=T.getImage("grille_pain.png");
 	private final Image phedre=T.getImage("phedre.png");
+	
+	private final Image picsDroite;
+	private final Image picsGauche;
 	
 	private Image imageObj;
 	private Image imageObstacle;
@@ -35,6 +38,10 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		cible = new Cible (0.05, 0.2, this, true);
         obstacle = new Cible (0.12, 0.08, this, false);
+        
+        //initialisation des pics sur la cible
+        picsDroite=T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        picsGauche=T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
         
 		//initialisation des decors
 		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
@@ -72,6 +79,8 @@ public class PanelTrajJeu extends PanelTraj{
 		
 		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());		// dans l'idéal ça se passerait dans Cible ça non ? 
 		//cible.dessine(g);
+		g.drawImage(picsGauche, cible.getPositionX() - (int) (this.getWidth()*0.01), cible.getPositionY(),null);
+		g.drawImage(picsDroite, cible.getPositionX() + cible.getLargeurCible(), cible.getPositionY(),null);
 		
 		if(cible.getVitesseCible()!=0){ // pour que l'obstacle ne s'affiche pas en mode débutant
 			g.drawImage(imageObstacle, obstacle.getPositionX(), obstacle.getPositionY(),null);
@@ -102,30 +111,35 @@ public class PanelTrajJeu extends PanelTraj{
 				fenJ.victoireOuDefaite();
 				finDuLancer();
 				
-			}else if(YParcourus.size() > 0){		 // condition anti-exception : les arraylist de la trajectoire ne doivent pas être nulles 
+			}else if(YParcourus.size() > 0 && dernierXAffiche > 0){		 // condition anti-exception : les arraylist de la trajectoire ne doivent pas être nulles 
 				
 				// la balle touche l'obstacle
 				if(cible.getVitesseCible()!=0 && obstacle.toucheObstacle(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		// tentative infructueuse pour que l'image s'arrête quand c'est le bas qui touche et non pas le centre : + imageObj.getHeight(null)/2
 					fenJ.perdVies(1);
 					fenJ.victoireOuDefaite();
 					finDuLancer();
-					return;	
-                
-                // la balle touche sol sans avoir touché la cible  
-                }else if(atterrie()){
+					return;
+					
+				// cas où le joueur touche le côté de la cible au lieu du dessus
+				}else if(cible.toucheCoteCible(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 					fenJ.perdVies(1);
 					fenJ.victoireOuDefaite();
 					finDuLancer();
-					return;
 					
 				// cas où le joueur GAGNE son lancer : il touche la cible
 				}else if(cible.toucheCible(dernierXAffiche, YParcourus.get((int)(dernierXAffiche/vitesseAffichage)-1).intValue())){		
 					fenJ.mAjScore(300);
+					cible.setPosition();
+					obstacle.setPosition();
 					fenJ.victoireOuDefaite();
 					finDuLancer();
-					return; 
+					
+				// la balle touche sol sans avoir touché la cible  
+                }else if(atterrie()){
+					fenJ.perdVies(1);
+					fenJ.victoireOuDefaite();
+					finDuLancer();	
 				}
-				
 				// remarque : les return permettent de sortir de la méthode lorsqu'UNE des conditions et vérifiée sans tester les suivantes 
 			}
 		}	
@@ -177,16 +191,16 @@ public class PanelTrajJeu extends PanelTraj{
 	public void setVitesseAffichage(String s){
 		switch (s){
         case "Débutant" :
-			this.vitesseAffichage = 1;
+			this.vitesseAffichage = 2;
 			break;
         case "Intermédiaire":
-            this.vitesseAffichage = 2;
+            this.vitesseAffichage = 3;
             break;
         case "Expert":
             this.vitesseAffichage = 4;
             break;
         default :
-            this.vitesseAffichage = 1;
+            this.vitesseAffichage = 2;
             break;
         }
 	}
@@ -217,8 +231,8 @@ public class PanelTrajJeu extends PanelTraj{
         case "Girafe" :
 			imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
 			break;
-        case "Ballon":
-            imageObj = ballon.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
+        case "Pommeau de douche":
+            imageObj = pommeDouche.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
         case "Vaisseau spatial":
             imageObj = vaisseau.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.13), Image.SCALE_DEFAULT);
@@ -235,7 +249,7 @@ public class PanelTrajJeu extends PanelTraj{
 	public void setObstacle(String decor){
 		switch (decor){
         case "Espace" :
-			imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.2), Image.SCALE_DEFAULT);
+			imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
 			break;
         case "Jungle":
             imageObstacle = bus.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);

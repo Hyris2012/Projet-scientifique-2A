@@ -101,7 +101,25 @@ public class Balle {
 	public void setPesanteur(double p){
 		this.pesanteur=p*4;
 	}
-		
-		
+	
+	/**
+	 * accesseur en lecture de l'attribut vitesseInitiale
+	 * @param aucun
+	 * @return l'attribut vitesseInitiale de type double
+	 */
+	 
+	public double getVitesseInitiale(){
+		return this.vitesseInitiale;
+	}
+	
+	/**
+	 * accesseur en lecture de l'attribut angleIni
+	 * @param aucun
+	 * @return l'attribut angleIni converti en degrés de type double
+	 */
+	
+	public double getAngleInitial(){ // on choisit de retourner une valeur en degré, plus accessible à l'utilisateur
+		return ((this.angleIni*180)/Math.PI);
+	}
 
 }
