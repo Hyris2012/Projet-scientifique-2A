@@ -1,8 +1,13 @@
+/** Classe permettant la création du Panel dans lequel notre jeu va se dérouler
+ * correspond au Panel mis en place dans les deux modes de jeu, qu'il faudra différencier dans les classes filles 
+ * Classe mère des classes PanelTrajJeu et PanelTrajScienti
+ * 
+ * 
+*/
 import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-
 
 public class PanelTraj extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
@@ -26,8 +31,13 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 	protected double pesanteurChoisie=9.81;
 	
 	
-	// constructeur 
-	
+	/** Constructeur du PanelTraj dans lequel la trajectoire et les différentes options complémentaires, suivant le mode de jeu choisi, vont évoluer 
+ * @param fen 	permet d'agir sur la fenetre mère qui lui est associé
+ * @param x 	position en x dans le Panel au début du jeu 
+ * @param y 	position en y dans le Panel au début du jeu 
+ * @param l 	largeur du PanelTraj choisie 
+ * @param h 	hauteur du PanelTraj choisie 
+*/ 
 	public PanelTraj(FenetreMere fen, int x, int y, int l, int h) {
 		super();
 		this.fen = fen;
@@ -43,23 +53,27 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		addMouseListener(this);
 		
 		addMouseMotionListener(this);
-		fond = new Decor();
-	
+		fond = new Decor();	
 	}
 	
-	public String toString(){
-		return ("Je suis le JPanel d'affichage de la trajectoire du splendide projet 'Trajectory Manager' :) ");
-		//juste pour le principe
-	}
-	
-	// méthode appelée à l'appui du bouton 'Jouer' ; initialise la balle et lance la trajectoire 
+	/**Initialise la balle et lance la trajectoire 
+ * Méthode appelée à l'appui du bouton 'Jouer'  
+ * Ne renvoie rien
+ * name : lancerBalle 
+ * @param balle 	caractérise l'objet choisi à faire évoluer dans le panel 
+*/
 	public void lancerBalle(Balle balle){
 		this.balle = balle;
 		dernierXAffiche = 0;
 		time.start();
 	}
 	
-	// déterminé si la balle a touché le sol ; pour arrêter le timer 
+	/**Détermine si la balle a touché le sol et que la trajectoire est terminée 
+ * Méthode permettant d'arrêter le timer   
+ * name : atterrie 
+ * @param balle 	caractérise l'objet choisi à faire évoluer dans le panel 
+ * @return b 		représente le fait que la balle soit au niveau du sol
+*/
 	public boolean atterrie(){
 		boolean b = false; 
 		if(XParcourus.size() > 0){
@@ -68,7 +82,12 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		return b; 
 	}
 	
-	// conversion d'arrayList Double en tableau de int pour les besoins de la méthode drawPolyline
+/**Conversion d'arrayList Double en tableau de int
+ * Méthode mise en place pour l'utilisation de la méthode drawPolyline   
+ * name : conversionTableau
+ * @param liste 	liste de double à convertir 
+ * @return t 		liste de int utilisable par la méthode drawPolyline 
+*/
 	public int[] conversionTableau(ArrayList<Double> liste){
 		
 		int[] t = new int[liste.size()];
@@ -78,7 +97,11 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		return t;
 	}
 	
-	
+	/** Méthode permettant de dessiner la portion de trajectoire où la balle se situe  
+ * Ne renvoie rien 
+ * name : paintComponent 
+ * @param g		objet graphique permettant de représenter la trajectoire 
+*/
 	public void paintComponent(Graphics g){
 		super.paintComponent(g); 
 		
@@ -96,22 +119,25 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		
 		if(flecheInit != null && fond!=null){
 			drawArrowLine(g);
-		}
-		
+		}		
 	}
-	
-	
+		
 	// ************* méthodes utiles au paint *******************
 	
-	
+	/**Permet de créer la ligne se terminant par une flèche servant à viser
+ * Ne renvoie rien  
+ * name : drawArrowLine
+ * @param g		objet graphique permettant de représenter la trajectoire 
+*/
 	public void drawArrowLine(Graphics g) {
 		
-		final int d = 12, h = 10; 
+		final int D = 12;
+		final int H = 10; 
 		
 		// sommet bas : pointe du vecteur qui part de la pointe de flecheInit, fait un angle de PI/2, et avance de la moitié de la largeur 
-		APoint sommetBas = (new Vecteur(flecheInit.getPointe(), h/2, flecheInit.getArgument() - Math.PI/2)).getPointe();	
-		APoint sommetHaut = (new Vecteur(flecheInit.getPointe(), h/2, flecheInit.getArgument() + Math.PI/2)).getPointe();	
-		APoint sommetPointe = (new Vecteur(flecheInit.getPointe(), d, flecheInit.getArgument())).getPointe();
+		APoint sommetBas = (new Vecteur(flecheInit.getPointe(), H/2, flecheInit.getArgument() - Math.PI/2)).getPointe();	
+		APoint sommetHaut = (new Vecteur(flecheInit.getPointe(), H/2, flecheInit.getArgument() + Math.PI/2)).getPointe();	
+		APoint sommetPointe = (new Vecteur(flecheInit.getPointe(), D, flecheInit.getArgument())).getPointe();
 
 
 		int[] xpoints = {(int)sommetBas.x, (int)sommetHaut.x, (int) sommetPointe.x};
@@ -121,7 +147,14 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		g.fillPolygon(xpoints, ypoints, 3);
 	}
 	
-	
+	/**
+ * Implémentation de l'interface ActionListener
+ * Permet de créer les listes de points avec leurs coordonnées an abscisses et en ordonnées 
+ * On ajoute un point à la liste suivant x et y a chaque intervalle de temps du timer et tant que la trajectoire n'est pas terminée 
+ * ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent elle est déclenchée dès qu'une action précise est réalisée 
+*/
 	public void actionPerformed(ActionEvent e){ 
 	
 		if (e.getSource() == time){
@@ -136,12 +169,9 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 				//	}
 				}else{
 					time.stop();
-
-					//new FenetreFinJeu("L'OBJET A ATTERRI" , balle.toString());	// la fenetre affiche l'altitude max atteinte et la longueur parcourue
 				}
 			}else{
 				time.stop();
-				//new FenetreFinJeu("Rate, essaie encore !" , "L'objet a atteri trop loin.");
 			}
 		}
 	}
@@ -162,6 +192,11 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		
 	}
 	
+	/**Créée une balle et initialise une trajectoire avec les paramètres choisis et la taille du vecteur dessiné par l'utilisateur 
+ * Ne renvoie rien  
+ * name : mouseClicked 
+ * @param e		MouseEvent est un évènement qui se déclenche dès qu'une action précise est réalisée, ici dès qu'on clic avec la souris  
+*/
 	public void mouseClicked(MouseEvent e){
 		if(flecheSuitSouris){ // si flecheSuitSouris est true, la trajectoire est "libre", si on a cliqué le vecteur reste fixe
 			if (fond != null) {	// normalement on devrait pouvoir l'enlever, puisque la condition est déjà dans le paint
@@ -169,21 +204,28 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 				//APoint pointeFleche = new APoint(e.getX(),this.getHeight()-e.getY());
 				//flecheInit = new Vecteur (departFleche, pointeFleche);
 				
-				lancerBalle(new Balle(1.0, 1.0, flecheInit, this.getWidth(), this.getHeight(), pesanteurChoisie));
+				lancerBalle(new Balle(flecheInit, this.getWidth(), this.getHeight(), pesanteurChoisie));
 				//reInit();
 				flecheSuitSouris = false;
-				
-				//repaint();	// on le fait dans les classes filles our faire une condition sur imageObj dans PanelTrajJeu
 			}
 		}
 	}
 	
+	/**Permet de réinitialiser les listes de points lorsqu'on va débuter un nouveau lancer 
+ * Ne prend pas de paramètre en compte et ne renvoie rien
+ * name : reInit 
+*/
 	public void reInit(){
 		YParcourus.clear();
 		XParcourus.clear();
 		dernierXAffiche = 0;
 	}
 	
+	/**Permet de créer le vecteur fictif qui serait dessiné lors du clic 
+ * Ne renvoie rien  
+ * name : mouseMoved
+ * @param e		MouseEvent est un évènement qui se déclenche dès qu'une action précise est réalisée, ici dès qu'on déplace la souris 
+*/
 	public void mouseMoved(MouseEvent e) {
 		if(flecheSuitSouris){
 			APoint pointeFleche;
@@ -196,14 +238,18 @@ public class PanelTraj extends JPanel implements ActionListener, MouseListener, 
 		
 			flecheInit = new Vecteur (departFleche, pointeFleche);
 			repaint();
-		}
-		
+		}		
 	}
 	public void mouseDragged(MouseEvent e) {
 		
 	}
-	
-	//accesseur en lecture de panelTraj
+		
+/**
+ * Accesseur en lecture du fond actif dans la fenetre 
+ * Ne prend pas de paramètre en compte  
+ * name : getFond 
+ * @return Decor  		décor choisi pour la partie  
+ */	
 	public Decor getFond(){
 		return fond ;
 	}

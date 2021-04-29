@@ -1,3 +1,6 @@
+/**
+ * Cette classe représente un conteneur permettant le déroulement d'une partie de Trajectory Manager en mode jeu.
+ */
 import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
@@ -14,25 +17,33 @@ public class PanelTrajJeu extends PanelTraj{
 	private Decor jungle;
 	private Decor bobLeponge;
 	
-	private final Image pommeDouche = T.getImage("pomme_de_douche.png");
-	private final Image girafe = T.getImage("girafe.png");
-	private final Image barbecue = T.getImage("barbecue.png");
-	private final Image ananas = T.getImage("ananas.png");
-	private final Image photocopieur = T.getImage("photocopieur.png");
+	private final Image POMME_DOUCHE = T.getImage("pomme_de_douche.png");
+	private final Image GIRAFE = T.getImage("girafe.png");
+	private final Image BARBECUE = T.getImage("barbecue.png");
+	private final Image ANANAS = T.getImage("ananas.png");
+	private final Image PHOTOCOPIEUR = T.getImage("photocopieur.png");
 	
-	private final Image harpe = T.getImage("harpe.png");
-	private final Image bus = T.getImage("bus_a_imperiale.png");
-	private final Image grillePain = T.getImage("grille_pain.png");
-	private final Image phedre = T.getImage("phedre.png");
+	private final Image HARPE = T.getImage("harpe.png");
+	private final Image BUS = T.getImage("bus_a_imperiale.png");
+	private final Image GRILLE_PAIN = T.getImage("grille_pain.png");
+	private final Image PHEDRE = T.getImage("phedre.png");
 	
-	private final Image picsDroite;
-	private final Image picsGauche;
+	private final Image PICS_DROITE;
+	private final Image PICS_GAUCHE;
 	
 	private Image imageObj;
 	private Image imageObstacle;
 	private Cible cible;
     private Cible obstacle;
 	
+	/**
+ * Constructeur de la classe qui permet de créer le conteneur de la fenetreJeu  
+ * @param fenJ 	fenetreJeu qui est liée à la partie en cours 
+ * @param x 	position en x dans le Panel au début du jeu
+ * @param y 	position en y dans le Panel au début du jeu
+ * @param l 	largeur du PanelTraj choisie 
+ * @param h 	hauteur du PanelTraj choisie
+ */	
 	public PanelTrajJeu(FenetreJeu fenJ, int x, int y, int l, int h){
 		super(fenJ, x, y, l, h);
 		this.fenJ = fenJ;
@@ -41,8 +52,8 @@ public class PanelTrajJeu extends PanelTraj{
         obstacle = new Cible (0.12, 0.08, this, false);
         
         //initialisation des pics sur la cible
-        picsDroite = T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
-        picsGauche = T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        PICS_DROITE = T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        PICS_GAUCHE = T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
         
 		//initialisation des decors
 		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
@@ -51,10 +62,11 @@ public class PanelTrajJeu extends PanelTraj{
 		bobLeponge = new Decor(new AePlayWave("eponge.wav"), Color.black, T.getImage("./bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
 	}
 	
-	/** Méthode permettant de déterminer si la balle a atterrie (= trajectoire atteint le bord inférieur du panel) ou non.
-	 * @param aucun
-	 * @return booléen
-	 */
+	/** Méthode permettant de déterminer si la balle a atterrie 
+ *  Trajectoire atteint le bord inférieur du panel ou non
+ *  Ne prend pas de parametre en compte et ne renvoie rien 
+ *  name : atterrie 
+ */
 	
 	public boolean atterrie(){
 		boolean b = super.atterrie();
@@ -70,18 +82,20 @@ public class PanelTrajJeu extends PanelTraj{
 	
 	
 	/**********************************  PAINT  **************************************/
-	/** Rédéfinition de la méthode paint héritée de JPanel. Elle dessine tous les objets graphiques dans le panel.
-	 * @param g de type Graphics
-	 * @return void
-	 */
+	/** Rédéfinition de la méthode paint héritée de PanelTraj 
+ *  Elle dessine tous les objets graphiques dans le panel : la cible et l'obstacle
+ *  Ne renvoie rien 
+ *  name : paintComponent 
+ *  @param g		objet graphique permettant de représenter tous les éléments graphiques voulus 
+ */
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
 		g.fillRect(cible.getPositionX(), (int) this.getHeight() - cible.getHauteurCible(), cible.getLargeurCible(), cible.getHauteurCible());		// dans l'idéal ça se passerait dans Cible ça non ? 
 		//cible.dessine(g);
-		g.drawImage(picsGauche, cible.getPositionX() - (int) (this.getWidth()*0.01), cible.getPositionY(),null);
-		g.drawImage(picsDroite, cible.getPositionX() + cible.getLargeurCible(), cible.getPositionY(),null);
+		g.drawImage(PICS_GAUCHE, cible.getPositionX() - (int) (this.getWidth()*0.01), cible.getPositionY(),null);
+		g.drawImage(PICS_DROITE, cible.getPositionX() + cible.getLargeurCible(), cible.getPositionY(),null);
 		
 		if(cible.getVitesseCible()!=0){ // pour que l'obstacle ne s'affiche pas en mode débutant
 			g.drawImage(imageObstacle, obstacle.getPositionX(), obstacle.getPositionY(),null);
@@ -93,11 +107,12 @@ public class PanelTrajJeu extends PanelTraj{
 	}
 	
 	/**
-	 * Redéfinition de l'implémentation de l'interface ActionListener héritée de PanelTraj. 
-	 * Gère les évènements du timer spécifiques au mode jeu : évolution des vies et du score en fonction de l'issue de la trajectoire de la balle.
-	 * @param e de type ActionEvent
-	 * @return void
-	 */
+ * Redéfinition de l'implémentation de l'interface ActionListener héritée de PanelTraj. 
+ * Gère les évènements du timer spécifiques au mode jeu : évolution des vies et du score en fonction de l'issue de la trajectoire de la balle.
+ * Ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent elle est déclenchée dès qu'une action précise est réalisée 
+ */
 	
 	public void actionPerformed(ActionEvent e){ //lié au timer
 		super.actionPerformed(e);
@@ -147,10 +162,9 @@ public class PanelTrajJeu extends PanelTraj{
 	}
 	
 	/**
-	 * Méthode exécutant toutes les réinitialisations nécessaires lorsqu'un lancer est considéré terminé et doit laisser place à un autre.
-	 * @param aucun
-	 * @return void
-	 */
+ * Méthode exécutant toutes les réinitialisations nécessaires lorsqu'un lancer est considéré terminé et doit laisser place à un autre
+ * Ne prend en compte aucun parametre et ne renvoie rien 
+ */
 	
 	public void finDuLancer(){
 		time.stop(); 
@@ -163,9 +177,7 @@ public class PanelTrajJeu extends PanelTraj{
 		this.reInit();
 		this.repaint();
 	}
-	
-
-	
+		
 	public void mouseExited(MouseEvent e){
 		
 	}
@@ -189,6 +201,13 @@ public class PanelTrajJeu extends PanelTraj{
 		}
 	}	
 	
+	/**
+ * Methode permettant de définir la vitesse d'affichage en fonction de la difficulté de jeu choisie 
+ * différenciation des différents cas par l'utilisation d'un switch/case 
+ * Ne renvoie rien 
+ * name : setVitesseAffichage
+ * @param s 	difficulté choisie par l'utilisateur 
+ */
 	public void setVitesseAffichage(String s){
 		switch (s){
         case "Débutant" :
@@ -206,7 +225,12 @@ public class PanelTrajJeu extends PanelTraj{
         }
 	}
 	
-	
+	/**
+ * Permet de choisir l'image de fond du décor  
+ * Ne renvoie rien 
+ * name : setDecor
+ * @param decor 	défini le choix du fond du décor 
+ */
 	public void setDecor(String decor){
         switch (decor){
         case "Espace" :
@@ -227,61 +251,88 @@ public class PanelTrajJeu extends PanelTraj{
         }
     }
     
+    /**
+  * Permet de choisir la balle associée au décor 
+  * Ne renvoie rien 
+  * name : setObjet
+  * @param objet 	défini le choix de l'objet 
+ */
     public void setObjet(String objet){
 		switch (objet){
         case "Girafe" :
-			imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+			imageObj = GIRAFE.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
 			break;
         case "Pommeau de douche":
-            imageObj = pommeDouche.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
+            imageObj = POMME_DOUCHE.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
         case "Barbecue":
-            imageObj = barbecue.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            imageObj = BARBECUE.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         case "Ananas":
-            imageObj = ananas.getScaledInstance((int) (this.getWidth()*0.05), (int) (this.getHeight()*0.20), Image.SCALE_DEFAULT);
+            imageObj = ANANAS.getScaledInstance((int) (this.getWidth()*0.05), (int) (this.getHeight()*0.20), Image.SCALE_DEFAULT);
             break;
         case "Photocopieur":
-            imageObj = photocopieur.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.16), Image.SCALE_DEFAULT);
+            imageObj = PHOTOCOPIEUR.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.16), Image.SCALE_DEFAULT);
          break;
         default :
-            imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            imageObj = GIRAFE.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         }
 	}
 	
+	/**
+  * Gère le choix de l'obstacle en fonction du fond choisi 
+  * Ne renvoie rien 
+  * name : setObstacle 
+  * @param decor 	fond qui a été choisi par l'utilisateur 
+ */
 	public void setObstacle(String decor){
 		switch (decor){
         case "Espace" :
-			imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
+			imageObstacle = HARPE.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
 			break;
         case "Jungle":
-            imageObstacle = bus.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            imageObstacle = BUS.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         case "Bob l'eponge":
-            imageObstacle = phedre.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
+            imageObstacle = PHEDRE.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.21), Image.SCALE_DEFAULT);
             break;
         case "Savane":
-            imageObstacle = grillePain.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            imageObstacle = GRILLE_PAIN.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         default :
-            imageObstacle = harpe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
+            imageObstacle = HARPE.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         }
 	}
 	
-	// accesseurs en lecture
-	
+	/**
+ * Accesseur en lecture des caractéristiques de la cible
+ * Ne prend pas de paramètre en compte 
+ * name : getCible  
+ * @return Cible  		caractéristiques de la cible  
+ */	
 	public Cible getCible(){
 		return this.cible;
 	}
     
+    /**
+ * Accesseur en lecture des caractéristiques de l'obstacle
+ * Ne prend pas de paramètre en compte 
+ * name : getObstacle 
+ * @return Cible  		caractéristiques de l'obstacle   
+ */	
     public Cible getObstacle(){
 		return this.obstacle;
 	}
 	
+	/**
+ * Accesseur en lecture de la fenetreJeu active 
+ * Ne prend pas de paramètre en compte 
+ * name : getFenetreJeu 
+ * @return FenetreJeu 	fenetre de jeu associée au PanelTrajJeu
+ */	
 	public FenetreJeu getFenetreJeu(){
 		return this.fenJ;
 	}
-
 }

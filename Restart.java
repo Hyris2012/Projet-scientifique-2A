@@ -1,7 +1,6 @@
 /**
- * Fenetre apparaissant la fin d'une partie permettant d'en démarrer une nouvelle.
+ * Fenetre apparaissant la fin d'une partie permettant d'en démarrer une nouvelle ou de quitter le jeu 
  */
- 
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +13,12 @@ public class Restart extends JFrame implements ActionListener{
 	private int hauteur = 600;
 	private JButton quitte; 
 	private JButton restart;
-	
-	// je me suis permise d'enlever le constructeur de test ; on peut la retrouver dans la version précédente si besoin
-	
+		
+	/**
+ * Constructeur de la classe qui permet de créer une fenetre dans lequelle on peut choisir de recommencer une partie ou quitter le jeu  
+ * @param fenJ 			fenetre de jeu associée à la partie jouée 
+ * @param affichage 	affiche un message de fin de partie suivant si le joueur à gagné ou perdu
+ */	
 	public Restart(FenetreJeu fenJ, String affichage){
 		super("Trajectory Manager") ;
 		this.fenJ = fenJ;
@@ -24,10 +26,10 @@ public class Restart extends JFrame implements ActionListener{
 		setBounds(300,100,largeur,hauteur);
 		setBackground(Outils.FOND_BLEU) ;
 		
-		JPanel FenPrinc = new JPanel() ; 
-		FenPrinc.setLayout(null) ; 
-		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(Outils.FOND_BLEU) ;
+		JPanel fenPrinc = new JPanel() ; 
+		fenPrinc.setLayout(null) ; 
+		fenPrinc.setBounds(0,0,largeur,hauteur) ;
+		fenPrinc.setBackground(Outils.FOND_BLEU) ;
 		
 		JLabel ecriture = new JLabel(affichage); 
 		ecriture.setBounds((int)(largeur*(6/29.7)),(int)(hauteur*(1/21.0)),(int)(largeur*(19/29.7)),(int)(hauteur*(10/21.0)));
@@ -46,13 +48,21 @@ public class Restart extends JFrame implements ActionListener{
 		restart.setBackground(Color.red); 
 		restart.addActionListener(this);
 		
-		FenPrinc.add(ecriture);
-		FenPrinc.add(restart);
-		FenPrinc.add(quitte);
-		add(FenPrinc);
+		fenPrinc.add(ecriture);
+		fenPrinc.add(restart);
+		fenPrinc.add(quitte);
+		add(fenPrinc);
 		setVisible(true);
 	}
 	
+	/**
+ * Implémentation de l'interface ActionListener
+ * Gère la visibilité des fenetres de Jeu et accueil suite au clic sur le bouton rejouer ou quitter 
+ * Branchement au préalable des écouteurs sur les boutons 
+ * Ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent elle est déclenchée dès qu'une action précise est réalisée 
+*/
 	public void actionPerformed(ActionEvent e) {
 		fenJ.setVisible(false);
 		

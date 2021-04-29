@@ -1,3 +1,6 @@
+/**
+ * Fenetre de Trajectory Manager gérant le mode scientifique, classe descendante de la classe fenetreMere
+ */
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +35,11 @@ public class FenetreScientifique extends FenetreMere {
     
 	protected JLabel info;
 	
+	/**
+ * Constructeur par défaut et seul constructeur de la classe
+ * Ne prend en compte aucun paramètre 
+ * Crée une fenetreScientifique qui est une classe fille de la classe FenetreMere
+ */
 	public FenetreScientifique(){
 		super();
 		
@@ -149,33 +157,40 @@ public class FenetreScientifique extends FenetreMere {
         hAtteinte.setFont(new Font("Arial",Font.BOLD,22));
         
         		
-		FenPrinc.add(courbe);
-		FenPrinc.add(hauteurInit);
-		FenPrinc.add(vitesseAffichage);
-		FenPrinc.add(hInit);
-		FenPrinc.add(vitesse);
-		FenPrinc.add(equa);
-		FenPrinc.add(equationCourante);
-        FenPrinc.add(historique);
-        FenPrinc.add(histo1);
-        FenPrinc.add(histo2);
-        FenPrinc.add(histo3);
-		FenPrinc.add(gravite);
-		FenPrinc.add(graviteChoisie);
-		FenPrinc.add(infoVitesseInitiale);
-		FenPrinc.add(vInit);
-		FenPrinc.add(infoAngleInitial);
-		FenPrinc.add(aInit);
-		FenPrinc.add(infoDistanceParcourue);
-		FenPrinc.add(distParcourue);
-		FenPrinc.add(infoHauteurAtteinte);
-		FenPrinc.add(hAtteinte);
+		fenPrinc.add(courbe);
+		fenPrinc.add(hauteurInit);
+		fenPrinc.add(vitesseAffichage);
+		fenPrinc.add(hInit);
+		fenPrinc.add(vitesse);
+		fenPrinc.add(equa);
+		fenPrinc.add(equationCourante);
+        fenPrinc.add(historique);
+        fenPrinc.add(histo1);
+        fenPrinc.add(histo2);
+        fenPrinc.add(histo3);
+		fenPrinc.add(gravite);
+		fenPrinc.add(graviteChoisie);
+		fenPrinc.add(infoVitesseInitiale);
+		fenPrinc.add(vInit);
+		fenPrinc.add(infoAngleInitial);
+		fenPrinc.add(aInit);
+		fenPrinc.add(infoDistanceParcourue);
+		fenPrinc.add(distParcourue);
+		fenPrinc.add(infoHauteurAtteinte);
+		fenPrinc.add(hAtteinte);
 		
-		this.add(FenPrinc);
-		setVisible(true);
-		
+		this.add(fenPrinc);
+		setVisible(true);		
 	}
 	
+	/**
+ * Implémentation de l'interface ActionListener
+ * Permet de gérer l'affichage des équations des précédents lancers et de faire évoluer la trajectoire en fonction des paramètres choisis   
+ * Branchement d'écouteurs auparavant sur le bouton concerné
+ * ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent elle est déclenchée dès qu'une action précise est réalisée 
+*/
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		
@@ -218,8 +233,6 @@ public class FenetreScientifique extends FenetreMere {
         default :
             this.gifChoisi = "physique.gif";
             break;
-        }
-		
+        }		
 	}
-
 }

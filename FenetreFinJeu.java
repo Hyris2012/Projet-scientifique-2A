@@ -23,8 +23,7 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		
 		texte.add(etiquette);		
 		add(texte) ;
-		setVisible(true);
-		
+		setVisible(true);		
 	}
 	
 	public FenetreFinJeu(String type, String affichage){
@@ -56,20 +55,17 @@ public class FenetreFinJeu extends JFrame implements ActionListener {
 		retourFenAccueil.setBackground(new Color (90,90,90)); 
 		retourFenAccueil.addActionListener(this);
 		
-		
-		
 		texte.add(coord);
 		//texte.add(conv) ;
 		add(texte);
 		add(retourFenAccueil);
-		setVisible(true);
-		
+		setVisible(true);		
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == retourFenAccueil){
 			this.setVisible(false);
 			new FenetreAccueil();
 		}
-	}
-	
+	}	
 }

@@ -1,6 +1,6 @@
 
 /** Classe principale contenant le main. A executer pour lancer le jeu Trajectory Manager.
- * @author l'équipe MS-L-M-E
+ * @author l'équipe Marie_Sara-Lucas-Massyl-Eliette
  */
 
 public class TrajectoryManager {

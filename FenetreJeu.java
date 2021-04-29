@@ -1,10 +1,9 @@
+/** Fenetre de Trajectory Manager gérant le mode Jeu, classe descendante de la classe fenetreMere
+ */
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.String;
-
-/** Fenetre de Trajectory Manager gérant le mode Jeu.
- */
 
 public class FenetreJeu extends FenetreMere{
 	
@@ -27,8 +26,10 @@ public class FenetreJeu extends FenetreMere{
 	private PanelTrajJeu courbe;
 	
 	/**
-	 * Construit une fenetre de jeu.
-	 */
+ * Constructeur par défaut et seul constructeur de la classe
+ * Ne prend en compte aucun paramètre 
+ * Crée une fenetre de jeu 
+ */
 	
 	public FenetreJeu () {
 		super();	
@@ -100,24 +101,28 @@ public class FenetreJeu extends FenetreMere{
 		sonOnOff.setVisible(false);
 		
 				
-		FenPrinc.add(panel);
-		FenPrinc.add(labelScore) ; 
-		FenPrinc.add(labelVie) ; 
-		FenPrinc.add(objet);
-		FenPrinc.add(objet1) ; 
-		FenPrinc.add(endroit) ; 
-		FenPrinc.add(decor); 
-		FenPrinc.add(sonOnOff);
-		FenPrinc.add(diff);
-		FenPrinc.add(difficulteJeu);
+		fenPrinc.add(panel);
+		fenPrinc.add(labelScore) ; 
+		fenPrinc.add(labelVie) ; 
+		fenPrinc.add(objet);
+		fenPrinc.add(objet1) ; 
+		fenPrinc.add(endroit) ; 
+		fenPrinc.add(decor); 
+		fenPrinc.add(sonOnOff);
+		fenPrinc.add(diff);
+		fenPrinc.add(difficulteJeu);
 				
-		this.add(FenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à FenPrinc APRES ??
-		setVisible(true);
-		
+		this.add(fenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à fenPrinc APRES ??
+		setVisible(true);		
 	}
 	
-	/** Implémentation de l'interface ActionListener. Gère les interactions avec les éléments d'IHM branchés.
-	 */
+	/**
+ * Implémentation de l'interface ActionListener 
+ * Gère les interactions avec les éléments d'IHM branchés
+ * ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent
+*/
 	
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
@@ -163,22 +168,16 @@ public class FenetreJeu extends FenetreMere{
 				sonOnOff.setVisible(true);
 				courbe.flecheSuitSouris = true;
 				courbe.reInit();
-				courbe.repaint();
-							
-			}
-			
-		}
-		
+				courbe.repaint();							
+			}			
+		}		
 	}
 	
-	// méthodes pour une meilleure lisibilité du code
-	
 	/**
-	 * Méthode permettant d'afficher le panel de jeu sur tout la fenetre lors du clic du bouton 'lancer'.
-	 * @param aucun
-	 * @return void
-	 */
-	
+ * Méthode permettant d'afficher le panel de jeu sur toute la fenetre lors du clic du bouton 'lancer'
+ * name : panelPleinEcran
+ * Ne prend en compte aucun paramètre et ne renvoie rien 
+ */	
 	public void panelPleinEcran(){
 		//changement de la taille du PanelTraj pour l'afficher en plein écran
 		panel.setVisible(false);
@@ -186,16 +185,16 @@ public class FenetreJeu extends FenetreMere{
 		courbe.setLayout(null);
 		courbe.setBackground(Color.red); // au cas où l'image mise en superposition n'apparaisse pas
 		courbe.setVisible(true);
-		FenPrinc.add(courbe);	
+		fenPrinc.add(courbe);	
 		labelScore.setBounds(courbe.getX(),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 		labelVie.setBounds((int) (courbe.getX()+0.75*courbe.getWidth()),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 	}
 	
 	/**
-	 * Méthode gérant le lancement des musiques.
-	 * @param aucun
-	 * @return void
-	 */
+ * Méthode gérant le lancement des musiques en fonction du décor choisi
+ * name : gestionMusiqueEtDecor 
+ * Ne prend pas de paramètre en compte et ne renvoie rien 
+ */
 	 
 	public void gestionMusiqueEtDecor(){
 		boolean b = courbe.getFond().getMusiqueChoisie() == null;
@@ -219,10 +218,11 @@ public class FenetreJeu extends FenetreMere{
 	
 	// méthodes de gestion de la partie de jeu : points de vie et points de score
 	
-	/** Méthode permettant de déterminer si la partie est perdue ou gagnée.
-	 * @param aucun
-	 * @return void
-	 */
+	/** Méthode permettant de déterminer si la partie est perdue ou gagnée
+ * Elle crée alors une nouvelle fenêtre permettant de relancer ou de quitter la partie 
+ * name : victoireOuDefaite
+ * Ne prend pas en compte de paramètre et ne renvoie rien
+ */
 	
 	public void victoireOuDefaite(){
 		if(vie <= 0){
@@ -233,16 +233,16 @@ public class FenetreJeu extends FenetreMere{
 		}else if(score >= 3000){
 			new Restart(this, "<html><center> Gagné! Bravo ! <br> Tu peux recommencer une partie <br> ou explorer le mode scientifique </center></html>");
 			courbe.getFond().getMusiqueChoisie().stop();
-			this.setVisible(false);
-			
+			this.setVisible(false);			
 		}
 	}
 	
-	/**
-	 * Cette méthode met à jour les vies et leur affichage lorsque le joueur manque un lancer.
-	 * @param perte de type int : le nombre de vie à perdre
-	 * @return void
-	 */
+/**
+ * Cette méthode met à jour l'affichage du nombre de vie lorsque le joueur manque un lancer
+ * name : perdVies
+ * Ne renvoie rien
+ * @param perte 	le nombre de vie à perdre a chaque lancer, permet de différencier les façons desquelles on peut perdre et le nombre de vie associées
+ */
 	
 	public void perdVies(int perte){
 		combo = 0;
@@ -251,10 +251,13 @@ public class FenetreJeu extends FenetreMere{
 	}
 	
 	/**
-	 * Cette méthode met à jour le score lorsque le joueur réussit un tir. Elle est prévue pour gérer dans le futur les combo également.
-	 * @param ajout de type int : les points à ajouter au score
-	 * @return void
-	 */
+ * Cette méthode met à jour le score lorsque le joueur réussit un tir 
+ * Elle est prévue pour gérer les combo également
+ * Lorsque le joueur réussi trois lancer d'affilés alors son score est multiplié par 2
+ * name : mAjScore 
+ * Ne renvoie rien 
+ * @param ajout 	nombre de points à ajouter au score 
+ */
 	
 	public void mAjScore(int ajout){
 		if(combo < 3){
@@ -267,32 +270,63 @@ public class FenetreJeu extends FenetreMere{
 		labelScore.setText("Score : " + score);
 	}
 	
-	// accesseurs en lecture
-	
+/**
+ * Accesseur en lecture du score  
+ * name : getScore
+ * Ne prend pas de paramètre en compte  
+ * @return score 		score actuel du joueur   
+ */	
 	public int getScore() {
 		return score ; 
 	}
 	
+	/**
+ * Accesseur en lecture du nombre de vies  
+ * name : getVie
+ * Ne prend pas de paramètre en compte  
+ * @return vie 		nombre de vies actuelles du joueur   
+ */
 	public int getVie() {
 		return vie ; 
 	}
 	
+	/**
+ * Accesseur en lecture du JLabel de score  
+ * name : getLabelScore
+ * Ne prend pas de paramètre en compte  
+ * @return JLabel 		état actuel du labelScore   
+ */	
 	public JLabel getLabelScore(){
 		return this.labelScore;
 	}
 	
+	/**
+ * Accesseur en lecture du JLabel de vies  
+ * name : getLabelVie
+ * Ne prend pas de paramètre en compte  
+ * @return JLabel 		état actuel du labelVie  
+ */	
 	public JLabel getLabelVie(){
 		return this.labelVie;
 	}
 	
-	// accesseurs en écriture 
-	
+	/**
+ * Accesseur en écriture du score permettant de choisir le score de départ
+ * name : setScore
+ * Ne renvoie rien  
+ * @param sco		permet de régler le score au démarrage de la partie
+ */	
 	public void setScore(int sco) {
 		this.score = sco ;
 	}
 	
+	/**
+ * Accesseur en écriture du nombre de vies de départ du joueur 
+ * name : setVie
+ * Ne renvoie rien  
+ * @param v		permet de régler le nombre de vies au début de la partie
+ */	
 	public void setVie(int v) {
 		this.vie = v ; 
-	}
-	
+	}	
 }

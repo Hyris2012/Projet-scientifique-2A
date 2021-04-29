@@ -1,18 +1,24 @@
+/** La classe FenetreMere permet de poser une base de fenêtre commune à ses classes filles : FenetreJeu et FenetreScientifique
+ */
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.String;
 
-
 public abstract class FenetreMere extends JFrame implements ActionListener{
 	
-	protected JPanel FenPrinc ;
+	protected JPanel fenPrinc ;
 	protected JButton jouer ;
 	protected int largeur;
 	protected int hauteur;
 	protected JButton retourFenAccueil;
 	protected boolean enJeu = false;
 	
+	/**
+ * Constructeur par défaut et seul constructeur de la classe
+ * Ne prend en compte aucun paramètre 
+ * Crée une fenetreMere qui pourra etre différenciée par la suite en une fenetre de jeu et une fenetre scientifique
+ */
 	public FenetreMere(){
 		super("Trajectory Manager") ;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,11 +30,11 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 		setResizable(false);
 		
 		
-		FenPrinc = new JPanel() ; 
-		FenPrinc.setLayout(null) ; 
-		FenPrinc.setBounds(0,0,largeur,hauteur) ;
-		FenPrinc.setBackground(Outils.FOND_BLEU) ; 
-		FenPrinc.repaint();
+		fenPrinc = new JPanel() ; 
+		fenPrinc.setLayout(null) ; 
+		fenPrinc.setBounds(0,0,largeur,hauteur) ;
+		fenPrinc.setBackground(Outils.FOND_BLEU) ; 
+		fenPrinc.repaint();
 		
 		jouer = new JButton("Jouer ! ") ; 
 		jouer.setFont(new Font("Stencil",Font.BOLD,50)) ;
@@ -53,13 +59,19 @@ public abstract class FenetreMere extends JFrame implements ActionListener{
 		
 		
 		
-		FenPrinc.add(jouer); 
-		FenPrinc.add(logo);
-		FenPrinc.add(insa);
-		FenPrinc.add(retourFenAccueil);
-		
+		fenPrinc.add(jouer); 
+		fenPrinc.add(logo);
+		fenPrinc.add(insa);
+		fenPrinc.add(retourFenAccueil);		
 	}
 	
+	/**
+ * Permet de créer une nouvelle fenêtre d'accueil si le joueur souhaite quitter la fenetre dans laquelle il se situe  
+ * Branchement d'écouteurs auparavant sur le bouton concerné
+ * ne renvoie rien 
+ * name : actionPerformed 
+ * @param  e 	ActionEvent
+*/	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == retourFenAccueil){
 			this.setVisible(false);
