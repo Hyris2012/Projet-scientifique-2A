@@ -6,6 +6,8 @@ import java.lang.String;
 public class FenetreScientifique extends FenetreMere {
 	
 	private PanelTrajScienti courbe ; 
+	private String gifChoisi;
+	private JLabel gifPanel;
 	
 	private JSlider hauteurInit;
 	private JSlider vitesseAffichage;
@@ -39,6 +41,12 @@ public class FenetreScientifique extends FenetreMere {
 		courbe.setLayout(null);
 		courbe.setBackground(Color.white);
 		
+		choixGif();
+		gifPanel = new JLabel();
+		gifPanel.setBounds(0, 0, courbe.getWidth(), courbe.getHeight());
+		gifPanel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(gifChoisi).getScaledInstance(courbe.getWidth(), courbe.getHeight(), Image.SCALE_DEFAULT)));
+		courbe.add(gifPanel);
+		
 		equa = new JLabel("<html><u> Equation de la trajectoire :</u></html>") ;
 		equa.setBounds(courbe.getX(),jouer.getY()-50,(int)courbe.getWidth()/2,jouer.getHeight()/2);
 		equa.setBackground(Color.white); 
@@ -53,7 +61,7 @@ public class FenetreScientifique extends FenetreMere {
 		historique.setBounds((courbe.getX() + (int)courbe.getWidth()/2),equa.getY(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
 		historique.setBackground(Color.white); 
 		historique.setFont(new Font("Arial",Font.BOLD,22));
-      //  texteHistorique();
+      
         
         histo1 = new JLabel("") ;
         histo1.setBounds((courbe.getX() + (int)courbe.getWidth()/2),historique.getY()+historique.getHeight(),(int)courbe.getWidth()/2,jouer.getHeight()/2);
@@ -173,6 +181,8 @@ public class FenetreScientifique extends FenetreMere {
 		
 		if(e.getSource() == jouer && !enJeu){
 			
+			gifPanel.setVisible(false);
+			
 			enJeu = true;
 			vInit.setText("<html><center> ... </center></html>");
 			aInit.setText("<html><center> ... </center></html>");
@@ -184,36 +194,32 @@ public class FenetreScientifique extends FenetreMere {
             if(courbe.balle!=null){
                 histo1.setText(courbe.balle.getPolynome().toString());
             }
-          //  texteHistorique();
+          
             courbe.departFleche.y = hauteurInit.getValue();
 			courbe.pesanteurChoisie = graviteChoisie.getValue();
 			courbe.setVitesseAffichage(vitesseAffichage.getValue());
 			courbe.flecheSuitSouris = true;
 			courbe.reInit();
 			courbe.repaint();
-			
-			/*if(!enJeu){ on optimise encore + le enJeu en le mettant dans le if en haut et en le rééxploitant dans fenetre scienti
-				enJeu = true;
-				courbe.setVisible(true);
-			
-				courbe.flecheSuitSouris = true;
-				courbe.reInit();
-				courbe.repaint();	
-			}
-			*/
 		}
 	}
     
-    /*public void texteHistorique(){
-        if(histo3!=null){
-            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"<br>"+histo2+"<br>"+histo3+"</center></html>") ;   
-        }else if(histo2!=null){
-            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"<br>"+histo2+"</center></html>") ;
-        }else if(histo1!=null){
-            historique.setText("<html><center>Equations précédentes : <br>"+histo1+"</center></html>") ;
-        }else{
-            historique.setText("Equations précédentes :") ;
+    public void choixGif(){ // pour avoir un des 3 gif qui se met aléatoirement au lancement de fenetreScientifique
+		switch ((int)(Math.random()*3+1)){
+        case 1 :
+			this.gifChoisi = "maths.gif";
+			break;
+        case 2:
+            this.gifChoisi = "physique.gif" ;
+            break;
+        case 3:
+            this.gifChoisi = "billNye.gif";
+            break;
+        default :
+            this.gifChoisi = "physique.gif";
+            break;
         }
-    }*/
+		
+	}
 
 }

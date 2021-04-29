@@ -174,7 +174,7 @@ public class Cible implements ActionListener {	//extends JPanel
 	
 	public void setPosition(){
 		
-		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-1));
+		positionX=(int)(Math.random()*(courbe.getWidth()-largeur-courbe.getWidth()*0.01)); // le dernier terme correspond à la largeur des petits pics autour de la cible
 		
 		if(positionX<positionMin){ // pour éviter que la cible vienne contre l'origine, sinon c'est un peu trop facile de gagner
 			positionX=positionMin;

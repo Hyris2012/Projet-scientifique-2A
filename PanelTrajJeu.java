@@ -16,13 +16,14 @@ public class PanelTrajJeu extends PanelTraj{
 	
 	private final Image pommeDouche = T.getImage("pomme_de_douche.png");
 	private final Image girafe = T.getImage("girafe.png");
-	private final Image vaisseau = T.getImage("vaisseau.png");
-	private final Image balleTennis = T.getImage("balleTennis.png");
+	private final Image barbecue = T.getImage("barbecue.png");
+	private final Image ananas = T.getImage("ananas.png");
+	private final Image photocopieur = T.getImage("photocopieur.png");
 	
-	private final Image harpe=T.getImage("harpe.png");
-	private final Image bus=T.getImage("bus_a_imperiale.png");
-	private final Image grillePain=T.getImage("grille_pain.png");
-	private final Image phedre=T.getImage("phedre.png");
+	private final Image harpe = T.getImage("harpe.png");
+	private final Image bus = T.getImage("bus_a_imperiale.png");
+	private final Image grillePain = T.getImage("grille_pain.png");
+	private final Image phedre = T.getImage("phedre.png");
 	
 	private final Image picsDroite;
 	private final Image picsGauche;
@@ -40,8 +41,8 @@ public class PanelTrajJeu extends PanelTraj{
         obstacle = new Cible (0.12, 0.08, this, false);
         
         //initialisation des pics sur la cible
-        picsDroite=T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
-        picsGauche=T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        picsDroite = T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        picsGauche = T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
         
 		//initialisation des decors
 		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
@@ -234,14 +235,17 @@ public class PanelTrajJeu extends PanelTraj{
         case "Pommeau de douche":
             imageObj = pommeDouche.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
             break;
-        case "Vaisseau spatial":
-            imageObj = vaisseau.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.13), Image.SCALE_DEFAULT);
+        case "Barbecue":
+            imageObj = barbecue.getScaledInstance((int) (this.getWidth()*0.07), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
-        case "Balle":
-            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
+        case "Ananas":
+            imageObj = ananas.getScaledInstance((int) (this.getWidth()*0.05), (int) (this.getHeight()*0.20), Image.SCALE_DEFAULT);
             break;
+        case "Photocopieur":
+            imageObj = photocopieur.getScaledInstance((int) (this.getWidth()*0.08), (int) (this.getHeight()*0.16), Image.SCALE_DEFAULT);
+         break;
         default :
-            imageObj = balleTennis.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.17), Image.SCALE_DEFAULT);
+            imageObj = girafe.getScaledInstance((int) (this.getWidth()*0.1), (int) (this.getHeight()*0.18), Image.SCALE_DEFAULT);
             break;
         }
 	}
