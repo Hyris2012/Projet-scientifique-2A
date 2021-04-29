@@ -22,6 +22,7 @@ public class FenetreJeu extends FenetreMere{
 	private JLabel labelVie; 
 	private JButton sonOnOff;
 	private JPanel panel;
+	private JLabel comboLabel;
 	
 	// panel dans lequel la trajectoire est gérée
 	private PanelTrajJeu courbe;
@@ -44,7 +45,6 @@ public class FenetreJeu extends FenetreMere{
 		minion.setBounds(0, 0, panel.getWidth(), panel.getHeight());
 		minion.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("minions.gif").getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT)));
 		panel.add(minion);
-		
 		
 		JLabel objet = new JLabel("Choisissez l'objet :") ; //7
 		objet.setFont(new Font("Arial",Font.BOLD,20)) ;
@@ -97,7 +97,12 @@ public class FenetreJeu extends FenetreMere{
 		String diff3 = new String ("Expert");	
 		String [] choixDiff = {diff1, diff2, diff3};
 		difficulteJeu = new JComboBox(choixDiff) ; //8
-		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
+		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0)));
+		
+		comboLabel = new JLabel();
+		comboLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("combo.png").getScaledInstance((int) (0.1*largeur), (int) (0.05*hauteur), Image.SCALE_DEFAULT)));
+		FenPrinc.add(comboLabel);
+		
 		
 		FenPrinc.add(panel);
 		FenPrinc.add(labelScore) ; 
@@ -109,7 +114,7 @@ public class FenetreJeu extends FenetreMere{
 		FenPrinc.add(sonOnOff);
 		FenPrinc.add(diff);
 		FenPrinc.add(difficulteJeu);
-				
+		
 		this.add(FenPrinc);		// le mettre dans fenetreMere ?? meme si d'autres trucs sont ajoutés à FenPrinc APRES ??
 		setVisible(true);
 		
@@ -162,8 +167,7 @@ public class FenetreJeu extends FenetreMere{
 				sonOnOff.setVisible(true);
 				courbe.flecheSuitSouris = true;
 				courbe.reInit();
-				courbe.repaint();
-							
+				courbe.repaint();	
 			}
 			
 		}
@@ -187,6 +191,9 @@ public class FenetreJeu extends FenetreMere{
 		courbe.setVisible(true);
 		FenPrinc.add(courbe);	
 		labelScore.setBounds(courbe.getX(),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
+		comboLabel.setBounds((int)(largeur*(0.7/29.7)) + 200,(int)(hauteur*(17.7/21.0)),200,100);
+		comboLabel.setVisible(false);
+		
 		labelVie.setBounds((int) (courbe.getX()+0.75*courbe.getWidth()),jouer.getY(),(int) (courbe.getWidth()/4),jouer.getHeight());
 	}
 	
@@ -227,8 +234,16 @@ public class FenetreJeu extends FenetreMere{
 		if(vie <= 0){
 			new Restart(this, "Perdu!");
 			courbe.getFond().getMusiqueChoisie().stop();
+//<<<<<<< Updated upstream
 	
-		}else if(score >= 1500){
+		}else if(score >= 3000){
+//=======
+			this.setVisible(false); // sinon on peut recliquer dans la fenêtre et continuer à jouer
+			new Restart(this, "Gagné!");
+			courbe.getFond().getMusiqueChoisie().stop();
+			
+		}else if(score >= 2000){
+//>>>>>>> Stashed changes
 			new Restart(this, "Gagné!");
 			courbe.getFond().getMusiqueChoisie().stop();
 			
@@ -243,7 +258,7 @@ public class FenetreJeu extends FenetreMere{
 	
 	public void perdVies(int perte){
 		combo = 0;
-		vie = vie - 1; 			
+		vie = vie - perte; 			
 		labelVie.setText("Nombre de vies: " + vie);
 	}
 	
@@ -252,13 +267,18 @@ public class FenetreJeu extends FenetreMere{
 	 * @param ajout de type int : les points à ajouter au score
 	 * @return void
 	 */
-	
+
+
 	public void mAjScore(int ajout){
 		if(combo < 3){
 			score = score + ajout; 
 			combo++;
 		}else{
 			score = score + ajout*2;
+			
+			comboLabel.setVisible(true);
+			Outils.pause(7000);
+			/*comboLabel.setVisible(false);*/
 			// est-ce qu'on remet le combo à 0 ou bien on enchaine les combo jusqu'à tomber à côté ?
 		}				
 		labelScore.setText("Score : " + score);
