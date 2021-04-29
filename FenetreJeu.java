@@ -45,22 +45,33 @@ public class FenetreJeu extends FenetreMere{
 		minion.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("minions.gif").getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT)));
 		panel.add(minion);
 		
+		JLabel diff = new JLabel("<html><u>Choisissez la difficulté</u></html>") ; 
+		diff.setFont(new Font("Arial",Font.BOLD,20)) ;
+		diff.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(3/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
-		JLabel objet = new JLabel("Choisissez l'objet :") ; //7
+		String diff1 = new String ("Débutant");	
+		String diff2 = new String ("Intermédiaire");			 
+		String diff3 = new String ("Expert");	
+		String [] choixDiff = {diff1, diff2, diff3};
+		difficulteJeu = new JComboBox(choixDiff) ; 
+		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
+		
+		JLabel objet = new JLabel("<html><u>Choisissez l'objet :</u></html>") ; 
 		objet.setFont(new Font("Arial",Font.BOLD,20)) ;
-		objet.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(11.5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		objet.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(8/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
 		String obj1 = new String ("Girafe");	
 		String obj2 = new String ("Pommeau de douche");			 
-		String obj3 = new String ("Vaisseau spatial");	
-		String obj4 = new String ("Balle");
-		String [] choixObj = {obj1, obj2, obj3, obj4};
-		objet1 = new JComboBox(choixObj) ; //8
-		objet1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(13.3/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
+		String obj3 = new String ("Barbecue");	
+		String obj4 = new String ("Ananas");
+		String obj5 = new String ("Photocopieur");
+		String [] choixObj = {obj1, obj2, obj3, obj4,obj5};
+		objet1 = new JComboBox(choixObj) ; 
+		objet1.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(10/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
-		JLabel endroit = new JLabel("Choisissez l'endroit :") ; //9
+		JLabel endroit = new JLabel("<html><u>Choisissez l'endroit :</u></html>") ; 
 		endroit.setFont(new Font("Arial",Font.BOLD,20)) ;
-		endroit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(14.6/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
+		endroit.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(13/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
 		String decor1 = new String ("Espace");	
 		String decor2 = new String ("Jungle");			 
@@ -68,7 +79,7 @@ public class FenetreJeu extends FenetreMere{
 		String decor4 = new String ("Bob l'eponge");	
 		String [] choixDecor = {decor1, decor2, decor3, decor4};
 		decor = new JComboBox(choixDecor) ; //10
-		decor.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(16.4/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
+		decor.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(15/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
 		
 		labelScore = new JLabel(" Score : " + score) ;
 		labelScore.setBounds(panel.getX(),jouer.getY(),(int) (panel.getWidth()/4),jouer.getHeight());
@@ -88,17 +99,7 @@ public class FenetreJeu extends FenetreMere{
 		sonOnOff.addActionListener(this);
 		sonOnOff.setVisible(false);
 		
-		JLabel diff = new JLabel("Choisissez la difficulté") ; //7
-		diff.setFont(new Font("Arial",Font.BOLD,20)) ;
-		diff.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(5/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1.5/21.0))) ;
-		
-		String diff1 = new String ("Débutant");	
-		String diff2 = new String ("Intermédiaire");			 
-		String diff3 = new String ("Expert");	
-		String [] choixDiff = {diff1, diff2, diff3};
-		difficulteJeu = new JComboBox(choixDiff) ; //8
-		difficulteJeu.setBounds((int)(largeur*(0.7/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(8/29.7)),(int)(hauteur*(1/21.0))) ;
-		
+				
 		FenPrinc.add(panel);
 		FenPrinc.add(labelScore) ; 
 		FenPrinc.add(labelVie) ; 
@@ -229,7 +230,7 @@ public class FenetreJeu extends FenetreMere{
 			courbe.getFond().getMusiqueChoisie().stop();
 			this.setVisible(false); // sinon on peut recliquer dans la fenêtre et continuer à jouer
 				
-		}else if(score >= 1500){
+		}else if(score >= 3000){
 			new Restart(this, "<html><center> Gagné! Bravo ! <br> Tu peux recommencer une partie <br> ou explorer le mode scientifique </center></html>");
 			courbe.getFond().getMusiqueChoisie().stop();
 			this.setVisible(false);

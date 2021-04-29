@@ -10,6 +10,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 	
 	private FenetreMere trajectory ;	
 	private JPanel FenPrinc ; 
+	private final Image logoAccueil;
+	private JLabel labelLogoAccueil;
 	
 	public FenetreAccueil() {
 		super("Trajectory Manager") ; 
@@ -34,21 +36,23 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		jeu.setBackground(Color.red) ; 
 		jeu.setFont(new Font("Stencil",Font.BOLD,30)) ;
 		
-		JLabel logo = new JLabel() ;
-		logo.setIcon(new ImageIcon("./logo_trajectory_fenetreAccueil.png")) ; 
-		logo.setBounds(0,0,largeur,hauteur) ;
+		logoAccueil = Toolkit.getDefaultToolkit().getImage("logo_trajectory_fenetreAccueil(2).png").getScaledInstance(this.getWidth(), 275, Image.SCALE_DEFAULT);
+		labelLogoAccueil = new JLabel() ;
+		labelLogoAccueil.setIcon(new ImageIcon(logoAccueil)) ; 
+		labelLogoAccueil.setBounds(0,0,this.getWidth(),275) ;
 		
-		JLabel regle = new JLabel("<html><center>Bienvenue dans notre jeu ludique et scientifique : TRAJECTORY MANAGER.<br>Les regles sont simples, il faut tirer dans le panier et atteindre le score de 1500.<br>Les tirs peuvent vous apporter jusqu'a 300 points.<br>Si vous n'avez plus de vies sans atteindre ce score alors vous avez perdu.<br>Bonne chance ;)</center></html>");
-		regle.setBounds((int)(largeur*(4/29.7)),(int)(hauteur*(9/21.0)),(int)(largeur*(20/29.7)),(int)(hauteur*(4/21.0))) ;
+		JLabel regle = new JLabel("<html><center><u>Mode Scientifique:</u> <br> Explorez à travers différents paramètres mis en votre disposition<br>leur influence sur la formation d'une trajectoire<br><br><br><u>Mode Jeu:</u><br> Lancez des objets incongrus sur une plateforme sans en toucher les bords, <br>Evitez les obstacles et marquez 3000 points pour gagner ! Bonne chance (*^▽^*) ! </center></html>");
+		regle.setBounds((int)(largeur*(4.3/29.7)),(int)(hauteur*(7/21.0)),(int)(largeur*(20/29.7)),(int)(hauteur*(6/21.0))) ;
 		regle.setBackground(Outils.FOND_BLEU) ;
 		regle.setFont(new Font("Arial",Font.BOLD,18)) ;
 		
-		FenPrinc.add(logo); 
+		FenPrinc.add(labelLogoAccueil); 
 		FenPrinc.add(scientifique); 
 		FenPrinc.add(jeu);
 		FenPrinc.add(regle); 
 		this.add(FenPrinc);
 		setVisible(true);
+		
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -60,5 +64,5 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		}
 		this.setVisible(false);
 	}	
-	
+		
 }
