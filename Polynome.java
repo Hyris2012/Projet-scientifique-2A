@@ -1,7 +1,9 @@
 /**
+ * Nom de la classe : Polynome
  * Cette classe crée et gère des polynomes de degré 2 
  * Elle permet aussi le dessin de leur courbe
  */
+ 
 import java.util.*;
 
 public class Polynome {
@@ -24,19 +26,16 @@ public class Polynome {
 	private ArrayList <Double> valeurY;
 	
 	//racines
-	private double[] racines; 
-	
+	private double[] racines; 	
 	
 /**
  * Constructeur par défaut de la classe
- */
-	 
+ */	 
 	public Polynome(){		
 	}
 	
 	/**
- * Construit un Polynome de coefficients a, b et c 
- * Ils correspondent à la forme développée du Polynome
+ * Construit un Polynome de degré 2 de coefficients a, b et c 
  * Le polynôme est calculé pour être affiché dans le panel de dimensions les attributs largeur et hauteur
  * @param a 		coefficient du Polynome qui se trouve devant le terme x² 
  * @param b 		coefficient du Polynome qui se trouve devant le terme x
@@ -64,23 +63,21 @@ public class Polynome {
 	}
 	
 	/**
- * Méthode de calcul de l'image y du réel x par la fonction du Polynome instanciée.
- * @param x 	abscisse du point, l'antécédent de y par la fonction associée au Polynome 
- * @return y 	image de x par la fonction associée au Polynome 
- */
-	 
-	public double calculFdeX(double x){ 
-	
+	 * Méthode qui calcule l'image y du réel x par le Polynome instancié.
+	 * Name : calculFdeX
+	 * @param x 	abscisse du point, l'antécédent de y par la fonction associée au Polynome 
+	 * @return y 	image de x par la fonction associée au Polynome 
+	 */	 
+	public double calculFdeX(double x){ 	
 		double y = a * Math.pow(x,2) + b * x + c;
 		return y;
 	}
 	
 	/**
- * Méthode qui remplit les ArrayList permettant l'affichage de la courbe représentative du Polynome.
- * Ne prend pas de paramètre en compte et ne renvoie rien
- * name : remplissageListe 
- */
-	 
+	 * Méthode qui remplit les ArrayList permettant l'affichage de la courbe représentative du Polynome
+	 * Ne prend pas de paramètre en compte et ne renvoie rien
+	 * Name : remplissageListe 
+	 */	 
 	public void remplissageListe(){
 		
 		for(double i = 0; i < this.largeurPanel; i++){		
@@ -94,23 +91,20 @@ public class Polynome {
 	}
 	
 	/**
- * Calcule les racines du Polynome et les stockent dans l'attribut racines.
- * Ne prend pas de paramètre en compte et ne renvoie rien
- * name : calculRacines 
- */
+	 * Méthode qui calcule les racines du Polynome et les stocke dans l'attribut racines
+	 * Ne prend pas de paramètre en compte et ne renvoie rien
+	 * Name : calculRacines 
+	 */
 	public void calculRacines(){
 		
 		double delta;
 		delta = b*b - 4*a*c;
-		if(delta < 0){
-			//System.out.println("Erreur : la trajectoire est souterraine ou la balle ne touche pas le sol");
-			return;
-		} if (delta == 0){
-			//System.out.println("Erreur : la trajectoire est paranormale");
+		 if (delta == 0){			
 			racines[0] = (-b/(2*a));
 			racines[1] = (-b/(2*a));
 			return; 
-		} if (delta > 0){
+		} 
+		if (delta > 0){
 			double premiereRacine=(-b - Math.sqrt(delta))/(2*a);
 			double deuxiemeRacine=(-b + Math.sqrt(delta))/(2*a);
 			racines[0] = Math.min(premiereRacine,deuxiemeRacine);
@@ -119,133 +113,75 @@ public class Polynome {
 	}
 	
 	/**
- * Méthode qui donne accès au lieu d'atterrissage : la racine la plus grande.
- * name : calculAtterissage 
- * @return la valeur de la plus grande racine
- */
+	 * Méthode qui donne accès au lieu d'atterrissage : la racine la plus grande.
+	 * Name : calculAtterissage 
+	 * @return la valeur de la plus grande racine
+	 */
 	public double calculAtterrissage(){ 
 		return Math.max(racines[0], racines[1]);
 	}	
 	
 	/**
- * Renvoie l'extremum de la fonction Polynome 
- * Correspond à l'altitude maximum atteinte par la balle.
- * Ne prend pas de paramètre en compte
- * name : calculSommet 
- * @return double 	la valeur de l'altitude maximale atteinte
- */
+	 * Méthode qui renvoie l'extremum de la fonction Polynome 
+	 * Ne prend pas de paramètre en compte
+	 * Name : calculSommet 
+	 * @return extremum 	la valeur de l'altitude maximale atteinte
+	 */
 	public double calculSommet(){
-		if ((int) alpha < valeurY.size()){
-			
-			double extremum = valeurY.get((int)alpha);
-			if(beta > extremum){
-				// new FenetreFinJeu("Erreur", "Attention, la parabole est tournée vers le bas... trajectoire paranormale");
-			}
-			return extremum;
-		} else {
-			return 0.0;
+		double extremum = 0.0;
+		if ((int) alpha < valeurY.size()){			
+			extremum = valeurY.get((int)alpha);			
 		}
+		return extremum;
 	}
 	
 	/**
- * Affiche l'équation correspondant au Polynome créé
- * Ne prend pas de paramètre en compte 
- * name : toString 
- * @return String 	renvoie l'équation en fonction de x correspondant au Polynome 
- */
+	 * Affiche l'équation correspondant au Polynome créé
+	 * Ne prend pas de paramètre en compte 
+	 * Name : toString 
+	 * @return String  équation en fonction de x correspondant au Polynome 
+	 */
 	public String toString (){
 		return ("<html><center> P(X) = " + Outils.coupeDecimale(a) + " * X <sup>2</sup> + " + Outils.coupeDecimale(b) + " * X + " + Outils.coupeDecimale(c)+"</center></html>");
 	}
 	
 	/**
- * Calcule la distance entre les deux racines du Polynome
- * Permet de connaître la distance entre le point d'atterrisage et de départ de la trajectoire 
- * Ne prend pas de paramètre en compte 
- * name : distanceEntreRacines 
- * @return double 	renvoie la distance entre les deux racines du polynôme
- */
+	 * Calcule la distance entre les deux racines du Polynome
+	 * Ne prend pas de paramètre en compte 
+	 * Name : distanceEntreRacines 
+	 * @return d 	de type double
+	 */
 	public double distanceEntreRacines(){
+		double d = 0.0;
 		if (racines != null){
-			double d = Math.abs(racines[0]-racines[1]);
-			return d;
-		} else {
-			return 0.0;
+			d = Math.abs(racines[0]-racines[1]);
 		}
+		return d;
 	}
 	
 	/**
- * Accesseur en lecture de l'attribut a
- * Permet d'avoir accès à la valeur de a 
- * name : getA 
- * @return a 	valeur du coefficient devant le x² 
- */
-	public double getA(){
-		return a;
-	}
-	
-	/**
- * Accesseur en lecture de l'attribut b
- * Permet d'avoir accès à la valeur de b
- * name : getB 
- * @return b 	valeur du coefficient devant le x 
- */
-	public double getB(){
-		return b;
-	}
-	
-	/**
- * Accesseur en lecture de l'attribut c
- * Permet d'avoir accès à la valeur de c
- * name : getC 
- * @return c 	valeur du coefficient constant  
- */
-	public double getC(){
-		return c;
-	}
-	
-	/**
- * Accesseur en lecture de l'attribut alpha 
- * Permet d'avoir accès à la valeur d'alpha
- * name : getAlpha 
- * @return alpha 	valeur du coefficient alpha de la forme canonique du Polynome  
- */
-	public double getAlpha(){
-		return alpha;
-	}
-	
-	/**
- * Accesseur en lecture de l'attribut beta
- * Permet d'avoir accès à la valeur de beta 
- * name : getBeta 
- * @return beta 	valeur du coefficient beta de la forme canonique du Polynome  
- */
-	public double getBeta(){
-		return beta;
-	}
-	
-	/**
- * Accesseur en lecture du tableau regroupant la valeur des racines du Polynome 
- * name : getRacines  
- * @return racines 		valeurs prises par les racines du Polynome   
- */
+	 * Accesseur en lecture du tableau regroupant la valeur des racines du Polynome 
+	 * Ne prend pas de paramètre
+	 * @return racines 		tableau de doubles   
+	 */
 	public double[] getRacines(){
 		return racines;
 	}
 	
 	/**
- * Accesseur en lecture de la liste regroupant les valeurs prises par x  
- * name : getValeurX  
- * @return valeurX 		valeurs prises par x lors de l'exécution du programme    
- */
+	 * Accesseur en lecture de la liste regroupant les valeurs prises par x   
+	 * Ne prend pas de paramètre
+	 * @return valeurX 		valeurs prises par x lors de l'exécution du programme    
+	 */
 	public ArrayList <Double> getValeurX(){
 		return valeurX;
 	}
 	
 	/**
- * Accesseur en lecture de la liste regroupant les valeurs prises par y 
- * name : getValeurY  
- * @return valeurY 		valeurs prises par y lors de l'exécution du programme    
- */
+	 * Accesseur en lecture de la liste regroupant les valeurs prises par y 
+	 * Ne prend pas de paramètre 
+	 * @return valeurY 		valeurs prises par y lors de l'exécution du programme    
+	 */
 	public ArrayList <Double> getValeurY(){
 		return valeurY;
 	} 

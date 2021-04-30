@@ -30,7 +30,7 @@ public class Balle {
 		
 		this.pesanteur = PESANTEUR_PAR_DEFAUT*4;  // on multiplie par 4 sinon ça sort trop vite de l'écran dans le mode jeu
 		this.angleIni = v.getArgument();	
-		this.vitesseInitiale = v.getModule()/2;		// on /2 car sinon la vitesse initiale est un peu trop importante
+		this.vitesseInitiale = v.getModule()/2;		// on /2 car sinon la vitesse initiale est un peu trop importante et on joue tout le temps avec des petits vecteurs 
 		this.depart = v;
 	    	    
 	    initPolynome(largeur, hauteur);		
@@ -41,13 +41,17 @@ public class Balle {
  */
 	public Balle(Vecteur v, int largeur, int hauteur, double g){
 		
-		this(v, largeur, hauteur);
 		this.pesanteur = g;
+		this.angleIni = v.getArgument();	
+		this.vitesseInitiale = v.getModule()/2;		// on /2 car sinon la vitesse initiale est un peu trop importante et on joue tout le temps avec des petits vecteurs 
+		this.depart = v;
+	    	    
+	    initPolynome(largeur, hauteur);
+		
 	}
 	
 	/**
-	* Méthode qui permet l'initialisation d'un polynôme qui décrit la trajectoire de la balle 
-	* Evolution du polynôme selon ses caractéristiques (masse, vitesse initiale, angle de lancer, gravité à laquelle elle est soumise)
+	* Méthode permetant l'initialisation d'un polynôme décirvant la trajectoire de la balle 
 	* Name : initPolynome
 	* @param 	largeur du panel dans lequel la trajectoire de la balle va être calculée et dessinée
 	* @param 	hauteur du panel dans lequel la trajectoire de la balle va être calculée et dessinée

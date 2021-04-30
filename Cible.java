@@ -1,5 +1,5 @@
 /** 
- * Nom de la classe : cible
+ * Nom de la classe : Cible
  * Créé et gère les objet cible OU obstacle de taille et vitesse variable utilisés dans le mode jeu
  */
 import java.util.ArrayList;
@@ -160,7 +160,7 @@ public class Cible implements ActionListener {
 	}
 	
 	/**
-	 * Méthode qui permet d'initialiser la position de la cible
+	 * Méthode qui initialise la position de la cible
 	 * Name : setPosition
 	 * Ne prend pas de paramètre et ne renvoie rien
 	 */

@@ -1,5 +1,6 @@
-
-/** Classe principale contenant le main. A executer pour lancer le jeu Trajectory Manager.
+/** 
+ * Nom de la classe : TrajectoryManager
+ * Classe principale contenant le main. A executer pour lancer le jeu Trajectory Manager
  * @author l'équipe Marie_Sara-Lucas-Massyl-Eliette
  */
 
