@@ -1,57 +1,61 @@
-import java.util.*;
+/** 
+ * Nom de la classe : Balle
+ * Classe dans laquelle les objets qu'on lance sont créés  
+ */ 
+ import java.util.*;
+
 public class Balle {
-	
-	
-	// ces 3-là ne sont pas encore utilisés 
-	private double rayon;
-	private double masse;
-	private double taille;
-	
+		
 	private double vitesseInitiale;
 	private double angleIni;			// angle en radians 
 	private double pesanteur;		
+	private final double PESANTEUR_PAR_DEFAUT = 9.81;
 	
 	private Vecteur depart; 
 	private Polynome traj; 
 	
-	// distanceAterrissage est distance en x entre le point de départ et le point d'arrivée
-	// hauteurMax = hauteur de la flèche au plus haut 
-
-	/**
-	 * constructeur vide de Balle
-	 */
-	
+/**
+	* Constructeur par défaut de Balle
+	*/	
 	public Balle (){
-		
 	}
-	
-	public Balle(double m, double r, Vecteur v, int largeur, int hauteur, double g){
 		
-		this.pesanteur = g; //*4 car sinon ça sort trop vite de l'écran
+/**
+	 * Constructeur permettant de créer une balle à partir des paramètres suivants :
+	 * @param v			  vecteur permettant d'avoir accès à l'angle et au module de la vitesse initiale donnée à la balle       
+	 * @param largeur     fixe la largeur du panel dans lequel la trajectoire va être dessinée 
+	 * @param hauteur     fixe la hauteur du panel dans lequel la trajectoire va être dessinée
+	 */
+	public Balle(Vecteur v, int largeur, int hauteur){
+		
+		this.pesanteur = PESANTEUR_PAR_DEFAUT*4;  // on multiplie par 4 sinon ça sort trop vite de l'écran dans le mode jeu
 		this.angleIni = v.getArgument();	
-		this.vitesseInitiale = v.getModule()/2;		//pourquoi sur 2 
+		this.vitesseInitiale = v.getModule()/2;		// on /2 car sinon la vitesse initiale est un peu trop importante et on joue tout le temps avec des petits vecteurs 
 		this.depart = v;
+	    	    
+	    initPolynome(largeur, hauteur);		
+	}	
 		
-		// ces 3-là ne sont pas exploités dans le jeu ; taille et rayon même pas dans les calculs 
-		this.masse = m;
-		this.rayon = r;
-	    this.taille = 1; 
-	    
+	 /**
+ * Constructeur prenant en compte les même paramètres que précédemment excepté + @param g la gravité choisie
+ */
+	public Balle(Vecteur v, int largeur, int hauteur, double g){
+		
+		this.pesanteur = g;
+		this.angleIni = v.getArgument();	
+		this.vitesseInitiale = v.getModule()/2;		// on /2 car sinon la vitesse initiale est un peu trop importante et on joue tout le temps avec des petits vecteurs 
+		this.depart = v;
+	    	    
 	    initPolynome(largeur, hauteur);
 		
 	}
-
-	public Balle(double m, double r, Vecteur v, int largeur, int hauteur){
-		this(m, r, v, hauteur, largeur, 9.81*4);
-	}
 	
 	/**
-	 * méthode permettant l'initialisation d'un polynôme qui décrit la trajectoire de la balle 
-	 * en fonction de ses caractéristiques (masse, vitesse initiale, angle de lancer, gravité à laquelle elle est soumise)
-	 * @param largeur et hauteur du panel dans lequel la trajectoire de la balle va être calcullée et dessinée
-	 * @return void
-	 */
-	
+	* Méthode permetant l'initialisation d'un polynôme décirvant la trajectoire de la balle 
+	* Name : initPolynome
+	* @param 	largeur du panel dans lequel la trajectoire de la balle va être calculée et dessinée
+	* @param 	hauteur du panel dans lequel la trajectoire de la balle va être calculée et dessinée
+	*/	
 	public void initPolynome(int largeurPanel, int hauteurPanel){
 		double a = -(pesanteur)/(2*((Math.pow(vitesseInitiale*Math.cos(angleIni),2))));
 		double b = Math.tan(angleIni);
@@ -59,67 +63,31 @@ public class Balle {
 		
 		traj = new Polynome(a, b, c, largeurPanel, hauteurPanel);
 	}
-	
+			
 	/**
-	 * informations sur le parcours de la balle
-	 * @param pas de paramètres 
-	 * @return chaine de caractères : distance parcourue et altitude maximale atteinte
-	 */
-	
-	public String toString (){
-		return ("La balle a parcouru " + (int)(traj.distanceEntreRacines())+" pixels "+ "et a atteint une hauteur maximale de " + (int)(traj.calculSommet())+" pixels");
-	}
-	
-	// accesseurs en lecture 
-	
-	/**
-	 * accesseur en lecture de l'attribut Polynome traj
-	 * @param aucun
-	 * @return l'attribut traj de type Polynome
-	 */
-	
-	public Polynome getPolynome(){		// devrait s'appeler getTraj
+	 * Accesseur en lecture de l'attribut traj de type polynome 
+	 * Ne prend pas de paramètres en compte
+	 * @return traj 	Objet de type polynome, permet d'avoir accès à celui-ci 
+	 */	
+	public Polynome getPolynome(){
 		return this.traj;
 	}
-	
+		
 	/**
-	 * accesseur en lecture de l'attribut pesanteur
-	 * @param aucun
-	 * @return l'attribut pesanteur de type double
-	 */
-	
-	public double getPesanteur(){
-		return this.pesanteur/4;
-	}
-	
-	/**
-	 * accesseur en écriture de l'attribut pesanteur
-	 * @param double
-	 * @return void
-	 */
-	
-	public void setPesanteur(double p){
-		this.pesanteur=p*4;
-	}
-	
-	/**
-	 * accesseur en lecture de l'attribut vitesseInitiale
-	 * @param aucun
-	 * @return l'attribut vitesseInitiale de type double
-	 */
-	 
+	 * Accesseur en lecture de l'attribut vitesseInitiale
+	 * Ne prend pas de paramètre
+	 * @return vitesseInitiale l'attribut vitesseInitiale de type double
+	 */	 
 	public double getVitesseInitiale(){
 		return this.vitesseInitiale;
 	}
 	
 	/**
-	 * accesseur en lecture de l'attribut angleIni
-	 * @param aucun
+	 * Accesseur en lecture de l'attribut angleIni
+	 * Ne prend pas de paramètre
 	 * @return l'attribut angleIni converti en degrés de type double
-	 */
-	
+	 */	
 	public double getAngleInitial(){ // on choisit de retourner une valeur en degré, plus accessible à l'utilisateur
 		return ((this.angleIni*180)/Math.PI);
 	}
-
 }

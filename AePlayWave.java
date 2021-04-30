@@ -1,3 +1,9 @@
+/** 
+ * Nom de la Classe : AePlayWave 
+ * Classe dans laquelle sont définies et gérées toutes les musiques
+ * Classe empruntée à @author ajmas, sur gitHub et adaptée aux besoins de notre code 
+ */ 
+ 
 import java.io.File; 
 import java.io.IOException; 
 import javax.sound.sampled.AudioFormat; 
@@ -20,17 +26,32 @@ public class AePlayWave extends Thread {
     enum Position { 
         LEFT, RIGHT, NORMAL
     };
+    
+    /**
+ * Constructeur de la classe ne prenant en compte que le nom de la musique 
+ * @param wavfile	nom de la musique jouée
+ */
  
     public AePlayWave(String wavfile) { 
         filename = wavfile;
         curPosition = Position.NORMAL;
     } 
  
+ /**
+	* Constructeur de la classe prenant en compte le nom de la musique jouée et sa position
+	* @param wavfile	nom de la musique jouée
+	* @param p 		position de la musique jouée 
+	*/
     public AePlayWave(String wavfile, Position p) { 
         filename = wavfile;
         curPosition = p;
     } 
  
+  /**
+	* Méthode run
+	* Mise en route de la musique et répétition de celle-ci une fois qu'elle est terminée  
+	* Ne prend en compte aucun paramètre et ne renvoie rien
+	*/
     public void run() { 
 		
 		while (true){ // pour que la musique recommence en boucle 
@@ -92,9 +113,8 @@ public class AePlayWave extends Thread {
 			} finally { 
 				auline.drain();
 				auline.close();
-			} 
-	 
+			} 	 
 		} 
 	}
 } 
-//new AePlayWave("test.wav").start();
+

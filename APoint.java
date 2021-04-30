@@ -1,3 +1,8 @@
+/** 
+ * Nom de la classe : APoint
+ * Classe dans laquelle les points de la trajectoire sont créés, issue d'un TP de 2A
+ * Calculs entre différents points 
+ */ 
 public class APoint {
     
 	// Attributs
