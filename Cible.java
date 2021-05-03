@@ -95,7 +95,7 @@ public class Cible implements ActionListener {
 	 */	 
 	public boolean toucheCoteCible(int x, int y){ // pas infaillible : si on tire en ligne droite sur le coin on gagne, si on tombe verticalement sur le coin on risque de perdre ; mais la proba est très faible
 		boolean b;
-		b = (x >= positionX && x <= (positionX + 10) && y >= positionY+5);	// 5 parce que la vitesse en expert est de 4 (évite que l'objet "passe à travers")
+		b = (x >= positionX-(courbe.getWidth()*0.01) && x <= (positionX) && y >= positionY);	// 5 parce que la vitesse en expert est de 4 (évite que l'objet "passe à travers")
 		return b;
 	}
 	
