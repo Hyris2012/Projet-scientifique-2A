@@ -226,16 +226,16 @@ public class FenetreScientifique extends FenetreMere {
     public void choixGif(){
 		switch ((int)(Math.random()*3+1)){
         case 1 :
-			this.gifChoisi = "maths.gif";
+			this.gifChoisi = "Images/maths.gif";
 			break;
         case 2:
-            this.gifChoisi = "physique.gif" ;
+            this.gifChoisi = "Images/physique.gif" ;
             break;
         case 3:
-            this.gifChoisi = "billNye.gif";
+            this.gifChoisi = "Images/billNye.gif";
             break;
         default :
-            this.gifChoisi = "physique.gif";
+            this.gifChoisi = "Images/physique.gif";
             break;
         }		
 	}

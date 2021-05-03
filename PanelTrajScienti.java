@@ -24,7 +24,7 @@ public class PanelTrajScienti extends PanelTraj {
 		this.fenS = fenS;
 		
 		// initialisation de l'unique fond de ce mode scientifique
-		fond = new Decor(null, Color.black, T.getImage("einstein.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+		fond = new Decor(null, Color.black, T.getImage("Images/einstein.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
 	}
 	
 	/**

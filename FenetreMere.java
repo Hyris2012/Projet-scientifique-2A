@@ -44,11 +44,11 @@ public class FenetreMere extends JFrame implements ActionListener{
 		jouer.addActionListener(this);
 		
 		JLabel insa = new JLabel() ; //3
-		insa.setIcon(new ImageIcon("./insa_logo.png")) ; 
+		insa.setIcon(new ImageIcon("./Images/insa_logo.png")) ; 
 		insa.setBounds((int)(largeur*(25/29.7)),(int)(hauteur*(0.7/21)),(int)(largeur*(4/29.7)),(int)(hauteur*(1.5/21.0))) ;
 		
 		JLabel logo = new JLabel() ; //4
-		logo.setIcon(new ImageIcon("./logo_trajectory_fenetreJeu.png")) ; 
+		logo.setIcon(new ImageIcon("./Images/logo_trajectory_fenetreJeu.png")) ; 
 		logo.setBounds((int)(largeur*(20/29.7)),(int)(hauteur*(0.7/21)),(int)(largeur*(5/29.7)),(int)(hauteur*(3/21.0))) ;
 		
 		retourFenAccueil = new JButton ("retour"); //5

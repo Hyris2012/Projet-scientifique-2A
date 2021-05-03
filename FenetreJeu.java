@@ -41,7 +41,7 @@ public class FenetreJeu extends FenetreMere{
 		
 		JLabel minion = new JLabel(); //2
 		minion.setBounds(0, 0, panel.getWidth(), panel.getHeight());
-		minion.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("minions.gif").getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT)));
+		minion.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("Images/minions.gif").getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT)));
 				
 		JLabel diff = new JLabel("<html><u>Choisissez la difficulté</u></html>") ; //3
 		diff.setFont(new Font("Arial",Font.BOLD,20)) ;

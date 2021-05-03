@@ -46,7 +46,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		jeu.setBackground(Color.red) ; 
 		jeu.setFont(new Font("Stencil",Font.BOLD,30)) ;
 		
-		LOGO_ACCUEIL = Toolkit.getDefaultToolkit().getImage("logo_trajectory_fenetreAccueil(2).png").getScaledInstance(this.getWidth(), 275, Image.SCALE_DEFAULT);
+		LOGO_ACCUEIL = Toolkit.getDefaultToolkit().getImage("Images/logo_trajectory_fenetreAccueil.png").getScaledInstance(this.getWidth(), 275, Image.SCALE_DEFAULT);
 		labelLogoAccueil = new JLabel() ; //4
 		labelLogoAccueil.setIcon(new ImageIcon(LOGO_ACCUEIL)) ; 
 		labelLogoAccueil.setBounds(0,0,this.getWidth(),275) ;

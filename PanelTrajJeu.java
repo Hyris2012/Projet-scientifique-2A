@@ -16,16 +16,16 @@ public class PanelTrajJeu extends PanelTraj{
 	private Decor jungle;
 	private Decor bobLeponge;
 	
-	private final Image POMME_DOUCHE = T.getImage("pomme_de_douche.png");
-	private final Image GIRAFE = T.getImage("girafe.png");
-	private final Image BARBECUE = T.getImage("barbecue.png");
-	private final Image ANANAS = T.getImage("ananas.png");
-	private final Image PHOTOCOPIEUR = T.getImage("photocopieur.png");
+	private final Image POMME_DOUCHE = T.getImage("Images/pomme_de_douche.png");
+	private final Image GIRAFE = T.getImage("Images/girafe.png");
+	private final Image BARBECUE = T.getImage("Images/barbecue.png");
+	private final Image ANANAS = T.getImage("Images/ananas.png");
+	private final Image PHOTOCOPIEUR = T.getImage("Images/photocopieur.png");
 	
-	private final Image HARPE = T.getImage("harpe.png");
-	private final Image BUS = T.getImage("bus_a_imperiale.png");
-	private final Image GRILLE_PAIN = T.getImage("grille_pain.png");
-	private final Image PHEDRE = T.getImage("phedre.png");
+	private final Image HARPE = T.getImage("Images/harpe.png");
+	private final Image BUS = T.getImage("Images/bus_a_imperiale.png");
+	private final Image GRILLE_PAIN = T.getImage("Images/grille_pain.png");
+	private final Image PHEDRE = T.getImage("Images/phedre.png");
 	
 	private final Image PICS_DROITE;
 	private final Image PICS_GAUCHE;
@@ -52,14 +52,14 @@ public class PanelTrajJeu extends PanelTraj{
         obstacle = new Cible (0.12, 0.08, this, false);
         
         //initialisation des pics sur la cible
-        PICS_DROITE = T.getImage("pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
-        PICS_GAUCHE = T.getImage("pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        PICS_DROITE = T.getImage("Images/pics_cible_droite.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
+        PICS_GAUCHE = T.getImage("Images/pics_cible_gauche.png").getScaledInstance((int) (this.getWidth()*0.01), cible.getHauteurCible(), Image.SCALE_DEFAULT);
         
 		//initialisation des decors
-		espace = new Decor(new AePlayWave("space.wav"), Color.white, T.getImage("./espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-		jungle = new Decor(new AePlayWave("mowgli.wav"), Color.yellow, T.getImage("./jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-		savane = new Decor(new AePlayWave("lion.wav"), Color.red, T.getImage("./savane.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-		bobLeponge = new Decor(new AePlayWave("eponge.wav"), Color.black, T.getImage("./bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
+		espace = new Decor(new AePlayWave("Audios/space.wav"), Color.white, T.getImage("./Images/espace.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+		jungle = new Decor(new AePlayWave("Audios/mowgli.wav"), Color.yellow, T.getImage("./Images/jungle.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+		savane = new Decor(new AePlayWave("Audios/lion.wav"), Color.red, T.getImage("./Images/savane.jpg").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+		bobLeponge = new Decor(new AePlayWave("Audios/eponge.wav"), Color.black, T.getImage("./Images/bobLeponge.png").getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));	
 	}
 
 	/**********************************  PAINT  **************************************/
